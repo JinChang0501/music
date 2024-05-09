@@ -9,7 +9,6 @@ if (!isset($pageName))
   } */
   .li-hover a:hover {
     color: white;
-    font-size: larger;
     font-weight: 900;
     background-color: #7B7B7B;
     transform: scale(1.3);

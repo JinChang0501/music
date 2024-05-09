@@ -21,7 +21,6 @@ $pageName = 'home';
 <div class="container-fluid">
     <div class="row">
         <div class="col-2 p-0"><?php include __DIR__ . "/part/left-bar.php"; ?></div>
-        
     </div>
 </div>
 <?php include __DIR__ . "/part/scripts.php"; ?>
