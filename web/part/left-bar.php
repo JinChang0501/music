@@ -12,6 +12,16 @@ if (!isset($pageName))
     font-size: larger;
     font-weight: 900;
     background-color: #7B7B7B;
+    transform: scale(1.3);
+  }
+
+  .li-hover {
+    transition: font-size 0.3s ease;
+    overflow: hidden;
+  }
+
+  .accordion-button {
+    overflow: hidden;
   }
 
   .logo {
@@ -82,15 +92,14 @@ if (!isset($pageName))
           <div class="accordion-item">
             <h2 class="accordion-header" id="heading4">
               <button class="accordion-button collapsed fs-5 fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
-                XX資料管理
+                訂票資料管理
               </button>
             </h2>
             <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="heading4" data-bs-parent="#accordionExample">
               <div class="accordion-body p-0"> <!-- p-0 把li上下左右的空間清掉不要動-->
-                <li class="li-hover"><a class="dropdown-item py-3 border  " href="#">增加會員資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">刪除會員資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">編輯會員資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">查詢會員資料</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border  " href="#">票務系統</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">座位系統</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">支付系統</a></li>
               </div>
             </div>
           </div>
