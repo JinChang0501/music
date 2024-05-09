@@ -21,30 +21,30 @@ if (!isset($_POST['id'])) {
 # filter_var('bob@example.com', FILTER_VALIDATE_EMAIL): 檢查 email 格式
 
 
-$birthday = strtotime($_POST['birthday']);
-if ($birthday === false) {
-  $birthday = null;
-} else {
-  $birthday = date('Y-m-d', $birthday);
-}
-
-
-
 $sql = "UPDATE `activities` SET 
-`name`=?,
-`email`=?,
-`mobile`=?,
-`birthday`=?,
-`address`=?
+`activity_class`=?,
+`activity_name`=?,
+`a_date`=?,
+`a_time`=?,
+`location`=?
+`descriptions`=?,
+`organizer`=?,
+`artist_id`=?,
+`picture`=?
 WHERE sid=?";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
-  $_POST['name'],
-  $_POST['email'],
+  $_POST['activity_class'],
+  $_POST['activity_name'],
   $_POST['mobile'],
-  $birthday,
-  $_POST['address'],
+  $_POST['a_date'],
+  $_POST['a_time'],
+  $_POST['location'],
+  $_POST['descriptions'],
+  $_POST['organizer'],
+  $_POST['artist_id'],
+  $_POST['picture'],
   $_POST['sid'],
 ]);
 
