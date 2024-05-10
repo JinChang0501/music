@@ -38,14 +38,14 @@ if (!isset($pageName))
             </h2>
             <div id="collapse1" class="accordion-collapse collapse show" aria-labelledby="heading1" data-bs-parent="#accordionExample">
               <div class="accordion-body p-0"> <!-- p-0 把li上下左右的空間清掉不要動-->
-                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'add-member' ? 'active' : '' ?> " href="add-members.php">增加會員資料</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'add-member' ? 'active' : '' ?> " href="members-add.php">增加會員資料</a></li>
 
                 <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'delete-member' ? 'active' : '' ?> " href="delete.php">刪除會員資料</a></li>
 
-                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'edit-members' ? 'active' : '' ?>" href="edit-members.php">編輯會員資料</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'edit-members' ? 'active' : '' ?>" href="members-edit.php">編輯會員資料</a></li>
                 <!--  onclick="saveRedirectPage()" -->
 
-                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'list-members' ? 'active' : '' ?>" href="list-members.php">查詢會員資料</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'list-members' ? 'active' : '' ?>" href="members-list.php">查詢會員資料</a></li>
               </div>
             </div>
           </div>
@@ -60,10 +60,10 @@ if (!isset($pageName))
             </h2>
             <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2" data-bs-parent="#accordionExample">
               <div class="accordion-body p-0"> <!-- p-0 把li上下左右的空間清掉不要動-->
-                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'add-employees' ? 'active' : '' ?> " href="add-employees.php">增加員工資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'delete-employees' ? 'active' : '' ?> " href="delete-employees.php">刪除員工資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'edit-employees' ? 'active' : '' ?> " href="edit-employees.php">編輯員工資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'list-employees' ? 'active' : '' ?> " href="list-employees.php">查詢員工資料</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'add-employees' ? 'active' : '' ?> " href="employees-add.php">增加員工資料</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'delete-employees' ? 'active' : '' ?> " href="employees-delete.php">刪除員工資料</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'edit-employees' ? 'active' : '' ?> " href="employees-edit.php">編輯員工資料</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'list-employees' ? 'active' : '' ?> " href="employees-list.php">查詢員工資料</a></li>
               </div>
             </div>
           </div>
