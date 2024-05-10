@@ -9,18 +9,9 @@ if (!isset($pageName))
   } */
   .li-hover a:hover {
     color: white;
+    font-size: larger;
     font-weight: 900;
     background-color: #7B7B7B;
-    transform: scale(1.3);
-  }
-
-  .li-hover {
-    transition: font-size 0.3s ease;
-    overflow: hidden;
-  }
-
-  .accordion-button {
-    overflow: hidden;
   }
 
   .logo {
@@ -34,7 +25,8 @@ if (!isset($pageName))
 
 <div class="container-fluid p-0">
   <div class="row m-0">
-    <div class="col-12 bg-primary border p-0">
+    <div class="col-12 bg-primary border p-0 ">
+
       <ul class="nav flex-column text-center">
         <!-- 1 -->
         <div class="accordion" id="accordionExample">
@@ -46,10 +38,14 @@ if (!isset($pageName))
             </h2>
             <div id="collapse1" class="accordion-collapse collapse show" aria-labelledby="heading1" data-bs-parent="#accordionExample">
               <div class="accordion-body p-0"> <!-- p-0 把li上下左右的空間清掉不要動-->
-                <li class="li-hover"><a class="dropdown-item py-3 border  " href="#">增加會員資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">刪除會員資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">編輯會員資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'list' ? 'active' : '' ?>" href="list.php">查詢會員資料</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'add-member' ? 'active' : '' ?> " href="add-members.php">增加會員資料</a></li>
+
+                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'delete-member' ? 'active' : '' ?> " href="delete.php">刪除會員資料</a></li>
+
+                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'edit-members' ? 'active' : '' ?>" href="edit-members.php">編輯會員資料</a></li>
+                <!--  onclick="saveRedirectPage()" -->
+
+                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'list-members' ? 'active' : '' ?>" href="list-members.php">查詢會員資料</a></li>
               </div>
             </div>
           </div>
@@ -64,10 +60,10 @@ if (!isset($pageName))
             </h2>
             <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2" data-bs-parent="#accordionExample">
               <div class="accordion-body p-0"> <!-- p-0 把li上下左右的空間清掉不要動-->
-                <li class="li-hover"><a class="dropdown-item py-3 border  " href="#">增加會員資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">刪除會員資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">編輯會員資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">查詢會員資料</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'add-employees' ? 'active' : '' ?> " href="add-employees.php">增加員工資料</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'delete-employees' ? 'active' : '' ?> " href="delete-employees.php">刪除員工資料</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'edit-employees' ? 'active' : '' ?> " href="edit-employees.php">編輯員工資料</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'list-employees' ? 'active' : '' ?> " href="list-employees.php">查詢員工資料</a></li>
               </div>
             </div>
           </div>
@@ -91,14 +87,15 @@ if (!isset($pageName))
           <div class="accordion-item">
             <h2 class="accordion-header" id="heading4">
               <button class="accordion-button collapsed fs-5 fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
-                訂票資料管理
+                XX資料管理
               </button>
             </h2>
             <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="heading4" data-bs-parent="#accordionExample">
               <div class="accordion-body p-0"> <!-- p-0 把li上下左右的空間清掉不要動-->
-              <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'ticket' ? 'active' : '' ?>" href="ticket.php">票務系統</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">座位系統</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">支付系統</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border  " href="#">增加會員資料</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">刪除會員資料</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">編輯會員資料</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">查詢會員資料</a></li>
               </div>
             </div>
           </div>
