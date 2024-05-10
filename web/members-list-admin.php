@@ -5,9 +5,9 @@ if (!isset($_SESSION)) {
 
 
 $title = '通訊錄列表';
-$pageName = 'list';
+$pageName = 'members-list';
 
-require __DIR__ . './../config/pdo-connect.php';
+require __DIR__ . '/../config/pdo-connect.php';
 
 $per_page = 20; #每頁有幾筆
 
@@ -19,7 +19,7 @@ if ($page < 1) {
 }
 
 #總筆數
-$t_sql = "SELECT COUNT(id) FROM members";
+$t_sql = "SELECT COUNT(id) FROM `members`";
 
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 
@@ -39,7 +39,7 @@ if ($page > $totalPages) {
 
 
 $sql = sprintf(
-  "SELECT * FROM `members` order by id DESC LIMIT %s,%s",
+  "SELECT * FROM `members` order by id asc LIMIT %s,%s",
   ($page - 1) * $per_page,
   $per_page
 );

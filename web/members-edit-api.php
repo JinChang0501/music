@@ -25,7 +25,7 @@ if ($birthday === false) {
 }
 
 
-$sql = "UPDATE `address_book` SET `name`=?,`email`=?,`mobile`=?,`birthday`=?,`address`=? WHERE sid=?";
+$sql = "UPDATE `members` SET `name`=?,`email`=?,`mobile`=?,`birthday`=?,`address`=? WHERE id=?";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
