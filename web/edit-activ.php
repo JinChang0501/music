@@ -34,7 +34,6 @@ if (empty($row)) {
   <div class="row d-flex justify-content-center my-5">
     <div class="col-6">
       <div class="card">
-        <!-- 待修改 -->
         <div class="card-body">
           <h5 class="card-title">編輯資料</h5>
           <form name="form1" onsubmit="sendData(event)">
