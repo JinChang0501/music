@@ -19,7 +19,7 @@ if ($page < 1) {
 }
 
 #總筆數
-$t_sql = "SELECT COUNT(id) FROM members";
+$t_sql = "SELECT COUNT(id) FROM employees";
 
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 
@@ -39,7 +39,7 @@ if ($page > $totalPages) {
 
 
 $sql = sprintf(
-  "SELECT * FROM members order by id DESC LIMIT %s,%s",
+  "SELECT * FROM employees order by id DESC LIMIT %s,%s",
   ($page - 1) * $per_page,
   $per_page
 );

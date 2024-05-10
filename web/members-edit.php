@@ -166,7 +166,7 @@ if (empty($row)) {
     // 有通過檢查, 才要送表單
     if (isPass) {
       const fd = new FormData(document.form1); // 沒有外觀的表單物件
-      fetch('edit-api.php', {
+      fetch('members-edit-api.php', {
           method: 'POST',
           body: fd, // Content-Type: multipart/form-data
         }).then(r => r.json())

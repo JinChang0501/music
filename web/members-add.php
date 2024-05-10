@@ -6,8 +6,8 @@ if (!isset($_SESSION)) {
 }
 
 
-$title = '新增員工列表';
-$pageName = 'add-employees';
+$title = '新增會員列表';
+$pageName = 'add-members';
 ?>
 
 
@@ -22,32 +22,34 @@ $pageName = 'add-employees';
 </style>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-2"><?php include __DIR__ . "/part/left-bar.php"; ?></div>
+    <div class="col-2 p-0"><?php include __DIR__ . "/part/left-bar.php"; ?></div>
     <div class="col-10">
-      <div class="card mt-5" style="width: 18rem;">
+      <div class="card mt-3" style="width: 18rem;">
         <div class="card-body">
-          <h5 class="card-title">新增員工資料</h5>
+          <h5 class="card-title">新增會員資料</h5>
           <form name="form1" onsubmit="sendData(event)">
             <div class="mb-3">
-              <label for="fname" class="form-label">名字(First_name)</label>
-              <input type="text" class="form-control" id="fname" name="first_name">
+              <label for="first_name" class="form-label">名字(First_name)</label>
+              <input type="text" class="form-control" id="first_name" name="first_name">
               <div class="form-text"></div>
             </div>
 
             <div class="mb-3">
-              <label for="lname" class="form-label">姓氏(Last_name)</label>
-              <input type="text" class="form-control" id="lname" name="last_name">
+              <label for="last_name" class="form-label">姓氏(Last_name)</label>
+              <input type="text" class="form-control" id="last_name" name="last_name">
               <div class="form-text"></div>
             </div>
 
             <div class="mb-3">
               <label for="email" class="form-label">Email</label>
               <input type="email" class="form-control" id="email" name="email">
+              <div class="form-text"></div>
             </div>
 
             <div class="mb-3">
               <label for="password" class="form-label">Password</label>
               <input type="password" class="form-control" id="password" name="passwords">
+              <div class="form-text"></div>
             </div>
 
             <div class="mb-3">
@@ -58,7 +60,19 @@ $pageName = 'add-employees';
 
             <div class="mb-3">
               <label for="mobile" class="form-label">電話號碼</label>
-              <input type="text" class="form-control" id="mobile" name="phone_number">
+              <input type="text" class="form-control" id="mobile" name="phone_number" pattern="[0]{1}[9]{1}[0-9]{8}" maxlength="10">
+              <div class="form-text"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="birthday" class="form-label">生日</label>
+              <input type="date" class="form-control" id="birthday" name="birthday">
+              <div class="form-text"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="address" class="form-label">地址</label>
+              <textarea id="address" cols="30" rows="3" name="address"></textarea>
               <div class="form-text"></div>
             </div>
 
@@ -85,7 +99,7 @@ $pageName = 'add-employees';
       </div>
       <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary" onclick="location.href='list.php'">到列表頁</button>
+        <button type="button" class="btn btn-primary" onclick="location.href='list-members.php'">到列表頁</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續新增</button>
       </div>
     </div>
@@ -115,14 +129,21 @@ $pageName = 'add-employees';
     last_nameField.nextElementSibling.innerText = '';
     emailField.style.border = '1px solid #CCCCCC';
     emailField.nextElementSibling.innerText = '';
-    // TODO: 欄位資料檢查
 
+    // TODO: 欄位資料檢查
     let isPass = true; // 表單有沒有通過檢查
     if (first_nameField.value.length < 2) {
       isPass = false;
       first_nameField.style.border = '1px solid red';
       first_nameField.nextElementSibling.innerText = '請填寫正確的姓名';
     }
+
+    if (last_nameField.value.length < 0) {
+      isPass = false;
+      last_nameField.style.border = '1px solid red';
+      last_nameField.nextElementSibling.innerText = '請填寫正確的姓名';
+    }
+
     if (!validateEmail(emailField.value)) {
       isPass = false;
       emailField.style.border = '1px solid red';
@@ -131,7 +152,7 @@ $pageName = 'add-employees';
     // 有通過檢查, 才要送表單
     if (isPass) {
       const fd = new FormData(document.form1); // 沒有外觀的表單物件
-      fetch('add-employees-api.php', {
+      fetch('members-add-api.php', {
           method: 'POST',
           body: fd, // Content-Type: multipart/form-data
         }).then(r => r.json())
@@ -145,8 +166,6 @@ $pageName = 'add-employees';
         })
         .catch(ex => console.log(ex))
     }
-
-
   };
   const myModal = new bootstrap.Modal('#staticBackdrop')
 </script>
