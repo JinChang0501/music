@@ -7,68 +7,97 @@ if (isset($_SESSION['admin'])) {
   exit;
 }
 
-
 $title = '登入';
 $pageName = 'login';
 ?>
 
-
 <?php include __DIR__ . "/part/html-header.php"; ?>
-<?php include __DIR__ . "/part/navbar-head.php"; ?>
-
 
 <style>
-  form .mb-3 .form-text {
-    color: red;
-    font-weight: 800;
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #f5f5f5;
+  }
+
+  .form-signin {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+  }
+
+  .form-signin .checkbox {
+    font-weight: 400;
+  }
+
+  .form-signin .form-floating:focus-within {
+    z-index: 2;
+  }
+
+  .form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+
+  .bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+
+  @media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+  }
+
+  .bxl-apple {
+    font-size: 80px;
+    margin-bottom: 30px;
   }
 </style>
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-2 p-0">
-      <?php include __DIR__ . "/part/left-bar.php"; ?>
+
+<main class="form-signin">
+  <form name="form1" onsubmit="sendData(event)">
+    <div><i class='bx bxl-apple'></i></div>
+    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+    <div class="mb-3 form-floating">
+      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email">
+      <label for="floatingInput">Email address</label>
     </div>
-    <div class="col-10">
-      <div class="card mt-5" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title">帳號登入</h5>
-          <form name="form1" onsubmit="sendData(event)">
-            <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
-              <input type="text" class="form-control" id="email" name="email">
-            </div>
-            <div class="mb-3">
-              <label for="password" class="form-label">密碼</label>
-              <input type="password" class="form-control" id="password" name="passwords">
-            </div>
-            <button type="submit" class="btn btn-primary">登入</button>
-          </form>
-        </div>
-      </div>
+    <div class="mb-3 form-floating">
+      <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="passwords">
+      <label for="floatingPassword">Password</label>
     </div>
-  </div>
-</div>
-<!-- Modal Start-->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">登入失敗</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="alert alert-danger" role="alert">
-          帳號或密碼錯誤!
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">重新登入</button>
-      </div>
+    <div class="d-flex">
+      <button class="me-3 w-50 btn btn-md btn-primary" type="submit">Sign in</button>
+      <a class="me-3 w-50 btn btn-md btn-primary" type="submit" href="index_R3.php">Home</a>
+      <a class="w-50 btn btn-md btn-primary" type="submit" href="quick-login.php">Quick</a>
     </div>
-  </div>
-</div>
-<!-- Modal End-->
+    <p class="mt-5 mb-3 text-muted">&copy; music</p>
+  </form>
+</main>
 
 <?php include __DIR__ . "/part/scripts.php"; ?>
 <script>
@@ -101,9 +130,9 @@ $pageName = 'login';
     if (isPass) {
       const fd = new FormData(document.form1); // 沒有外觀的表單物件
       fetch('login-api.php', {
-          method: 'POST',
-          body: fd, // Content-Type: multipart/form-data
-        }).then(r => r.json())
+        method: 'POST',
+        body: fd, // Content-Type: multipart/form-data
+      }).then(r => r.json())
         .then(data => {
           console.log(data);
           if (data.success) {
@@ -117,4 +146,3 @@ $pageName = 'login';
   };
   const myModal = new bootstrap.Modal('#staticBackdrop')
 </script>
-<?php include __DIR__ . "/part/html-footer.php"; ?>

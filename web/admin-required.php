@@ -5,8 +5,6 @@ if (!isset($_SESSION)) {
 }
 
 if (!isset($_SESSION['admin'])) {
-  //待串聯
-  // header('Location: login.php');
-  header('Location: index_R3.php');
+  header('Location: login.php');
   exit;
 }

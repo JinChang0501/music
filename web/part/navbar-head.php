@@ -3,51 +3,73 @@ if (!isset($pageName))
   $pageName = '';
 ?>
 <style>
-  /* .container-85 {
-    width: 100%;
-    margin: auto;
-  } */
-  /* .li-hover a:hover {
-    color: white;
-    font-size: larger;
-    font-weight: 900;
-    background-color: #7B7B7B;
-  } */
+  .bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
 
-  .logo {
-    width: 200px;
-    height: 70px;
-    background-color: aliceblue;
+  @media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+  }
+
+  .bxl-apple {
+    font-size: 60px;
+  }
+
+  * {
+    list-style: none;
+  }
+
+  .white {
+    color: white;
+  }
+
+  .white:hover {
+    color: white;
   }
 </style>
 
+<header class="p-3 bg-dark text-white">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <a href="index_R3.php" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+        <i class='bx bxl-apple'></i>
+      </a>
 
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
+        <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
+        <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
+        <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
+        <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+      </ul>
 
-<div class="container-fluid p-0">
-  <div class="row m-0">
-    <div class="col-2 bg-primary py-3">
-      <div class="w-100 logo mx-auto">
-        <img src="" alt="">
+      <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+        <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+      </form>
+
+      <div class="text-end">
+        <?php if (isset($_SESSION['admin'])): ?>
+          <div class="d-flex">
+            <div style="width: 120px; height: 38px" class="d-flex justify-content-center align-items-center">
+              <a class="white nav-link">Dear&nbsp;&nbsp;<?= $_SESSION['admin']['first_name'] ?></a>
+            </div>
+            <div>
+              <a class="btn btn-primary" href="logout.php">登出</a>
+            </div>
+          </div>
+        <?php else: ?>
+          <a type="button" class="btn btn-outline-light me-2 <?= $pageName == 'login' ? 'active' : '' ?>"
+            href="login.php">Login</a>
+          <a type="button" class="btn btn-warning <?= $pageName == 'register' ? 'active' : '' ?>"
+            href="register.php">Sign-up</a>
+        <?php endif ?>
       </div>
     </div>
-    <div class="col-10 bg-secondary">
-      <ul class="list-unstyled d-flex justify-content-end h-100 m-0 align-items-center">
-        <?php if (isset($_SESSION['admin'])) : ?>
-          <li class="nav-item me-3">
-            <a class="nav-link"><?= $_SESSION['admin']['first_name'] ?></a>
-          </li>
-          <li class="nav-item me-3">
-            <a class="nav-link" href="logout.php">登出</a>
-          </li>
-        <?php else : ?>
-          <li class="nav-item me-3">
-            <a class="nav-link <?= $pageName == 'login' ? 'active' : '' ?>" href="login.php">登入</a>
-          </li>
-          <li class="nav-item me-3">
-            <a class="nav-link <?= $pageName == 'register' ? 'active' : '' ?>" href="register.php">註冊</a>
-          </li>
-        <?php endif ?>
-      </ul>
-    </div>
   </div>
-</div>
+</header>

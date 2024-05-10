@@ -96,7 +96,7 @@ if (!isset($pageName))
             </h2>
             <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="heading4" data-bs-parent="#accordionExample">
               <div class="accordion-body p-0"> <!-- p-0 把li上下左右的空間清掉不要動-->
-                <li class="li-hover"><a class="dropdown-item py-3 border  " href="#">票務系統</a></li>
+              <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'ticket' ? 'active' : '' ?>" href="ticket.php">票務系統</a></li>
                 <li class="li-hover"><a class="dropdown-item py-3 border" href="#">座位系統</a></li>
                 <li class="li-hover"><a class="dropdown-item py-3 border" href="#">支付系統</a></li>
               </div>
