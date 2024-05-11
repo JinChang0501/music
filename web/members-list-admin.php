@@ -108,6 +108,9 @@ include __DIR__ . "/part/navbar-head.php";
       <table class="table table-bordered table-striped">
         <thead>
           <tr>
+            <th scope="col" style="text-align: center;">
+              <input class="form-check-input" type="checkbox" value="" id="checkall"> 全選
+            </th>
             <th scope="col" style="text-align: center;">#</th>
             <th scope="col">first_name</th>
             <th scope="col">last_name</th>
@@ -120,6 +123,9 @@ include __DIR__ . "/part/navbar-head.php";
         <tbody>
           <?php foreach ($rows as $r) : ?>
             <tr>
+              <td scope="col" style="text-align: center;">
+                <input class="checkboxes form-check-input" type="checkbox" value="" id="flexCheckDefault">
+              </td>
               <td style="text-align: center;"><?= $r['id'] ?></td>
               <td style="text-align: center;"><?= $r['first_name'] ?></td>
               <td style="text-align: center;"><?= $r['last_name'] ?></td>
@@ -142,6 +148,30 @@ include __DIR__ . "/part/navbar-head.php";
       location.href = `delete.php?id=${id}`;
     }
   }
+
+  // const checkall = document.getElementById("checkall");
+  // const checkboxes = document.getElementsByClassName("checkboxes");
+  // checkall.addEventListener('click', function() {
+
+  //   if (checkall.checked === true) {
+  //     checkboxes.checked = true;
+  //   }
+  // });
+
+  const checkall = document.getElementById("checkall");
+  const checkboxes = document.getElementsByClassName("checkboxes");
+
+  checkall.addEventListener('change', function() {
+    if (checkall.checked === true) {
+      for (let i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = true;
+      }
+    } else {
+      for (let i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = false;
+      }
+    }
+  });
 </script>
 
 <?php include __DIR__ . "/part/html-footer.php" ?>
