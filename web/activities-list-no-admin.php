@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../../config/pdo-connect.php';
+require __DIR__ . '/../config/pdo-connect.php';
 $title = '活動列表';
 $pageName = 'list-activities';
 
@@ -40,14 +40,14 @@ if ($totalRows) {
 
 ?>
 
-<?php include __DIR__ . '/../part/html-header.php' ?>
-<?php include __DIR__ . '/../part/navbar-head.php' ?>
+<?php include __DIR__ . '/part/html-header.php' ?>
+<?php include __DIR__ . '/part/navbar-head.php' ?>
 
 <!-- 列表 -->
 <div class="container-fluid">
   <div class="row">
     <div class="col-2 p-0">
-      <?php include __DIR__ . "/../part/left-bar.php"; ?>
+      <?php include __DIR__ . "/part/left-bar.php"; ?>
     </div>
     <div class="col-10">
       <!-- 頁碼 -->
@@ -65,12 +65,13 @@ if ($totalRows) {
                   <i class="fa-solid fa-angle-left"></i>
                 </a>
               </li>
-              <?php for ($i = $page - 5; $i <= $page + 5; $i++):
-                if ($i >= 1 and $i <= $totalPages): ?>
+              <?php for ($i = $page - 5; $i <= $page + 5; $i++) :
+                if ($i >= 1 and $i <= $totalPages) : ?>
                   <li class="page-item <?= $i == $page ? 'active' : '' ?>">
                     <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
                   </li>
-                <?php endif; endfor; ?>
+              <?php endif;
+              endfor; ?>
               <li class="page-item">
                 <a class="page-link" href="?page=<?= $page + 1 ?>">
                   <i class="fa-solid fa-angle-right"></i>
@@ -101,7 +102,7 @@ if ($totalRows) {
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($rows as $r): ?>
+          <?php foreach ($rows as $r) : ?>
             <tr>
               <td><?= $r['id'] ?></td>
               <td><?= $r['activity_class'] ?></td>
@@ -113,7 +114,7 @@ if ($totalRows) {
               <td><?= $r['organizer'] ?></td>
               <td><?= $r['artist_id'] ?></td>
               <td><?= $r['picture'] ?></td>
-              <td><a href="edit.php?id=<?= $r['id'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td>
+              <td><a href="activities-edit.php?id=<?= $r['id'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td>
             </tr>
           <?php endforeach; ?>
         </tbody>
@@ -132,20 +133,20 @@ if ($totalRows) {
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">保留</button>
           <!-- 這裡有問題 -->
-          <button type="button" class="btn btn-danger" herf="delete.php?id=<?php $r['id'] ?>">確認刪除</button>
+          <button type="button" class="btn btn-danger" herf="activities-delete.php?id=<?php $r['id'] ?>">確認刪除</button>
         </div>
       </div>
     </div>
   </div>
 
-  <?php include __DIR__ . '/../part/scripts.php' ?>
+  <?php include __DIR__ . '/part/scripts.php' ?>
   <script>
     // const delModal = new bootstrap.Modal('#deleteModal');
     // delModal.show();
     const deleteOne = (id) => {
       if (confirm(`是否要刪除編號為 ${id} 的資料？`)) {
-        location.herf = `delete.php?id=${id}`;
+        location.herf = `activities-delete.php?id=${id}`;
       }
     }
   </script>
-  <?php include __DIR__ . '/../part/html-footer.php' ?>
+  <?php include __DIR__ . '/part/html-footer.php' ?>

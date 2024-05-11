@@ -1,12 +1,12 @@
 <?php
-require __DIR__ . '/../admin-required.php';
-require __DIR__ . '/../../config/pdo-connect.php';
+require __DIR__ . '/admin-required.php';
+require __DIR__ . '/../config/pdo-connect.php';
 $title = "修改活動列表";
 
 
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if ($id < 1) {
-  header('Location: list-activ.php');
+  header('Location: activities-list.php');
   exit;
 }
 
@@ -14,7 +14,7 @@ $sql = "SELECT * FROM activities WHERE id={$id}";
 
 $row = $pdo->query($sql)->fetch();
 if (empty($row)) {
-  header('Location: list-activ.php');
+  header('Location: activities-list.php');
   exit;
 }
 
@@ -22,8 +22,8 @@ if (empty($row)) {
 
 
 ?>
-<?php include __DIR__ . '/../part/html-header.php' ?>
-<?php include __DIR__ . '/../part/navbar-head.php' ?>
+<?php include __DIR__ . '/part/html-header.php' ?>
+<?php include __DIR__ . '/part/navbar-head.php' ?>
 <style>
   form .mb-3 .form-text {
     color: red;
@@ -74,8 +74,7 @@ if (empty($row)) {
 
             <div class="mb-3">
               <label for="descriptions" class="form-label">活動內容</label>
-              <textarea class="form-control" id="descriptions" name="descriptions" cols="30"
-                rows="3"><?= $row['descriptions'] ?></textarea>
+              <textarea class="form-control" id="descriptions" name="descriptions" cols="30" rows="3"><?= $row['descriptions'] ?></textarea>
               <div class="form-text"></div>
             </div>
 
@@ -105,8 +104,7 @@ if (empty($row)) {
   </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -120,7 +118,7 @@ if (empty($row)) {
       </div>
       <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary" onclick="location.href='list-activ.php'">到列表頁</button>
+        <button type="button" class="btn btn-primary" onclick="location.href='activities-list.php'">到列表頁</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續編輯</button>
       </div>
     </div>
@@ -128,8 +126,7 @@ if (empty($row)) {
 </div>
 
 <!-- Modal2 -->
-<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -143,14 +140,14 @@ if (empty($row)) {
       </div>
       <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary" onclick="location.href='list-activ.php'">到列表頁</button>
+        <button type="button" class="btn btn-primary" onclick="location.href='activities-list.php'">到列表頁</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續編輯</button>
       </div>
     </div>
   </div>
 </div>
 
-<?php include __DIR__ . '/../part/scripts.php' ?>
+<?php include __DIR__ . '/part/scripts.php' ?>
 <script>
   const nameField = document.form1.name;
   const emailField = document.form1.email;
@@ -170,7 +167,7 @@ if (empty($row)) {
     emailField.nextElementSibling.innerText = '';
     // TODO: 欄位資料檢查
 
-    let isPass = true;  // 表單有沒有通過檢查
+    let isPass = true; // 表單有沒有通過檢查
     // if (nameField.value.length < 2) {
     //   isPass = false;
     //   nameField.style.border = '1px solid red';
@@ -188,10 +185,10 @@ if (empty($row)) {
     if (isPass) {
       const fd = new FormData(document.form1); // 沒有外觀的表單物件
 
-      fetch('edit-activ-api.php', {
-        method: 'POST',
-        body: fd, // Content-Type: multipart/form-data
-      }).then(r => r.json())
+      fetch('activities-edit-api.php', {
+          method: 'POST',
+          body: fd, // Content-Type: multipart/form-data
+        }).then(r => r.json())
         .then(data => {
           console.log(data);
           if (data.success) {
@@ -206,6 +203,5 @@ if (empty($row)) {
 
   const myModal = new bootstrap.Modal('#staticBackdrop');
   const myModal2 = new bootstrap.Modal('#staticBackdrop2');
-
 </script>
-<?php include __DIR__ . '/../part/html-footer.php' ?>
+<?php include __DIR__ . '/part/html-footer.php' ?>
