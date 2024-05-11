@@ -4,8 +4,8 @@ if (!isset($_SESSION)) {
 }
 
 
-$title = '通訊錄列表';
-$pageName = 'list';
+$title = '員工列表(已登入)';
+$pageName = 'employees-list';
 
 require __DIR__ . './../config/pdo-connect.php';
 
@@ -19,7 +19,7 @@ if ($page < 1) {
 }
 
 #總筆數
-$t_sql = "SELECT COUNT(id) FROM members";
+$t_sql = "SELECT COUNT(id) FROM employees";
 
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 
@@ -39,7 +39,7 @@ if ($page > $totalPages) {
 
 
 $sql = sprintf(
-  "SELECT * FROM `employees` order by id ASC LIMIT %s,%s",
+  "SELECT * FROM `employees` order by id desc LIMIT %s,%s",
   ($page - 1) * $per_page,
   $per_page
 );
@@ -109,12 +109,13 @@ include __DIR__ . "/part/navbar-head.php";
         <thead>
           <tr>
             <th scope="col" style="text-align: center;">#</th>
-            <th scope="col">first_name</th>
-            <th scope="col">last_name</th>
+            <th scope="col">First_name</th>
+            <th scope="col">Last_name</th>
             <th scope="col">Email</th>
-
-            <th scope="col">phone_number</th>
-
+            <th scope="col">Passwords</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Phone_Number</th>
+            <th scope="col">Created_at</th>
           </tr>
         </thead>
         <tbody>
@@ -124,9 +125,10 @@ include __DIR__ . "/part/navbar-head.php";
               <td style="text-align: center;"><?= $r['first_name'] ?></td>
               <td style="text-align: center;"><?= $r['last_name'] ?></td>
               <td style="text-align: center;"><?= $r['email'] ?></td>
-
+              <td style="text-align: center;"><?= $r['passwords'] ?></td>
+              <td style="text-align: center;"><?= $r['gender'] ?></td>
               <td style="text-align: center;"><?= $r['phone_number'] ?></td>
-
+              <td style="text-align: center;"><?= $r['created_at'] ?></td>
             </tr>
           <?php endforeach; ?>
         </tbody>
@@ -139,7 +141,7 @@ include __DIR__ . "/part/navbar-head.php";
 <script>
   const deleteOne = (id) => {
     if (confirm(`確定要刪除${id}的資料嗎?`)) {
-      location.href = `delete.php?id=${id}`;
+      location.href = `employees-delete.php?id=${id}`;
     }
   }
 </script>

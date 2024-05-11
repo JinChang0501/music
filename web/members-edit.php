@@ -3,19 +3,19 @@ require __DIR__ . '/admin-required.php';
 require __DIR__ . '/../config/pdo-connect.php';
 
 $title = '修改會員通訊錄資料';
-$pageName = 'edit-members';
+$pageName = 'members-edit';
 
-$sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
+$sid = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if ($sid < 1) {
-  header('Location: list.php');
+  header('Location: members-edit-list.php');
   exit;
 }
 
-$sql = "Select * FROM address_book WHERE sid=$sid";
+$sql = "Select * FROM `members` WHERE id=$id";
 $row = $pdo->query($sql)->fetch();
 
 if (empty($row)) {
-  header('Location: list.php');
+  header('Location: members-list.php');
   exit;
 }
 
@@ -99,7 +99,7 @@ if (empty($row)) {
       </div>
       <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary" onclick="location.href='list.php'">到列表頁</button>
+        <button type="button" class="btn btn-primary" onclick="location.href='members-list.php'">到列表頁</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續更新</button>
       </div>
     </div>
@@ -122,7 +122,7 @@ if (empty($row)) {
       </div>
       <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary" onclick="location.href='list.php'">到列表頁</button>
+        <button type="button" class="btn btn-primary" onclick="location.href='members-list.php'">到列表頁</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續更新</button>
       </div>
     </div>

@@ -4,8 +4,8 @@ if (!isset($_SESSION)) {
 }
 
 
-$title = '通訊錄列表';
-$pageName = 'list';
+$title = '員工列表(未登入)';
+$pageName = 'employees-list';
 
 require __DIR__ . './../config/pdo-connect.php';
 
@@ -114,7 +114,7 @@ include __DIR__ . "/part/navbar-head.php";
             <th scope="col">Email</th>
             <th scope="col">gender</th>
             <th scope="col">phone_number</th>
-            <th scope="col">address</th>
+
           </tr>
         </thead>
         <tbody>
@@ -126,46 +126,13 @@ include __DIR__ . "/part/navbar-head.php";
               <td style="text-align: center;"><?= $r['email'] ?></td>
               <td style="text-align: center;"><?= $r['gender'] ?></td>
               <td style="text-align: center;"><?= $r['phone_number'] ?></td>
-              <td><?= htmlentities($r['address']) ?></td>
+
             </tr>
           <?php endforeach; ?>
         </tbody>
       </table>
-
     </div>
   </div>
-
-  <!-- <div class="row">
-    <div class="col-2"></div>
-    <div class="col-10">
-      <table class="table table-bordered table-striped">
-        <thead>
-          <tr>
-            <th scope="col" style="text-align: center;">#</th>
-            <th scope="col">first_name</th>
-            <th scope="col">last_name</th>
-            <th scope="col">Email</th>
-            <th scope="col">gender</th>
-            <th scope="col">phone_number</th>
-            <th scope="col">address</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($rows as $r) : ?>
-            <tr>
-              <td style="text-align: center;"><?= $r['id'] ?></td>
-              <td style="text-align: center;"><?= $r['first_name'] ?></td>
-              <td style="text-align: center;"><?= $r['last_name'] ?></td>
-              <td style="text-align: center;"><?= $r['email'] ?></td>
-              <td style="text-align: center;"><?= $r['gender'] ?></td>
-              <td style="text-align: center;"><?= $r['phone_number'] ?></td>
-              <td><?= htmlentities($r['address']) ?></td>
-            </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
-    </div>
-  </div> -->
 </div>
 
 <?php include __DIR__ . "/part/scripts.php" ?>

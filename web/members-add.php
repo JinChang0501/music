@@ -7,7 +7,7 @@ if (!isset($_SESSION)) {
 
 
 $title = '新增會員列表';
-$pageName = 'add-members';
+$pageName = 'members-add';
 ?>
 
 
@@ -99,7 +99,7 @@ $pageName = 'add-members';
       </div>
       <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary" onclick="location.href='list-members.php'">到列表頁</button>
+        <button type="button" class="btn btn-primary" onclick="location.href='members-list.php'">到列表頁</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續新增</button>
       </div>
     </div>
