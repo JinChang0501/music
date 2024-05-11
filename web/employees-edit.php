@@ -3,11 +3,11 @@ require __DIR__ . '/admin-required.php';
 require __DIR__ . '/../config/pdo-connect.php';
 
 $title = '修改員工通訊錄資料';
-$pageName = 'edit-employees';
+$pageName = 'employees-edit';
 
 $sid = isset($_GET['id']) ? intval($_GET['id']) : 0;
-if ($sid < 1) {
-  header('Location: list.php');
+if ($id < 1) {
+  header('Location: employees-edit-list.php');
   exit;
 }
 
@@ -15,7 +15,7 @@ $sql = "Select * FROM `employees` WHERE id=$id";
 $row = $pdo->query($sql)->fetch();
 
 if (empty($row)) {
-  header('Location: list.php');
+  header('Location: employees-list.php');
   exit;
 }
 
@@ -60,22 +60,23 @@ if (empty($row)) {
         </div>
 
         <div class="mb-3">
+          <label for="passwords" class="form-label">Password</label>
+          <input type="password" class="form-control" id="passwords" name="passwords" value="<?= $row['passwords'] ?>">
+          <div class="form-text"></div>
+        </div>
+
+        <div class="mb-3">
+          <label for="gender" class="form-label">性別</label>
+          <input type="text" class="form-control" id="gender" name="gender" value="<?= $row['gender'] ?>">
+          <div class="form-text"></div>
+        </div>
+
+        <div class="mb-3">
           <label for="mobile" class="form-label">電話號碼</label>
           <input type="text" class="form-control" id="mobile" name="mobile" value="<?= $row['mobile'] ?>">
           <div class="form-text"></div>
         </div>
 
-        <div class="mb-3">
-          <label for="birthday" class="form-label">生日</label>
-          <input type="date" class="form-control" id="birthday" name="birthday" value="<?= $row['birthday'] ?>">
-          <div class="form-text"></div>
-        </div>
-
-        <div class="mb-3">
-          <label for="address" class="form-label">地址</label>
-          <textarea name="address" id="address" cols="30" rows="3"><?= $row['address'] ?></textarea>
-          <div class="form-text"></div>
-        </div>
 
         <button type="submit" class="btn btn-primary">修改
         </button>
@@ -133,7 +134,8 @@ if (empty($row)) {
 
 <?php include __DIR__ . "/part/scripts.php"; ?>
 <script>
-  const nameField = document.form1.name;
+  const first_nameField = document.form1.first_name;
+  const last_nameField = document.form1.last_name;
   const emailField = document.form1.email;
 
   function validateEmail(email) {
@@ -146,17 +148,19 @@ if (empty($row)) {
   const sendData = e => {
     e.preventDefault(); // 不要讓 form1 以傳統的方式送出
 
-    nameField.style.border = '1px solid #CCCCCC';
-    nameField.nextElementSibling.innerText = '';
+    first_nameField.style.border = '1px solid #CCCCCC';
+    first_nameField.nextElementSibling.innerText = '';
+    last_nameField.style.border = '1px solid #CCCCCC';
+    last_nameField.nextElementSibling.innerText = '';
     emailField.style.border = '1px solid #CCCCCC';
     emailField.nextElementSibling.innerText = '';
     // TODO: 欄位資料檢查
 
     let isPass = true; // 表單有沒有通過檢查
-    if (nameField.value.length < 2) {
+    if (first_nameField.value.length < 2) {
       isPass = false;
-      nameField.style.border = '1px solid red';
-      nameField.nextElementSibling.innerText = '請填寫正確的姓名';
+      first_nameField.style.border = '1px solid red';
+      first_nameField.nextElementSibling.innerText = '請填寫正確的姓名';
     }
     if (!validateEmail(emailField.value)) {
       isPass = false;
@@ -166,7 +170,7 @@ if (empty($row)) {
     // 有通過檢查, 才要送表單
     if (isPass) {
       const fd = new FormData(document.form1); // 沒有外觀的表單物件
-      fetch('edit-api.php', {
+      fetch('employees-edit-api.php', {
           method: 'POST',
           body: fd, // Content-Type: multipart/form-data
         }).then(r => r.json())

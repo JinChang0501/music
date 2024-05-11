@@ -7,7 +7,7 @@ if (!isset($_SESSION)) {
 
 
 $title = '新增員工列表';
-$pageName = 'add-employees';
+$pageName = 'employees-add';
 ?>
 
 
@@ -58,7 +58,7 @@ $pageName = 'add-employees';
 
             <div class="mb-3">
               <label for="mobile" class="form-label">電話號碼</label>
-              <input type="text" class="form-control" id="mobile" name="phone_number">
+              <input type="text" class="form-control" id="mobile" name="phone_number" pattern="[0]{1}[9]{1}[0-9]{8}" maxlength="10">
               <div class="form-text"></div>
             </div>
 
@@ -85,7 +85,7 @@ $pageName = 'add-employees';
       </div>
       <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary" onclick="location.href='list.php'">到列表頁</button>
+        <button type="button" class="btn btn-primary" onclick="location.href='employees-list.php'">到列表頁</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續新增</button>
       </div>
     </div>

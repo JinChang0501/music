@@ -1,13 +1,15 @@
 <?php
+require __DIR__ . "/admin-required.php";
+
 if (!isset($_SESSION)) {
   session_start();
 }
 
 
 $title = '通訊錄列表';
-$pageName = 'members-list';
+$pageName = 'members-edit-list';
 
-require __DIR__ . './../config/pdo-connect.php';
+require __DIR__ . '/../config/pdo-connect.php';
 
 $per_page = 20; #每頁有幾筆
 
@@ -19,7 +21,7 @@ if ($page < 1) {
 }
 
 #總筆數
-$t_sql = "SELECT COUNT(id) FROM members";
+$t_sql = "SELECT COUNT(id) FROM `members`";
 
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 
@@ -39,7 +41,7 @@ if ($page > $totalPages) {
 
 
 $sql = sprintf(
-  "SELECT * FROM members order by id desc LIMIT %s,%s",
+  "SELECT * FROM `members` order by id asc LIMIT %s,%s",
   ($page - 1) * $per_page,
   $per_page
 );
@@ -108,31 +110,33 @@ include __DIR__ . "/part/navbar-head.php";
       <table class="table table-bordered table-striped">
         <thead>
           <tr>
-            <!-- <th scope="col" style="text-align: center;">
-              <input class="form-check-input" type="checkbox" id="checkall"> 全選
-            </th> -->
-            <th scope="col" class="text-center">#</th>
-            <th scope="col" class="text-center">First_name</th>
-            <th scope="col" class="text-center">Last_name</th>
-            <th scope="col" class="text-center">Email</th>
-            <th scope="col" class="text-center">Gender</th>
-            <th scope="col" class="text-center">Phone_Number</th>
-            <th scope="col" class="text-center">Address</th>
+            <th scope="col" style="text-align: center;">
+              <input class="form-check-input" type="checkbox" value="" id="checkall"> 全選
+            </th>
+            <th scope="col" style="text-align: center;">#</th>
+            <th scope="col">first_name</th>
+            <th scope="col">last_name</th>
+            <th scope="col">Email</th>
+            <th scope="col">gender</th>
+            <th scope="col">phone_number</th>
+            <th scope="col">address</th>
+            <th><i class="fa-solid fa-pen-to-square"></i></th>
           </tr>
         </thead>
         <tbody>
           <?php foreach ($rows as $r) : ?>
             <tr>
-              <!-- <td scope="col" style="text-align: center;">
+              <td scope="col" style="text-align: center;">
                 <input class="checkboxes form-check-input" type="checkbox" value="" id="flexCheckDefault">
-              </td> -->
-              <td class="text-center"><?= $r['id'] ?></td>
-              <td class="text-center"><?= $r['first_name'] ?></td>
-              <td class="text-center"><?= $r['last_name'] ?></td>
-              <td class="text-center"><?= $r['email'] ?></td>
-              <td class="text-center"><?= $r['gender'] ?></td>
-              <td class="text-center"><?= $r['phone_number'] ?></td>
+              </td>
+              <td style="text-align: center;"><?= $r['id'] ?></td>
+              <td style="text-align: center;"><?= $r['first_name'] ?></td>
+              <td style="text-align: center;"><?= $r['last_name'] ?></td>
+              <td style="text-align: center;"><?= $r['email'] ?></td>
+              <td style="text-align: center;"><?= $r['gender'] ?></td>
+              <td style="text-align: center;"><?= $r['phone_number'] ?></td>
               <td><?= htmlentities($r['address']) ?></td>
+              <td><a href="members-edit.php?sid=<?= $r['id'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td>
             </tr>
           <?php endforeach; ?>
         </tbody>
@@ -149,6 +153,14 @@ include __DIR__ . "/part/navbar-head.php";
     }
   }
 
+  // const checkall = document.getElementById("checkall");
+  // const checkboxes = document.getElementsByClassName("checkboxes");
+  // checkall.addEventListener('click', function() {
+
+  //   if (checkall.checked === true) {
+  //     checkboxes.checked = true;
+  //   }
+  // });
 
   const checkall = document.getElementById("checkall");
   const checkboxes = document.getElementsByClassName("checkboxes");

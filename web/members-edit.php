@@ -3,11 +3,11 @@ require __DIR__ . '/admin-required.php';
 require __DIR__ . '/../config/pdo-connect.php';
 
 $title = '修改會員通訊錄資料';
-$pageName = 'edit-members';
+$pageName = 'members-edit';
 
 $sid = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if ($sid < 1) {
-  header('Location: members-list.php');
+  header('Location: members-edit-list.php');
   exit;
 }
 
