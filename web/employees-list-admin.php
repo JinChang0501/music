@@ -141,7 +141,7 @@ include __DIR__ . "/part/navbar-head.php";
 <script>
   const deleteOne = (id) => {
     if (confirm(`確定要刪除${id}的資料嗎?`)) {
-      location.href = `delete.php?id=${id}`;
+      location.href = `employees-delete.php?id=${id}`;
     }
   }
 </script>
