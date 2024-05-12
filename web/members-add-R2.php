@@ -20,22 +20,18 @@ $pageName = 'members-add';
     font-weight: 800;
   }
 </style>
-
-
-
 <div class="container-fluid">
   <div class="row">
     <div class="col-2 p-0"><?php include __DIR__ . "/part/left-bar.php"; ?></div>
     <div class="col-10">
-      <!-- NEW START-->
       <div class="row">
-        <div class="col-8 mx-auto border rounded-3 my-3 bg-white shadow">
+        <div class="col-8 mx-auto">
           <h4 class="my-3">新增會員</h4>
-          <form name="form1" onsubmit="sendData(event)" class="needs-validation" novalidate>
+          <form class="needs-validation" novalidate>
             <div class="row g-3">
               <div class="col-sm-6">
                 <label for="first_name" class="form-label">First name</label>
-                <input type="text" class="form-control" id="first_name" name="first_name" required>
+                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="" value="" required>
                 <div class="invalid-feedback">
                   Valid first name is required.
                 </div>
@@ -43,7 +39,7 @@ $pageName = 'members-add';
 
               <div class="col-sm-6">
                 <label for="last_name" class="form-label">Last name</label>
-                <input type="text" class="form-control" id="last_name" name="last_name" required>
+                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="" value="" required>
                 <div class="invalid-feedback">
                   Valid last name is required.
                 </div>
@@ -103,14 +99,14 @@ $pageName = 'members-add';
                   Please enter your shipping address.
                 </div>
               </div>
+
+              <button class="btn btn-primary" type="submit">新增</button>
             </div>
-            <button class="btn btn-primary my-3" type="submit">新增</button>
           </form>
         </div>
       </div>
-      <!-- NEW END -->
       <!-- OLD -->
-      <!-- <div class="card mt-3" style="width: 18rem;">
+      <div class="card mt-3" style="width: 18rem;">
         <div class="card-body">
           <h5 class="card-title">新增會員資料</h5>
           <form name="form1" onsubmit="sendData(event)">
@@ -165,7 +161,7 @@ $pageName = 'members-add';
             <button type="submit" class="btn btn-primary">新增</button>
           </form>
         </div>
-      </div> -->
+      </div>
       <!-- OLD -->
     </div>
   </div>

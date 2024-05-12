@@ -16,12 +16,10 @@
 
 <footer class="footer mt-auto py-3 bg-light">
   <div class="container d-flex justify-content-center">
-    <span class="text-muted d-flex justify-content-center align-items-center"><i
-        class='bx bxl-apple'></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2024
+    <span class="text-muted d-flex justify-content-center align-items-center"><i class='bx bxl-apple'></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2024
       IU H.E.R. WORLD TOUR CONCERT IN TAIPEI</span>
   </div>
 </footer>
-
 
 </body>
 
