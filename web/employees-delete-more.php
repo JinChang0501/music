@@ -2,15 +2,17 @@
 require __DIR__ . "/admin-required.php";
 require __DIR__ . '/../config/pdo-connect.php';
 
-$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-if ($id < 1) {
-  header('Location: employees-delete.php');
-  exit;
+$ids = isset($_GET['ids']) ? $_GET['ids'] : '';
+$idsArray = explode(',', $ids); // 將逗號分隔的 ID 字串轉換成陣列
+
+foreach ($idsArray as $id) {
+  $id = intval($id);
+
+  if ($id > 0) {
+    $sql = "DELETE FROM `employees` WHERE id=$id";
+    $pdo->query($sql);
+  }
 }
-
-$sql = "DELETE FROM `employees` WHERE id=$id";
-
-$pdo->query($sql);
 
 # $_SERVER['HTTP_REFERER']: 從哪個頁面連過來的
 $comeFrom = 'employees-delete-list.php';

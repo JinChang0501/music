@@ -11,7 +11,7 @@ $output = [
 ];
 
 // TODO: 欄位資料檢查
-if (!isset($_POST['name'])) {
+if (!isset($_POST['first_name'])) {
     echo json_encode($output);
     exit; # 結束 php 程式
 }
@@ -25,16 +25,19 @@ if ($birthday === false) {
 }
 
 
-$sql = "UPDATE `members` SET `name`=?,`email`=?,`mobile`=?,`birthday`=?,`address`=? WHERE id=?";
+$sql = "UPDATE `members` SET `first_name`=?,`last_name`=?,`email`=?,`passwords`=?,`gender`=?,`phone_number`=?,`birthday`=?,`address`=? WHERE id=?";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
-    $_POST['name'],
+    $_POST['first_name'],
+    $_POST['last_name'],
     $_POST['email'],
-    $_POST['mobile'],
+    $_POST['passwords'],
+    $_POST['gender'],
+    $_POST['phone_number'],
     $birthday,
     $_POST['address'],
-    $_POST['sid'],
+    $_POST['id'],
 ]);
 
 

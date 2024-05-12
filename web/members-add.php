@@ -132,7 +132,7 @@ $pageName = 'members-add';
 
     // TODO: 欄位資料檢查
     let isPass = true; // 表單有沒有通過檢查
-    if (first_nameField.value.length < 2) {
+    if (first_nameField.value.length < 0) {
       isPass = false;
       first_nameField.style.border = '1px solid red';
       first_nameField.nextElementSibling.innerText = '請填寫正確的姓名';

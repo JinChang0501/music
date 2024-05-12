@@ -6,8 +6,8 @@ if (!isset($_SESSION)) {
 }
 
 
-$title = '通訊錄列表';
-$pageName = 'members-edit-list';
+$title = '會員編輯列表';
+$pageName = 'members-edit';
 
 require __DIR__ . '/../config/pdo-connect.php';
 
@@ -32,32 +32,16 @@ if ($page > $totalPages) {
   exit; # 結束這支程式
 }
 
-
-// SELECT * FROM `address_book` ORDER BY id DESC LIMIT 0, 20
-// SELECT * FROM `address_book` ORDER BY id DESC LIMIT 20, 20
-// SELECT * FROM `address_book` ORDER BY id DESC LIMIT 40, 20
-// SELECT * FROM `address_book` ORDER BY id DESC LIMIT 60, 20
-
-
-
 $sql = sprintf(
-  "SELECT * FROM `members` order by id asc LIMIT %s,%s",
+  "SELECT * FROM `members` order by id desc LIMIT %s,%s",
   ($page - 1) * $per_page,
   $per_page
 );
 
 $rows = $pdo->query($sql)->fetchAll();
 
-// echo json_encode([
-//     'totalRows' => $totalRows,
-//     'totalPages' => $totalPages,
-//     'rows' => $rows,
-// ]);
-
-
 include __DIR__ . "/part/html-header.php";
 include __DIR__ . "/part/navbar-head.php";
-// include __DIR__ . "/part/left-bar.php";
 ?>
 
 
@@ -110,17 +94,20 @@ include __DIR__ . "/part/navbar-head.php";
       <table class="table table-bordered table-striped">
         <thead>
           <tr>
-            <th scope="col" style="text-align: center;">
+            <th scope="col" class="text-center">
               <input class="form-check-input" type="checkbox" value="" id="checkall"> 全選
             </th>
-            <th scope="col" style="text-align: center;">#</th>
-            <th scope="col">first_name</th>
-            <th scope="col">last_name</th>
-            <th scope="col">Email</th>
-            <th scope="col">gender</th>
-            <th scope="col">phone_number</th>
-            <th scope="col">address</th>
-            <th><i class="fa-solid fa-pen-to-square"></i></th>
+            <th scope="col" class="text-center">#</th>
+            <th scope="col" class="text-center">First_Name</th>
+            <th scope="col" class="text-center">Last_Name</th>
+            <th scope="col" class="text-center">Email</th>
+            <th scope="col" class="text-center">Passwords</th>
+            <th scope="col" class="text-center">Gender</th>
+            <th scope="col" class="text-center">Phone_Number</th>
+            <th scope="col" class="text-center">Birthday</th>
+            <th scope="col" class="text-center">Address</th>
+            <th scope="col" class="text-center">Created_at</th>
+            <th class="text-center"><i class="fa-solid fa-pen-to-square"></i></th>
           </tr>
         </thead>
         <tbody>
@@ -129,14 +116,17 @@ include __DIR__ . "/part/navbar-head.php";
               <td scope="col" style="text-align: center;">
                 <input class="checkboxes form-check-input" type="checkbox" value="" id="flexCheckDefault">
               </td>
-              <td style="text-align: center;"><?= $r['id'] ?></td>
-              <td style="text-align: center;"><?= $r['first_name'] ?></td>
-              <td style="text-align: center;"><?= $r['last_name'] ?></td>
-              <td style="text-align: center;"><?= $r['email'] ?></td>
-              <td style="text-align: center;"><?= $r['gender'] ?></td>
-              <td style="text-align: center;"><?= $r['phone_number'] ?></td>
-              <td><?= htmlentities($r['address']) ?></td>
-              <td><a href="members-edit.php?sid=<?= $r['id'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td>
+              <td class="text-center"><?= $r['id'] ?></td>
+              <td class="text-center"><?= $r['first_name'] ?></td>
+              <td class="text-center"><?= $r['last_name'] ?></td>
+              <td class="text-center"><?= $r['email'] ?></td>
+              <td class="text-center"><?= $r['passwords'] ?></td>
+              <td class="text-center"><?= $r['gender'] ?></td>
+              <td class="text-center"><?= $r['phone_number'] ?></td>
+              <td class="text-center"><?= $r['birthday'] ?></td>
+              <td><?= (!empty($r['address'])) ? htmlentities($r['address']) : '未填' ?></td>
+              <td class="text-center"><?= $r['created_at'] ?></td>
+              <td class="text-center"><a href="members-edit.php?id=<?= $r['id'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td>
             </tr>
           <?php endforeach; ?>
         </tbody>
@@ -149,18 +139,10 @@ include __DIR__ . "/part/navbar-head.php";
 <script>
   const deleteOne = (id) => {
     if (confirm(`確定要刪除${id}的資料嗎?`)) {
-      location.href = `delete.php?id=${id}`;
+      location.href = `members-delete.php?id=${id}`;
     }
   }
 
-  // const checkall = document.getElementById("checkall");
-  // const checkboxes = document.getElementsByClassName("checkboxes");
-  // checkall.addEventListener('click', function() {
-
-  //   if (checkall.checked === true) {
-  //     checkboxes.checked = true;
-  //   }
-  // });
 
   const checkall = document.getElementById("checkall");
   const checkboxes = document.getElementsByClassName("checkboxes");

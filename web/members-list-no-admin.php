@@ -132,7 +132,7 @@ include __DIR__ . "/part/navbar-head.php";
               <td class="text-center"><?= $r['email'] ?></td>
               <td class="text-center"><?= $r['gender'] ?></td>
               <td class="text-center"><?= $r['phone_number'] ?></td>
-              <td><?= htmlentities($r['address']) ?></td>
+              <td><?= (!empty($r['address'])) ? htmlentities($r['address']) : '未填' ?></td>
             </tr>
           <?php endforeach; ?>
         </tbody>

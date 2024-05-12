@@ -5,8 +5,8 @@ require __DIR__ . '/../config/pdo-connect.php';
 $title = '修改會員通訊錄資料';
 $pageName = 'members-edit';
 
-$sid = isset($_GET['id']) ? intval($_GET['id']) : 0;
-if ($sid < 1) {
+$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+if ($id < 1) {
   header('Location: members-edit-list.php');
   exit;
 }
@@ -15,7 +15,7 @@ $sql = "Select * FROM `members` WHERE id=$id";
 $row = $pdo->query($sql)->fetch();
 
 if (empty($row)) {
-  header('Location: members-list.php');
+  header('Location: members-edit-list.php');
   exit;
 }
 
@@ -26,7 +26,7 @@ if (empty($row)) {
 
 
 <?php include __DIR__ . "/part/html-header.php"; ?>
-<?php include __DIR__ . "/part/navbar.php"; ?>
+<?php include __DIR__ . "/part/navbar-head.php"; ?>
 
 <style>
   form .mb-3 .form-text {
@@ -35,53 +35,76 @@ if (empty($row)) {
   }
 </style>
 
-<div class="container">
-  <div class="card mt-5" style="width: 18rem;">
-    <div class="card-body">
-      <h5 class="card-title">編輯資料</h5>
-      <form name="form1" onsubmit="sendData(event)">
-        <input type="hidden" name="sid" value="<?= $row['sid'] ?>">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-2 p-0"><?php include __DIR__ . "/part/left-bar.php"; ?></div>
+    <div class="col-10">
+      <div class="card mt-5" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">編輯資料</h5>
+          <form name="form1" onsubmit="sendData(event)">
+            <input type="hidden" name="id" value="<?= $row['id'] ?>">
 
-        <div class="mb-3">
-          <label for="sid" class="form-label">編號</label>
-          <input type="text" class="form-control" id="sid" name="sid" value="<?= $row['sid'] ?>" disabled>
+            <div class="mb-3">
+              <label for="id" class="form-label">編號</label>
+              <input type="text" class="form-control" id="id" name="id" value="<?= $row['id'] ?>" disabled>
+            </div>
+
+            <div class="mb-3">
+              <label for="first_name" class="form-label">姓名</label>
+              <input type="text" class="form-control" id="first_name" name="first_name" value="<?= $row['first_name'] ?>">
+              <div class="form-text"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="last_name" class="form-label">姓氏</label>
+              <input type="text" class="form-control" id="last_name" name="last_name" value="<?= $row['last_name'] ?>">
+              <div class="form-text"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" name="email" value="<?= $row['email'] ?>">
+              <div class="form-text"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="passwords" class="form-label">Passwords</label>
+              <input type="password" class="form-control" id="passwords" name="passwords" value="<?= $row['passwords'] ?>">
+              <div class="form-text"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="gender" class="form-label">Gender</label>
+              <input type="text" class="form-control" id="gender" name="gender" value="<?= $row['gender'] ?>">
+              <div class="form-text"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="phone_number" class="form-label">電話號碼</label>
+              <input type="text" class="form-control" id="phone_number" name="phone_number" value="<?= $row['phone_number'] ?>">
+              <div class="form-text"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="birthday" class="form-label">生日</label>
+              <input type="date" class="form-control" id="birthday" name="birthday" value="<?= $row['birthday'] ?>">
+              <div class="form-text"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="address" class="form-label">地址</label>
+              <textarea name="address" id="address" cols="30" rows="3"><?= $row['address'] ?></textarea>
+              <div class="form-text"></div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">修改</button>
+          </form>
         </div>
-
-        <div class="mb-3">
-          <label for="name" class="form-label">姓名</label>
-          <input type="text" class="form-control" id="name" name="name" value="<?= $row['name'] ?>">
-          <div class="form-text"></div>
-        </div>
-
-        <div class="mb-3">
-          <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email" name="email" value="<?= $row['email'] ?>">
-          <div class="form-text"></div>
-        </div>
-
-        <div class="mb-3">
-          <label for="mobile" class="form-label">電話號碼</label>
-          <input type="text" class="form-control" id="mobile" name="mobile" value="<?= $row['mobile'] ?>">
-          <div class="form-text"></div>
-        </div>
-
-        <div class="mb-3">
-          <label for="birthday" class="form-label">生日</label>
-          <input type="date" class="form-control" id="birthday" name="birthday" value="<?= $row['birthday'] ?>">
-          <div class="form-text"></div>
-        </div>
-
-        <div class="mb-3">
-          <label for="address" class="form-label">地址</label>
-          <textarea name="address" id="address" cols="30" rows="3"><?= $row['address'] ?></textarea>
-          <div class="form-text"></div>
-        </div>
-
-        <button type="submit" class="btn btn-primary">修改
-        </button>
-      </form>
+      </div>
     </div>
   </div>
+
 </div>
 
 <!-- Modal Start-->
@@ -99,7 +122,7 @@ if (empty($row)) {
       </div>
       <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary" onclick="location.href='members-list.php'">到列表頁</button>
+        <button type="button" class="btn btn-primary" onclick="location.href='members-edit-list.php'">到列表頁</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續更新</button>
       </div>
     </div>
@@ -122,7 +145,7 @@ if (empty($row)) {
       </div>
       <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary" onclick="location.href='members-list.php'">到列表頁</button>
+        <button type="button" class="btn btn-primary" onclick="location.href='members-edit-list.php'">到列表頁</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續更新</button>
       </div>
     </div>
@@ -133,7 +156,8 @@ if (empty($row)) {
 
 <?php include __DIR__ . "/part/scripts.php"; ?>
 <script>
-  const nameField = document.form1.name;
+  const first_nameField = document.form1.first_name;
+  const last_nameField = document.form1.last_name;
   const emailField = document.form1.email;
 
   function validateEmail(email) {
@@ -145,19 +169,27 @@ if (empty($row)) {
 
   const sendData = e => {
     e.preventDefault(); // 不要讓 form1 以傳統的方式送出
-
-    nameField.style.border = '1px solid #CCCCCC';
-    nameField.nextElementSibling.innerText = '';
+    first_nameField.style.border = '1px solid #CCCCCC';
+    first_nameField.nextElementSibling.innerText = '';
+    last_nameField.style.border = '1px solid #CCCCCC';
+    last_nameField.nextElementSibling.innerText = '';
     emailField.style.border = '1px solid #CCCCCC';
     emailField.nextElementSibling.innerText = '';
     // TODO: 欄位資料檢查
 
     let isPass = true; // 表單有沒有通過檢查
-    if (nameField.value.length < 2) {
+    if (first_nameField.value.length < 2) {
       isPass = false;
-      nameField.style.border = '1px solid red';
-      nameField.nextElementSibling.innerText = '請填寫正確的姓名';
+      first_nameField.style.border = '1px solid red';
+      first_nameField.nextElementSibling.innerText = '請填寫正確的姓名';
     }
+
+    if (last_nameField.value.length < 2) {
+      isPass = false;
+      last_nameField.style.border = '1px solid red';
+      last_nameField.nextElementSibling.innerText = '請填寫正確的姓名';
+    }
+
     if (!validateEmail(emailField.value)) {
       isPass = false;
       emailField.style.border = '1px solid red';

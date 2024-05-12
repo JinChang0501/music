@@ -17,7 +17,7 @@ if (!isset($_POST['first_name']) || !isset($_POST['last_name']) || !isset($_POST
     exit; // 結束 PHP 程式
 }
 
-$sql = "INSERT INTO `employees`(`first_name`, `last_name`, `email`, `passwords`, `gender`, `phone_number`,`created_at`) VALUES (
+$sql = "INSERT INTO `employees` (`first_name`, `last_name`, `email`, `passwords`, `gender`, `phone_number`,`created_at`) VALUES (
     ?,
     ?,
     ?,

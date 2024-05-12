@@ -5,7 +5,7 @@ require __DIR__ . '/../config/pdo-connect.php';
 $title = '修改員工通訊錄資料';
 $pageName = 'employees-edit';
 
-$sid = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if ($id < 1) {
   header('Location: employees-edit-list.php');
   exit;
@@ -15,7 +15,7 @@ $sql = "Select * FROM `employees` WHERE id=$id";
 $row = $pdo->query($sql)->fetch();
 
 if (empty($row)) {
-  header('Location: employees-list.php');
+  header('Location: employees-edit-list.php');
   exit;
 }
 
@@ -26,7 +26,7 @@ if (empty($row)) {
 
 
 <?php include __DIR__ . "/part/html-header.php"; ?>
-<?php include __DIR__ . "/part/navbar.php"; ?>
+<?php include __DIR__ . "/part/navbar-head.php"; ?>
 
 <style>
   form .mb-3 .form-text {
@@ -35,54 +35,68 @@ if (empty($row)) {
   }
 </style>
 
-<div class="container">
-  <div class="card mt-5" style="width: 18rem;">
-    <div class="card-body">
-      <h5 class="card-title">編輯資料</h5>
-      <form name="form1" onsubmit="sendData(event)">
-        <input type="hidden" name="sid" value="<?= $row['sid'] ?>">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-2">
+      <?php include __DIR__ . "/part/left-bar.php"; ?>
+    </div>
+    <div class="col-10">
+      <div class="card mt-5" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">編輯資料</h5>
+          <form name="form1" onsubmit="sendData(event)">
+            <input type="hidden" name="id" value="<?= $row['id'] ?>">
 
-        <div class="mb-3">
-          <label for="sid" class="form-label">編號</label>
-          <input type="text" class="form-control" id="sid" name="sid" value="<?= $row['sid'] ?>" disabled>
+            <div class="mb-3">
+              <label for="id" class="form-label">編號</label>
+              <input type="text" class="form-control" id="id" name="id" value="<?= $row['id'] ?>" disabled>
+            </div>
+
+            <div class="mb-3">
+              <label for="first_name" class="form-label">姓名</label>
+              <input type="text" class="form-control" id="first_name" name="first_name" value="<?= $row['first_name'] ?>">
+              <div class="form-text"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="last_name" class="form-label">姓名</label>
+              <input type="text" class="form-control" id="last_name" name="last_name" value="<?= $row['last_name'] ?>">
+              <div class="form-text"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" name="email" value="<?= $row['email'] ?>">
+              <div class="form-text"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="passwords" class="form-label">Password</label>
+              <input type="password" class="form-control" id="passwords" name="passwords" value="<?= $row['passwords'] ?>">
+              <div class="form-text"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="gender" class="form-label">性別</label>
+              <input type="text" class="form-control" id="gender" name="gender" value="<?= $row['gender'] ?>">
+              <div class="form-text"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="phone_number" class="form-label">電話號碼</label>
+              <input type="text" class="form-control" id="phone_number" name="phone_number" value="<?= $row['phone_number'] ?>" pattern="[0]{1}[9]{1}[0-9]{8}" maxlength="10">
+              <div class="form-text"></div>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">修改
+            </button>
+          </form>
         </div>
-
-        <div class="mb-3">
-          <label for="name" class="form-label">姓名</label>
-          <input type="text" class="form-control" id="name" name="name" value="<?= $row['name'] ?>">
-          <div class="form-text"></div>
-        </div>
-
-        <div class="mb-3">
-          <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email" name="email" value="<?= $row['email'] ?>">
-          <div class="form-text"></div>
-        </div>
-
-        <div class="mb-3">
-          <label for="passwords" class="form-label">Password</label>
-          <input type="password" class="form-control" id="passwords" name="passwords" value="<?= $row['passwords'] ?>">
-          <div class="form-text"></div>
-        </div>
-
-        <div class="mb-3">
-          <label for="gender" class="form-label">性別</label>
-          <input type="text" class="form-control" id="gender" name="gender" value="<?= $row['gender'] ?>">
-          <div class="form-text"></div>
-        </div>
-
-        <div class="mb-3">
-          <label for="mobile" class="form-label">電話號碼</label>
-          <input type="text" class="form-control" id="mobile" name="mobile" value="<?= $row['mobile'] ?>">
-          <div class="form-text"></div>
-        </div>
-
-
-        <button type="submit" class="btn btn-primary">修改
-        </button>
-      </form>
+      </div>
     </div>
   </div>
+
 </div>
 
 <!-- Modal Start-->
@@ -100,7 +114,7 @@ if (empty($row)) {
       </div>
       <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary" onclick="location.href='list.php'">到列表頁</button>
+        <button type="button" class="btn btn-primary" onclick="location.href='employees-edit-list.php'">到列表頁</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續更新</button>
       </div>
     </div>
@@ -123,7 +137,7 @@ if (empty($row)) {
       </div>
       <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary" onclick="location.href='list.php'">到列表頁</button>
+        <button type="button" class="btn btn-primary" onclick="location.href='employees-edit-list.php'">到列表頁</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續更新</button>
       </div>
     </div>

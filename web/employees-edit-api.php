@@ -11,30 +11,31 @@ $output = [
 ];
 
 // TODO: 欄位資料檢查
-if (!isset($_POST['name'])) {
+if (!isset($_POST['first_name'])) {
     echo json_encode($output);
     exit; # 結束 php 程式
 }
 
 // 生日
-$birthday = strtotime($_POST['birthday']);
-if ($birthday === false) {
-    $birthday = null;
-} else {
-    $birthday = date('Y-m-d', $birthday);
-}
+// $birthday = strtotime($_POST['birthday']);
+// if ($birthday === false) {
+//     $birthday = null;
+// } else {
+//     $birthday = date('Y-m-d', $birthday);
+// }
 
 
-$sql = "UPDATE `employees` SET `name`=?,`email`=?,`mobile`=?,`birthday`=?,`address`=? WHERE sid=?";
+$sql = "UPDATE `employees` SET `first_name`=?, `last_name`=?,`email`=?,`passwords`=?,`gender`=?,`phone_number`=? WHERE id=?";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
-    $_POST['name'],
+    $_POST['first_name'],
+    $_POST['last_name'],
     $_POST['email'],
-    $_POST['mobile'],
-    $birthday,
-    $_POST['address'],
-    $_POST['sid'],
+    $_POST['passwords'],
+    $_POST['gender'],
+    $_POST['phone_number'],
+    $_POST['id'],
 ]);
 
 

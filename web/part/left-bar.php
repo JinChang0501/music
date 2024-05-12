@@ -56,9 +56,9 @@ if (!isset($pageName))
               <div class="accordion-body p-0"> <!-- p-0 把li上下左右的空間清掉不要動-->
                 <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'members-add' ? 'active' : '' ?> " href="members-add.php">增加會員資料</a></li>
 
-                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'members-delete-list' ? 'active' : '' ?> " href="members-delete-list.php">刪除會員資料</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'members-delete' ? 'active' : '' ?> " href="members-delete-list.php">刪除會員資料</a></li>
 
-                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'members-edit-list' ? 'active' : '' ?>" href="members-edit.php">編輯會員資料</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'members-edit' ? 'active' : '' ?>" href="members-edit-list.php">編輯會員資料</a></li>
 
                 <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'members-list' ? 'active' : '' ?>" href="members-list.php">查詢會員資料</a></li>
               </div>
@@ -113,6 +113,7 @@ if (!isset($pageName))
               </div>
             </div>
           </div>
+
           <!-- 5 -->
           <div class="accordion-item">
             <h2 class="accordion-header" id="heading5">
