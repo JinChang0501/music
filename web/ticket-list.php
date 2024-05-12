@@ -201,30 +201,32 @@ echo json_encode([
 
             <div class="col-12">
                 <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item ">
-                            <a class="page-link" href="#">
+                    <ul class="pagination">
+                        <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
+                            <a class="page-link" href="?page=1">
                                 <i class="fa-solid fa-angles-left"></i>
                             </a>
                         </li>
-                        <li class="page-item ">
-                            <a class="page-link" href="#">
+                        <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
+                            <a class="page-link" href="?page=<?= max(1, $page - 1) ?>">
                                 <i class="fa-solid fa-angle-left"></i>
                             </a>
                         </li>
+
                         <?php for ($i = $page - 5; $i <= $page + 5; $i++):
                             if ($i >= 1 and $i <= $totalPages): ?>
                                 <li class="page-item <?= $page == $i ? 'active' : '' ?>">
                                     <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
                                 </li>
                             <?php endif; endfor; ?>
-                        <li class="page-item ">
-                            <a class="page-link" href="#">
+                        <li class="page-item <?= $page == $totalPages ? 'disabled' : '' ?>">
+                            <a class="page-link" href="?page=<?= min($totalPages, $page + 1) ?>">
                                 <i class="fa-solid fa-angle-right"></i>
                             </a>
                         </li>
-                        <li class="page-item ">
-                            <a class="page-link" href="#">
+
+                        <li class="page-item <?= $page == $totalPages ? 'disabled' : '' ?>">
+                            <a class="page-link" href="?page=<?= $totalPages ?>">
                                 <i class="fa-solid fa-angles-right"></i>
                             </a>
                         </li>
