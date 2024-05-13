@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/../config/pdo-connect.php';
 $title = '活動列表';
-$pageName = 'list-activities';
+$pageName = 'activities-list';
 
 $perPage = 10;
 
@@ -11,7 +11,7 @@ if ($page < 1) {
   exit;
 }
 
-$t_sql = "SELECT COUNT(id) FROM activities";
+$t_sql = "SELECT COUNT(actid) FROM activities";
 
 # 總筆數
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
@@ -31,7 +31,7 @@ if ($totalRows) {
 
   # 取得分頁資料
   $sql = sprintf(
-    "SELECT * FROM `activities` ORDER BY id DESC LIMIT %s, %s",
+    "SELECT * FROM activities JOIN aclass ON activities.activity_class = aclass.id JOIN artist ON artist_id = artist.id ORDER BY activities.actid ASC LIMIT %s, %s",
     ($page - 1) * $perPage,
     $perPage
   );
@@ -88,8 +88,8 @@ if ($totalRows) {
       </div>
       <!-- 按鈕群組 -->
       <div class="col-6 mb-3">
-        <input class="btn btn-primary" type="button" value="一鍵全選">
-        <input class="btn btn-secondary" type="button" value="一鍵取消">
+        <!-- <input class="btn btn-primary" type="button" value="一鍵全選">
+        <input class="btn btn-secondary" type="button" value="一鍵取消"> -->
         <button class="btn btn-danger" type="submit" id="dltAllSelect">刪除所選</button>
       </div>
       <!-- 搜尋 -->
@@ -122,11 +122,11 @@ if ($totalRows) {
             <?php foreach ($rows as $r): ?>
               <tr>
                 <td>
-                  <input class="checkboxes form-check-input" type="checkbox" value="<?= $r['id'] ?>"
-                    id="flexCheckDefault<?= $r['id'] ?>">
+                  <input class="checkboxes form-check-input" type="checkbox" value="<?= $r['actid'] ?>"
+                    id="flexCheckDefault<?= $r['actid'] ?>">
                 </td>
-                <td><?= $r['id'] ?></td>
-                <td><?= $r['activity_class'] ?></td>
+                <td><?= $r['actid'] ?></td>
+                <td><?= $r['class'] ?></td>
                 <td><?= $r['activity_name'] ?></td>
                 <td><?= $r['a_date'] ?></td>
                 <td><?= $r['a_time'] ?></td>
@@ -134,11 +134,11 @@ if ($totalRows) {
                 <td><?= $r['address'] ?></td>
                 <td><?= $r['descriptions'] ?></td>
                 <td><?= $r['organizer'] ?></td>
-                <td><?= $r['artist_id'] ?></td>
-                <td><?= $r['picture'] ?></td>
-                <td><a href="javascript: deleteOne(<?= $r['id'] ?>)">
+                <td><?= $r['art_name'] ?></td>
+                <td><img src="<?= $r['picture'] ?>" class="image img-thumbnail" alt="activities_picture"></td>
+                <td><a href="javascript: deleteOne(<?= $r['actid'] ?>)">
                     <i class="fa-solid fa-trash"></i></a></td>
-                <td><a href="activities-edit.php?id=<?= $r['id'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                <td><a href="activities-edit.php?id=<?= $r['actid'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td>
               </tr>
             <?php endforeach; ?>
           </tbody>
@@ -159,7 +159,7 @@ if ($totalRows) {
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">保留</button>
         <!-- 這裡有問題 -->
-        <button type="button" class="btn btn-danger" herf="activities-delete.php?id=<?php $r['id'] ?>">確認刪除</button>
+        <button type="button" class="btn btn-danger" herf="activities-delete.php?id=<?php $r['actid'] ?>">確認刪除</button>
       </div>
     </div>
   </div>

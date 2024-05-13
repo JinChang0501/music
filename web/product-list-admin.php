@@ -1,5 +1,5 @@
 <?php
-// require __DIR__ . '/part/pdo-connect.php';
+require __DIR__ . '/../config/pdo-connect.php';
 $title = '商品列表';
 $pageName = 'list';
 
@@ -12,22 +12,22 @@ if ($page < 1) {
   exit;
 }
 
-
 # 算總筆數 $totalRows
 $t_sql = "SELECT COUNT(id) FROM products";
-// $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
+$totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 
-$totalPages = ceil($totalRows / $perPage); # 總頁數
-
+$totalPages = 0;
 $rows = []; # 預設值
 # 如果有資料的話
 if ($totalRows) {
+  // # 總頁數
+  $totalPages = ceil($totalRows / $perPage);
   if ($page > $totalPages) {
-    header('Location: ?page={$totalPages}');
+    header("Location: ?page={$totalPages}");
     exit;
   }
 
-  $sql = sprintf("SELECT * FROM `products` ORDER BY sid DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+  $sql = sprintf("SELECT * FROM `products` ORDER BY id DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
   $rows = $pdo->query($sql)->fetchAll();
 }
 
@@ -61,8 +61,7 @@ if ($totalRows) {
               <li class="page-item <?= $page == $i ? 'active' : '' ?>">
                 <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
               </li>
-            <?php endif ?>
-          <?php endfor ?>
+            <?php endif; endfor ?>
           <li class="page-item">
             <a class="page-link" href="#">
               <i class="fa-solid fa-angle-right"></i>
@@ -79,23 +78,30 @@ if ($totalRows) {
         <table class="table table-bordered table-striped">
           <thead>
             <tr>
-              <th scope="col" class="text-center"><a href="index_R3.php" type="submit" class="btn btn-success"><i class="fa-solid fa-file-pen"></i>修改</a></th>
+              <th class="text-center">
+                <button type="submit" class="btn btn-success" disabled>
+                  <i class="fa-solid fa-file-pen"></i>編輯
+                </button>
+              </th>
               <th scope="col" class="text-center">編號</th>
               <th scope="col" class="text-center">商品名稱</th>
               <th scope="col" class="text-center">商品圖片</th>
               <th scope="col" class="text-center">定價</th>
               <th scope="col" class="text-center">進貨數量</th>
               <th scope="col" class="text-center">活動名稱</th>
-              <th scope="col" class="text-center"><button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i>刪除</button></th>
+              <th scope="col" class="text-center">
+                <button type="submit" class="btn btn-danger" disabled>
+                  <i class="fa-solid fa-trash"></i>刪除
+                </button>
+              </th>
             </tr>
           </thead>
           <tbody>
             <?php foreach ($rows as $r) : ?>
               <tr>
-              <td><input type="checkbox" name="ids[]" value="<?= $r['id'] ?>"></td>
-              <td>
-                <a href="edit.php?sid=<?= $r['id'] ?>">
-                  <i class="fa-solid fa-file-pen"></i>
+              <td class="text-center">
+                <a href="product-edit.php?id=<?= $r['id'] ?>" type="submit" class="btn btn-success">
+                  <i class="fa-solid fa-file-pen"></i>編輯
                 </a>
               </td>
               <td><?= $r['id'] ?></td>
@@ -106,7 +112,7 @@ if ($totalRows) {
               <td><?= $r['activitie_id'] ?></td>
               <td>
                 <a href="javascript: delete_one(<?= $r['id'] ?>)">
-                  <i class="fa-solid fa-trash"></i> 
+                  <i class="fa-solid fa-trash"></i>刪除 
                 </a>
               </td>
               </tr>
@@ -122,9 +128,9 @@ if ($totalRows) {
 </div>
 <?php include __DIR__ . '/part/scripts.php' ?>
 <script>
-  function delete_one(id){
+  const delete_one = (id) =>{
     if(confirm(`是否要刪除編號為 ${id} 的資料?`)){
-      location.href = `product-delete.php?sid=${id}`;
+      location.href = `product-delete.php?id=${id}`;
     }
   }
 // 不知道要不要

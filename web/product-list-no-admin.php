@@ -1,7 +1,7 @@
 <?php
-// require __DIR__ . '/part/pdo-connect.php';
+require __DIR__ . '/../config/pdo-connect.php';
 $title = '商品列表';
-$pageName = 'list';
+$pageName = 'list-no-admin';
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
@@ -12,21 +12,20 @@ if ($page < 1) {
 
 $perPage = 20; # 每頁有幾筆
 # 算總筆數 $totalRows
-$t_sql = "SELECT COUNT(1) FROM address_book";
-// $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
+$t_sql = "SELECT COUNT(1) FROM products";
+$totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 
-
-$totalPages = ceil($totalRows / $perPage); # 總頁數
-
+$totalPages = 0;
 $rows = []; # 預設值
 # 如果有資料的話
 if ($totalRows) {
+  $totalPages = ceil($totalRows / $perPage); # 總頁數
   if ($page > $totalPages) {
-    header('Location: ?page=' . $totalPages);
+    header("Location: ?page={$totalPages}");
     exit;
   }
 
-  $sql = sprintf("SELECT * FROM `address_book` ORDER BY sid DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+  $sql = sprintf("SELECT * FROM `products` ORDER BY id DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
   $rows = $pdo->query($sql)->fetchAll();
 }
 
@@ -34,7 +33,7 @@ if ($totalRows) {
 <?php include __DIR__ . '/part/html-header.php' ?>
 <?php include __DIR__ . '/part/navbar-head.php' ?>
 
-<div class="container">
+<div class="container-fluid">
   <div class="row">
     <div class="col-2 p-0">
       <?php include __DIR__ . '/part/left-bar.php' ?>
@@ -60,8 +59,7 @@ if ($totalRows) {
               <li class="page-item <?= $page == $i ? 'active' : '' ?>">
                 <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
               </li>
-            <?php endif ?>
-          <?php endfor ?>
+            <?php endif; endfor ?>
           <li class="page-item">
             <a class="page-link" href="#">
               <i class="fa-solid fa-angle-right"></i>
@@ -78,18 +76,15 @@ if ($totalRows) {
         <table class="table table-bordered table-striped">
           <thead>
             <tr>
-              <th>編號</th>
-              <th>姓名</th>
-              <th>電郵</th>
-              
+              <th scope="col">編號</th>
+              <th scope="col">商品名稱</th>
             </tr>
           </thead>
           <tbody>
             <?php foreach ($rows as $r) : ?>
              <tr>
-                <td><?= $r['sid'] ?></td>
-                <td><?= $r['name'] ?></td>
-                <td><?= $r['email'] ?></td>
+                <td><?= $r['id'] ?></td>
+                <td><?= $r['product_name'] ?></td>
               </tr>
             <?php endforeach ?>
           </tbody>
@@ -102,8 +97,8 @@ if ($totalRows) {
 <?php include __DIR__ . '/part/scripts.php' ?>
 <script>
   function delete_one(sid){
-    if(confirm(`是否要刪除編號為 ${sid} 的資料?`)){
-      location.href = `del.php?sid=${sid}`;
+    if(confirm(`是否要刪除編號為 ${id} 的資料?`)){
+      location.href = `product-delete.php?sid=${id}`;
     }
   }
 

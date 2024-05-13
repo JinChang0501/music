@@ -5,9 +5,8 @@ if (!isset($_SESSION)) {
 	session_start();
 }
 
-
 $title = '新增活動列表';
-$pageName = 'add-activities';
+$pageName = 'activities-add';
 ?>
 
 
@@ -115,8 +114,7 @@ $pageName = 'add-activities';
 				</div>
 			</div>
 			<div class="modal-footer">
-
-				<button type="button" class="btn btn-primary" onclick="location.href='list-members.php'">到列表頁</button>
+				<button type="button" class="btn btn-primary" onclick="location.href='activities-list.php'">到列表頁</button>
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續新增</button>
 			</div>
 		</div>
@@ -152,11 +150,10 @@ $pageName = 'add-activities';
 			activity_nameField.nextElementSibling.innerText = '請填寫正確的活動名稱';
 		}
 
-
-
 		// 有通過檢查, 才要送表單
 		if (isPass) {
 			const fd = new FormData(document.form_activities); // 沒有外觀的表單物件
+
 			fetch('activities-add-api.php', {
 				method: 'POST',
 				body: fd, // Content-Type: multipart/form-data
@@ -172,6 +169,7 @@ $pageName = 'add-activities';
 				.catch(ex => console.log(ex))
 		}
 	};
+
 	const myModalA = new bootstrap.Modal('#staticBackdropA')
 </script>
 <?php include __DIR__ . "/part/html-footer.php"; ?>
