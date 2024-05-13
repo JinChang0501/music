@@ -22,7 +22,7 @@ $pageName = 'ticket-add';
         <div class="col-2 p-0"><?php include __DIR__ . "/part/left-bar.php"; ?></div>
         <div class="col-7 mx-auto">
 
-            <form action="ticket-list.php" class="needs-validation shadow-lg add" novalidate>
+            <form action="ticket-list.php" class="needs-validation shadow-lg add" novalidate onsubmit="sendData(event)">
 
                 <h1 class="text-center mb-5 fw-bold">新增購票</h1>
 
