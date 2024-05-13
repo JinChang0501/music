@@ -61,24 +61,25 @@ $pageName = 'product-add';
 </div>
 
 <!-- Modal start-->
-<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5">新增結果</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="alert alert-success" role="alert">
-          資料新增成功
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="location.href='product-list-admin.php'">到列表頁</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續新增</button>
-      </div>
-    </div>
-  </div>
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="staticBackdropLabel">新增成功</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-success" role="alert">
+					資料新增成功
+				</div>
+			</div>
+			<div class="modal-footer">
+
+				<button type="button" class="btn btn-primary" onclick="location.href='list-members.php'">到列表頁</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續新增</button>
+			</div>
+		</div>
+	</div>
 </div>
 <!-- Modal End-->
 

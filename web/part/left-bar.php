@@ -173,8 +173,8 @@ if (!isset($pageName))
               <div class="accordion-body p-0"> <!-- p-0 把li上下左右的空間清掉不要動-->
                 <li class="li-hover"><a class="dropdown-item py-3 border  " href="#">增加訂單資料</a></li>
                 <li class="li-hover"><a class="dropdown-item py-3 border" href="#">刪除訂單資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">編輯會員資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">查詢會員資料</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">編輯訂單資料</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">查詢訂單資料</a></li>
               </div>
             </div>
           </div>
