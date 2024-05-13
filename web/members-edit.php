@@ -39,7 +39,119 @@ if (empty($row)) {
   <div class="row">
     <div class="col-2 p-0"><?php include __DIR__ . "/part/left-bar.php"; ?></div>
     <div class="col-10">
-      <div class="card mt-5" style="width: 18rem;">
+      <!-- NEW START-->
+      <div class="row">
+        <div class="col-8 mx-auto border rounded-3 my-3 bg-white shadow">
+          <h4 class="my-3">編輯會員</h4>
+          <form name="form1" onsubmit="sendData(event)" class="needs-validation" novalidate>
+            <input type="hidden" name="id" value="<?= $row['id'] ?>">
+
+
+            <div class="row g-3">
+
+              <div class="mb-3">
+                <label for="id" class="form-label">編號</label>
+                <input type="text" class="form-control" id="id" name="id" value="<?= $row['id'] ?>" disabled>
+              </div>
+
+
+
+
+              <div class="col-sm-6">
+                <label for="first_name" class="form-label">First name</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" value="<?= $row['first_name'] ?>" required>
+                <div class="invalid-feedback">
+                  Valid first name is required.
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <label for="last_name" class="form-label">Last name</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" value="<?= $row['last_name'] ?>" required>
+                <div class="invalid-feedback">
+                  Valid last name is required.
+                </div>
+              </div>
+
+              <!-- Email Start -->
+
+              <div class="col-12">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" value="<?= $row['email'] ?>" required>
+                <div class="invalid-feedback">
+                  Please enter a valid email address for shipping updates.
+                </div>
+              </div>
+              <!-- Email End -->
+
+              <!-- Passwords Start -->
+              <div class="col-12">
+                <label for="passwords" class="form-label">Passwords</label>
+                <input type="password" class="form-control" id="passwords" name="passwords" value="<?= $row['passwords'] ?>" required>
+                <div class="invalid-feedback">
+                  Please enter a valid password for shipping updates.
+                </div>
+              </div>
+              <!-- Passwords End -->
+
+              <!-- Gender Start -->
+              <div class="col-4">
+                <label for="gender" class="form-label">Gender</label><br>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="male" name="gender" value="Male" <?= $row['gender'] === 'Male' ? 'checked' : '' ?> required>
+                  <label class="form-check-label" for="male">男 - Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="female" name="gender" value="Female" <?= $row['gender'] === 'Female' ? 'checked' : '' ?> required>
+                  <label class="form-check-label" for="female">女 - Female</label>
+                </div>
+              </div>
+              <!-- Gender End -->
+
+
+              <div class="col-4">
+                <label for="phone_number" class="form-label">Phone Number</label>
+                <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="09xxxxxxxx" pattern="[0]{1}[9]{1}[0-9]{8}" maxlength="10" value="<?= $row['phone_number'] ?>" required>
+                <div class="invalid-feedback">
+                  Phone number required.
+                </div>
+              </div>
+
+
+              <div class="col-4">
+                <label for="birthday" class="form-label">Birthday</label>
+                <input type="date" class="form-control" id="birthday" name="birthday" value="<?= $row['birthday'] ?>" required>
+                <div class="invalid-feedback">
+                  Birthday required.
+                </div>
+              </div>
+
+
+              <div class="col-12">
+                <label for="address" class="form-label">Address</label>
+                <input type="text" class="form-control" id="address" name="address" value="<?= $row['address'] ?>" required>
+                <div class="invalid-feedback">
+                  address required.
+                </div>
+              </div>
+
+            </div>
+            <div class="text-end">
+              <button class="btn btn-primary my-3" type="submit">新增</button>
+              <button class="btn btn-secondary my-3" type="reset">清除</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- NEW END -->
+
+
+
+
+
+
+      <!-- OLD Start -->
+      <!-- <div class="card mt-5" style="width: 18rem;">
         <div class="card-body">
           <h5 class="card-title">編輯資料</h5>
           <form name="form1" onsubmit="sendData(event)">
@@ -101,7 +213,8 @@ if (empty($row)) {
             <button type="submit" class="btn btn-primary">修改</button>
           </form>
         </div>
-      </div>
+      </div> -->
+      <!-- OLD End -->
     </div>
   </div>
 
@@ -145,7 +258,7 @@ if (empty($row)) {
       </div>
       <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary" onclick="location.href='members-edit-list.php'">到列表頁</button>
+        <button type="button" class="btn btn-primary" onclick="location.href='members-list-admin.php'">到列表頁</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續更新</button>
       </div>
     </div>

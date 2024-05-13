@@ -68,8 +68,8 @@ $pageName = 'employees-add';
                 <label for="gender" class="form-label">Gender</label><br>
 
                 <div class="col-12 form-control">
-                  <input type="radio" name="gender" value="male" required>男 - Male
-                  <input type="radio" name="gender" value="female" class="ms-3" required>女 - Female
+                  <input type="radio" name="gender" value="Male" required>男 - Male
+                  <input type="radio" name="gender" value="Female" class="ms-3" required>女 - Female
                   <div class="invalid-feedback">
                     Gender required.
                   </div>
