@@ -117,17 +117,17 @@ include __DIR__ . "/part/navbar-head.php";
         <thead>
           <tr>
             <th scope="col" class="text-center">
-              <input class="form-check-input" type="checkbox" id="checkall"> 全選
+              <input class="form-check-input" type="checkbox" id="checkall">
             </th>
             <th><i class="fa-solid fa-trash text-center"></i></th>
 
             <th scope="col" class="text-center">#</th>
-            <th scope="col" class="text-center">First_name</th>
-            <th scope="col" class="text-center">Last_name</th>
+            <th scope="col" class="text-center">First name</th>
+            <th scope="col" class="text-center">Last name</th>
             <th scope="col" class="text-center">Email</th>
             <th scope="col" class="text-center">Passwords</th>
             <th scope="col" class="text-center">Gender</th>
-            <th scope="col" class="text-center">Phone_Number</th>
+            <th scope="col" class="text-center">Phone number</th>
             <th scope="col" class="text-center">Created_at</th>
             <th><i class="fa-solid fa-pen-to-square"></i></th>
 
@@ -136,10 +136,10 @@ include __DIR__ . "/part/navbar-head.php";
         <tbody>
           <?php foreach ($rows as $r) : ?>
             <tr>
-              <td scope="col" class="text-center">
-                <input class="checkboxes form-check-input" type="checkbox" id="flexCheckDefault">
+              <td scope="col" style="text-align: center;">
+                <input class="checkboxes form-check-input" type="checkbox" value="<?= $r['id'] ?>" id="flexCheckDefault<?= $r['id'] ?>">
               </td>
-              <td><a href="javascript: deleteOne(<?= $r['id'] ?>)"><i class="fa-solid fa-trash"></i></a></td>
+              <td><a href="javascript: deleteOne(<?= $r['id'] ?>)"><i class="fa-solid fa-trash text-danger"></i></a></td>
 
               <td class="text-center"><?= $r['id'] ?></td>
               <td class="text-center"><?= $r['first_name'] ?></td>
@@ -149,7 +149,7 @@ include __DIR__ . "/part/navbar-head.php";
               <td class="text-center"><?= $r['gender'] ?></td>
               <td class="text-center"><?= $r['phone_number'] ?></td>
               <td class="text-center"><?= $r['created_at'] ?></td>
-              <td><a href="employees-edit.php?id=<?= $r['id'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td>
+              <td><a href="employees-edit.php?id=<?= $r['id'] ?>"><i class="fa-solid fa-pen-to-square text-warning"></i></a></td>
 
             </tr>
           <?php endforeach; ?>

@@ -52,7 +52,6 @@ include __DIR__ . "/part/navbar-head.php";
 ?>
 
 
-
 <div class="container-fluid">
   <div class="row">
     <!--  -->
@@ -135,7 +134,7 @@ include __DIR__ . "/part/navbar-head.php";
               <td scope="col" style="text-align: center;">
                 <input class="checkboxes form-check-input" type="checkbox" value="<?= $r['id'] ?>" id="flexCheckDefault<?= $r['id'] ?>">
               </td>
-              <td class="text-center"><a href="javascript: deleteOne(<?= $r['id'] ?>)"><i class="fa-solid fa-trash"></i></a></td>
+              <td class="text-center"><a href="javascript: deleteOne(<?= $r['id'] ?>)"><i class="fa-solid fa-trash text-danger"></i></a></td>
               <td class="text-center"><?= $r['id'] ?></td>
               <td class="text-center"><?= $r['first_name'] ?></td>
               <td class="text-center"><?= $r['last_name'] ?></td>
@@ -146,7 +145,7 @@ include __DIR__ . "/part/navbar-head.php";
               <td class="text-center"><?= $r['birthday'] ?></td>
               <td><?= (!empty($r['address'])) ? htmlentities($r['address']) : '未填' ?></td>
               <td class="text-center"><?= $r['created_at'] ?></td>
-              <td class="text-center"><a href="members-edit.php?id=<?= $r['id'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td>
+              <td class="text-center"><a href="members-edit.php?id=<?= $r['id'] ?>"><i class="fa-solid fa-pen-to-square text-warning"></i></a></td>
             </tr>
           <?php endforeach; ?>
         </tbody>

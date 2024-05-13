@@ -108,24 +108,24 @@ include __DIR__ . "/part/navbar-head.php";
       <table class="table table-bordered table-striped">
         <thead>
           <tr>
-            <th scope="col" style="text-align: center;">#</th>
-            <th scope="col">first_name</th>
-            <th scope="col">last_name</th>
-            <th scope="col">Email</th>
-            <th scope="col">gender</th>
-            <th scope="col">phone_number</th>
+            <th scope="col" class="text-center">#</th>
+            <th scope="col" class="text-center">First name</th>
+            <th scope="col" class="text-center">Last name</th>
+            <th scope="col" class="text-center">Email</th>
+            <th scope="col" class="text-center">Gender</th>
+            <th scope="col" class="text-center">Phone number</th>
 
           </tr>
         </thead>
         <tbody>
           <?php foreach ($rows as $r) : ?>
             <tr>
-              <td style="text-align: center;"><?= $r['id'] ?></td>
-              <td style="text-align: center;"><?= $r['first_name'] ?></td>
-              <td style="text-align: center;"><?= $r['last_name'] ?></td>
-              <td style="text-align: center;"><?= $r['email'] ?></td>
-              <td style="text-align: center;"><?= $r['gender'] ?></td>
-              <td style="text-align: center;"><?= $r['phone_number'] ?></td>
+              <td class="text-center"><?= $r['id'] ?></td>
+              <td class="text-center"><?= $r['first_name'] ?></td>
+              <td class="text-center"><?= $r['last_name'] ?></td>
+              <td class="text-center"><?= $r['email'] ?></td>
+              <td class="text-center"><?= $r['gender'] ?></td>
+              <td class="text-center"><?= $r['phone_number'] ?></td>
 
             </tr>
           <?php endforeach; ?>
