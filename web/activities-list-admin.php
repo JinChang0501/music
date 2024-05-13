@@ -65,12 +65,12 @@ if ($totalRows) {
                   <i class="fa-solid fa-angle-left"></i>
                 </a>
               </li>
-              <?php for ($i = $page - 5; $i <= $page + 5; $i++):
-                if ($i >= 1 and $i <= $totalPages): ?>
+              <?php for ($i = $page - 5; $i <= $page + 5; $i++) :
+                if ($i >= 1 and $i <= $totalPages) : ?>
                   <li class="page-item <?= $i == $page ? 'active' : '' ?>">
                     <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
                   </li>
-                <?php endif;
+              <?php endif;
               endfor; ?>
               <li class="page-item ">
                 <a class="page-link" href="?page=<?= $page + 1 ?>">
@@ -119,11 +119,10 @@ if ($totalRows) {
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($rows as $r): ?>
+            <?php foreach ($rows as $r) : ?>
               <tr>
                 <td>
-                  <input class="checkboxes form-check-input" type="checkbox" value="<?= $r['actid'] ?>"
-                    id="flexCheckDefault<?= $r['actid'] ?>">
+                  <input class="checkboxes form-check-input" type="checkbox" value="<?= $r['actid'] ?>" id="flexCheckDefault<?= $r['actid'] ?>">
                 </td>
                 <td><?= $r['actid'] ?></td>
                 <td><?= $r['class'] ?></td>
@@ -138,7 +137,8 @@ if ($totalRows) {
                 <td><img src="<?= $r['picture'] ?>" class="image img-thumbnail" alt="activities_picture"></td>
                 <td><a href="javascript: deleteOne(<?= $r['actid'] ?>)">
                     <i class="fa-solid fa-trash"></i></a></td>
-                <td><a href="activities-edit.php?id=<?= $r['actid'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                <td><a href="activities-edit.php?actid=<?= $r['actid'] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+                </td>
               </tr>
             <?php endforeach; ?>
           </tbody>
@@ -159,7 +159,7 @@ if ($totalRows) {
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">保留</button>
         <!-- 這裡有問題 -->
-        <button type="button" class="btn btn-danger" herf="activities-delete.php?id=<?php $r['actid'] ?>">確認刪除</button>
+        <button type="button" class="btn btn-danger" herf="activities-delete.php?actid=<?php $r['actid'] ?>">確認刪除</button>
       </div>
     </div>
   </div>
@@ -167,16 +167,16 @@ if ($totalRows) {
 </div>
 <?php include __DIR__ . '/part/scripts.php' ?>
 <script>
-  const deleteOne = (id) => {
-    if (confirm(`確定要刪除${id}的資料嗎?`)) {
-      location.href = `activities-delete.php?id=${id}`;
+  const deleteOne = (actid) => {
+    if (confirm(`確定要刪除${actid}的資料嗎?`)) {
+      location.href = `activities-delete.php?actid=${actid}`;
     }
   }
 
   const checkAll = document.getElementById("checkAll");
   const checkboxes = document.getElementsByClassName("checkboxes");
 
-  checkAll.addEventListener('change', function () {
+  checkAll.addEventListener('change', function() {
     if (checkAll.checked === true) {
       for (let i = 0; i < checkboxes.length; i++) {
         checkboxes[i].checked = true;
@@ -192,13 +192,13 @@ if ($totalRows) {
   const dltAllSelect = document.getElementById("dltAllSelect");
   const checkboxes2 = document.querySelectorAll(".checkboxes");
 
-  dltAllSelect.addEventListener('click', function () {
+  dltAllSelect.addEventListener('click', function() {
     let selectedIds = []; // 儲存被勾選項目的 ID
 
     for (let i = 0; i < checkboxes2.length; i++) {
       if (checkboxes2[i].checked) {
-        const id = checkboxes2[i].value; // 獲取被勾選項目的 ID
-        selectedIds.push(id); // 將 ID 加入到 selectedIds 陣列中
+        const actid = checkboxes2[i].value; // 獲取被勾選項目的 ID
+        selectedIds.push(actid); // 將 ID 加入到 selectedIds 陣列中
       }
     }
 
@@ -206,7 +206,7 @@ if ($totalRows) {
       if (confirm(`確定要刪除這 ${selectedIds.length} 筆資料嗎?`)) {
         // 執行刪除操作，這裡可以使用 AJAX 或者其他方式向後端發送刪除請求
         // 這裡假設你已經有了一個可以處理刪除的後端接口
-        location.href = `activities-delete-sel.php?ids=${selectedIds.join(',')}`;
+        location.href = `activities-delete-sel.php?actid=${selectedIds.join(',')}`;
       }
     } else {
       alert('請先選擇要刪除的資料');

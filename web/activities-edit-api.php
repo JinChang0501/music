@@ -9,7 +9,7 @@ $output = [
 ];
 
 // TODO: 欄位資料檢查
-if (!isset($_POST['id'])) {
+if (!isset($_POST['actid'])) {
   echo json_encode($output);
   exit; # 結束 php 程式
 }
@@ -21,31 +21,39 @@ if (!isset($_POST['id'])) {
 # filter_var('bob@example.com', FILTER_VALIDATE_EMAIL): 檢查 email 格式
 
 
+$a_date = strtotime($_POST['a_date']);
+if ($a_date === false) {
+  $a_date = null;
+} else {
+  $a_date = date('Y-m-d', $a_date);
+}
+
 $sql = "UPDATE `activities` SET 
 `activity_class`=?,
 `activity_name`=?,
 `a_date`=?,
 `a_time`=?,
-`location`=?
+`location`=?,
+`address`=?,
 `descriptions`=?,
 `organizer`=?,
 `artist_id`=?,
 `picture`=?
-WHERE sid=?";
+WHERE actid=?";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
   $_POST['activity_class'],
   $_POST['activity_name'],
-  $_POST['mobile'],
-  $_POST['a_date'],
+  $a_date,
   $_POST['a_time'],
   $_POST['location'],
+  $_POST['address'],
   $_POST['descriptions'],
   $_POST['organizer'],
   $_POST['artist_id'],
   $_POST['picture'],
-  $_POST['sid'],
+  $_POST['actid'],
 ]);
 
 

@@ -12,7 +12,7 @@ if ($page < 1) {
   exit;
 }
 
-$t_sql = "SELECT COUNT(id) FROM activities";
+$t_sql = "SELECT COUNT(actid) FROM activities";
 
 # 總筆數
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
@@ -31,7 +31,7 @@ if ($totalRows) {
 
   # 取得分頁資料
   $sql = sprintf(
-    "SELECT * FROM `activities` ORDER BY id DESC LIMIT %s, %s",
+    "SELECT * FROM `activities` ORDER BY actid DESC LIMIT %s, %s",
     ($page - 1) * $perPage,
     $perPage
   );
@@ -65,12 +65,12 @@ if ($totalRows) {
                   <i class="fa-solid fa-angle-left"></i>
                 </a>
               </li>
-              <?php for ($i = $page - 5; $i <= $page + 5; $i++):
-                if ($i >= 1 and $i <= $totalPages): ?>
+              <?php for ($i = $page - 5; $i <= $page + 5; $i++) :
+                if ($i >= 1 and $i <= $totalPages) : ?>
                   <li class="page-item <?= $i == $page ? 'active' : '' ?>">
                     <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
                   </li>
-                <?php endif;
+              <?php endif;
               endfor; ?>
               <li class="page-item">
                 <a class="page-link" href="?page=<?= $page + 1 ?>">
@@ -102,9 +102,9 @@ if ($totalRows) {
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($rows as $r): ?>
+          <?php foreach ($rows as $r) : ?>
             <tr>
-              <td><?= $r['id'] ?></td>
+              <td><?= $r['actid'] ?></td>
               <td><?= $r['activity_class'] ?></td>
               <td><?= $r['activity_name'] ?></td>
               <td><?= $r['a_date'] ?></td>
@@ -114,7 +114,7 @@ if ($totalRows) {
               <td><?= $r['organizer'] ?></td>
               <td><?= $r['artist_id'] ?></td>
               <td><?= $r['picture'] ?></td>
-              <td><a href="activities-edit.php?id=<?= $r['id'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td>
+              <td><a href="activities-edit.php?id=<?= $r['actid'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td>
             </tr>
           <?php endforeach; ?>
         </tbody>
@@ -133,7 +133,7 @@ if ($totalRows) {
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">保留</button>
           <!-- 這裡有問題 -->
-          <button type="button" class="btn btn-danger" herf="activities-delete.php?id=<?php $r['id'] ?>">確認刪除</button>
+          <button type="button" class="btn btn-danger" herf="activities-delete.php?actid=<?php $r['actid'] ?>">確認刪除</button>
         </div>
       </div>
     </div>
@@ -143,9 +143,9 @@ if ($totalRows) {
   <script>
     // const delModal = new bootstrap.Modal('#deleteModal');
     // delModal.show();
-    const deleteOne = (id) => {
-      if (confirm(`是否要刪除編號為 ${id} 的資料？`)) {
-        location.herf = `activities-delete.php?id=${id}`;
+    const deleteOne = (actid) => {
+      if (confirm(`是否要刪除編號為 ${actid} 的資料？`)) {
+        location.herf = `activities-delete.php?actid=${actid}`;
       }
     }
   </script>

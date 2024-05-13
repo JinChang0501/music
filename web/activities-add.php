@@ -84,7 +84,20 @@ $pageName = 'activities-add';
 							<input type="text" class="form-control" id="artist_id" name="artist_id">
 							<div class="form-text"></div>
 						</div>
-
+						<!-- 藝人多選 -->
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+							<label class="form-check-label" for="flexCheckDefault">
+								Default checkbox
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+							<label class="form-check-label" for="flexCheckChecked">
+								Checked checkbox
+							</label>
+						</div>
+						<!-- 藝人多選 -->
 						<div class="mb-3">
 							<label for="picture" class="form-label">圖片</label>
 							<input type="text" class="form-control" id="picture" name="picture">
@@ -100,8 +113,7 @@ $pageName = 'activities-add';
 </div>
 
 <!-- Modal Start-->
-<div class="modal fade" id="staticBackdropA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-	aria-labelledby="staticBackdropLabelA" aria-hidden="true">
+<div class="modal fade" id="staticBackdropA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelA" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -155,16 +167,14 @@ $pageName = 'activities-add';
 			const fd = new FormData(document.form_activities); // 沒有外觀的表單物件
 
 			fetch('activities-add-api.php', {
-				method: 'POST',
-				body: fd, // Content-Type: multipart/form-data
-			}).then(r => r.json())
+					method: 'POST',
+					body: fd, // Content-Type: multipart/form-data
+				}).then(r => r.json())
 				.then(data => {
 					console.log(data);
 					if (data.success) {
 						myModalA.show();
-					} else {
-
-					}
+					} else {}
 				})
 				.catch(ex => console.log(ex))
 		}
