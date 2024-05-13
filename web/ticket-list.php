@@ -13,7 +13,7 @@ if ($page < 1) {
     exit; # 結束這支程式
 }
 
-$t_sql = "SELECT COUNT(id) FROM ticket;";
+$t_sql = "SELECT COUNT(tid) FROM ticket;";
 
 # 總筆數
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
@@ -32,7 +32,7 @@ if ($totalRows) {
 
     # 取得分頁資料
     $sql = sprintf(
-        "SELECT * FROM ticket JOIN activities ON ticket.activities_id = activities.id JOIN aclass ON activities.id = aclass.id JOIN artist ON activities.id = artist.id ORDER BY ticket.id ASC LIMIT %s, %s",
+        "SELECT * FROM ticket JOIN activities ON ticket.activities_id = activities.id JOIN aclass ON activities.id = aclass.id JOIN artist ON activities.id = artist.id ORDER BY ticket.tid ASC LIMIT %s, %s",
         ($page - 1) * $perPage,
         $perPage
     );
@@ -170,10 +170,10 @@ echo json_encode([
                         <?php foreach ($rows as $r): ?>
                             <tr>
                                 <td><input type="checkbox"></td>
-                                <td><a class="btn btn-danger" href="javascript: deleteOne(<?= $r['id'] ?>)">
+                                <td><a class="btn btn-danger" href="javascript: deleteOne(<?= $r['tid'] ?>)">
                                         <i class="bi bi-trash3"></i>
                                     </a></td>
-                                <td><?= $r['id'] ?></td>
+                                <td><?= $r['tid'] ?></td>
                                 <td><img src="<?= $r['picture'] ?>" class="image img-thumbnail" alt="activities_picture">
                                 </td>
                                 <td><?= $r['activity_name'] ?></td>
@@ -189,7 +189,7 @@ echo json_encode([
                                 <td></td>
                                 <td></td>
                                 <td>
-                                    <a class="btn btn-warning" href="ticket-edit.php?id=<?= $r['id'] ?>">
+                                    <a class="btn btn-warning" href="ticket-edit.php?tid=<?= $r['tid'] ?>">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                 </td>
@@ -297,9 +297,9 @@ echo json_encode([
 
 <?php include __DIR__ . "/part/scripts.php"; ?>
 <script>
-    const deleteOne = (id) => {
-        if (confirm(`是否要刪除編號為 ${id} 的資料?`)) {
-            location.href = `ticket-list-delete.php?id=${id}`;
+    const deleteOne = (tid) => {
+        if (confirm(`是否要刪除編號為 ${tid} 的資料?`)) {
+            location.href = `ticket-list-delete.php?tid=${tid}`;
         }
     }
 
