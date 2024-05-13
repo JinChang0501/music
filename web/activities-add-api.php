@@ -16,10 +16,19 @@ if (!isset($_POST['activity_name'])) {
     echo json_encode($output);
     exit; // 結束 PHP 程式
 }
+
 // if (!isset($_POST['activity_class']) || !isset($_POST['activity_name']) || !isset($_POST['a_date']) || !isset($_POST['a_time']) || !isset($_POST['location']) || !isset($_POST['address']) || !isset($_POST['descriptions']) || !isset($_POST['organizer']) || !isset($_POST['artist_id']) || !isset($_POST['picture'])) {
 //     echo json_encode($output);
 //     exit; // 結束 PHP 程式
 // }
+
+$a_date = strtotime($_POST['a_date']);
+if ($a_date === false) {
+    $a_date = null;
+} else {
+    $a_date = date('Y-m-d', $a_date);
+}
+
 
 $sql = "INSERT INTO `activities`(`activity_class`, `activity_name`, `a_date`, `a_time`, `location`, `address`, `descriptions`, `organizer`, `artist_id`,`picture`) VALUES (
     ?,
@@ -30,13 +39,14 @@ $sql = "INSERT INTO `activities`(`activity_class`, `activity_name`, `a_date`, `a
     ?,
     ?,
     ?,
-    ?,NOW() )";
+    ?,
+    ?)";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
     $_POST['activity_class'],
     $_POST['activity_name'],
-    $_POST['a_date'],
+    $a_date,
     $_POST['a_time'],
     $_POST['location'],
     $_POST['address'],
