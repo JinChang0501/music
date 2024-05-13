@@ -7,7 +7,7 @@ header('Content-Type: application/json');
 $output = [
     'success' => false, # 有沒有新增成功
     'bodyData' => $_POST,
-    'newId' => 0,
+    
 ];
 
 // TODO: 欄位資料檢查

@@ -1,6 +1,6 @@
 <?php
-// require __DIR__ . '/admin-required.php';
-// require __DIR__ . '/../config/pdo-connect.php';
+require __DIR__ . '/admin-required.php';
+require __DIR__ . '/../config/pdo-connect.php';
 
 $title = '修改商品';
 $pageName = 'product-edit';
@@ -29,10 +29,11 @@ if (empty($row)) {
 <style>
   form .mb-3 .form-text {
     color: red;
+    font-weight: 800;
   }
 </style>
 
-<div class="container">
+<div class="container-fluid">
   <div class="row">
     <div class="col-2"><?php include __DIR__ . '/part/left-bar.php' ?></div>
     <div class="col-6">
@@ -40,9 +41,10 @@ if (empty($row)) {
         <div class="card-body">
           <h5 class="card-title text-primary fs-3 fw-bold mb-5 text-center">修改商品</h5>
           <form name="form1" onsubmit="sendData(event)">
+            <input type="hidden" name="id" value="<?= $row['id'] ?>">
             <div class="mb-3">
              <label for="id" class="form-label">編號</label>
-             <input type="text" class="form-control" id="id" name="id" value="<?= $row['id'] ?>" disabled>
+             <input type="text" class="form-control" value="<?= $row['id'] ?>" disabled>
             </div>
             <div class="mb-4">
               <label for="product_name" class="form-label fw-bold">商品名稱</label>
@@ -109,13 +111,7 @@ if (empty($row)) {
   const quantityField = document.form1.purchase_quantity;
   const activeField = document.form1.activitie_id;
 
-  function sendData(e) {
-    // 回復欄位的外觀
-    for (let el of fields) {
-      el.style.border = '1px solid #CCC';
-      el.nextElementSibling.innerHTML = '';
-    }
-
+  const sendData = e => {
     e.preventDefault(); // 不要讓表單以傳統的方式送出
     // 回復欄位的外觀
     nameField.style.border = '1px solid #CCC';
@@ -162,10 +158,9 @@ if (empty($row)) {
         }
 
       })
+      .catch(ex => console.log(ex))
     }
-
-    
-  }
+  };
 
   const successModal = new bootstrap.Modal('#successModal')
   

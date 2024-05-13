@@ -1,5 +1,5 @@
 <?php
-// require __DIR__ . '/admin-required.php';
+require __DIR__ . '/admin-required.php';
 
 if (!isset($_SESSION)) {
   session_start();
@@ -15,6 +15,7 @@ $pageName = 'product-add';
 <style>
   form .mb-3 .form-text {
     color: red;
+    font-weight: 800;
   }
 </style>
 <div class="container-fluid">
@@ -73,7 +74,7 @@ $pageName = 'product-add';
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="location.href='product-list-admin.php'">跳到列表頁</button>
+        <button type="button" class="btn btn-primary" onclick="location.href='product-list-admin.php'">到列表頁</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續新增</button>
       </div>
     </div>
@@ -125,7 +126,7 @@ $pageName = 'product-add';
     if (isPass) {
       const fd = new FormData(document.form1); // 沒有外觀的表單物件
 
-      fetch(`add-api.php`, {
+      fetch(`product-add-api.php`, {
         method: 'POST',
         body: fd,
       }).then(r => r.json())
@@ -137,13 +138,12 @@ $pageName = 'product-add';
         } else {
           
         }
-
       })
+      .catch(ex => console.log(ex))
     }
   };
 
   const successModal = new bootstrap.Modal('#successModal')
   
 </script>
-
 <?php include __DIR__ . '/part/html-footer.php' ?>

@@ -22,7 +22,7 @@ $sql = "INSERT INTO `products`(`product_name`, `picture`, `price`, `purchase_qua
     ?,
     ?,
     ?,
-    ?, NOW() )";
+    ?, )";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
