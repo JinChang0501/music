@@ -13,7 +13,7 @@ $output = [
 ];
 
 // TODO: 欄位資料檢查
-if (!isset($_POST['name'])) {
+if (!isset($_POST['activities_id'])) {
     echo json_encode($output);
     exit; # 結束 php 程式
 }
@@ -44,18 +44,19 @@ $_POST['address']
 
 $stmt = $pdo->query($sql);
 */
-$birthday = strtotime($_POST['birthday']);
-if ($birthday === false) {
-    $birthday = null;
-} else {
-    $birthday = date('Y-m-d', $birthday);
-}
+
+
+// $birthday = strtotime($_POST['date']);
+// if ($birthday === false) {
+//     $birthday = null;
+// } else {
+//     $birthday = date('Y-m-d', $birthday);
+// }
 
 
 
-$sql = "INSERT INTO `address_book`(
-`name`, `email`, `mobile`, `birthday`, `address`, `created_at`) VALUES (
-    ?,
+$sql = "INSERT INTO `ticket`(
+`activities_id`, `ticket_area`, `counts`, `price`, `created_at`) VALUES (
     ?,
     ?,
     ?,
@@ -63,13 +64,11 @@ $sql = "INSERT INTO `address_book`(
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
-    $_POST['name'],
-    $_POST['email'],
-    $_POST['mobile'],
-    $birthday,
-    $_POST['address']
+    $_POST['activities_id'],
+    $_POST['ticket_area'],
+    $_POST['counts'],
+    $_POST['price'],
 ]);
-
 
 $output['success'] = !!$stmt->rowCount(); # 新增了幾筆
 $output['newId'] = $pdo->lastInsertId(); # 取得最近的新增資料的primary key
