@@ -1,6 +1,6 @@
 <?php
 require __DIR__ . '/../config/pdo-connect.php';
-$title = '活動列表';
+$title = '活動列表(未登入)';
 $pageName = 'list-activities';
 
 

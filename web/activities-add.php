@@ -61,7 +61,7 @@ $pageName = 'add-activities';
 
 						<div class="mb-3">
 							<label for="descriptions" class="form-label">活動內容</label>
-							<textarea id="descriptions" cols="30" rows="3" name="descriptions"></textarea>
+							<textarea id="descriptions" cols="60" rows="3" name="descriptions"></textarea>
 							<div class="form-text"></div>
 						</div>
 
