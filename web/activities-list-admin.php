@@ -65,12 +65,12 @@ if ($totalRows) {
                   <i class="fa-solid fa-angle-left"></i>
                 </a>
               </li>
-              <?php for ($i = $page - 5; $i <= $page + 5; $i++) :
-                if ($i >= 1 and $i <= $totalPages) : ?>
+              <?php for ($i = $page - 5; $i <= $page + 5; $i++):
+                if ($i >= 1 and $i <= $totalPages): ?>
                   <li class="page-item <?= $i == $page ? 'active' : '' ?>">
                     <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
                   </li>
-              <?php endif;
+                <?php endif;
               endfor; ?>
               <li class="page-item ">
                 <a class="page-link" href="?page=<?= $page + 1 ?>">
@@ -86,8 +86,14 @@ if ($totalRows) {
           </nav>
         </div>
       </div>
+      <!-- 按鈕群組 -->
+      <div class="col mb-3">
+        <input class="btn btn-primary" type="button" value="一鍵全選">
+        <input class="btn btn-secondary" type="button" value="一鍵取消">
+        <button class="btn btn-danger" type="submit">刪除所選</button>
+      </div>
+      <!-- 列表 -->
       <div class="col">
-        <!-- 列表 -->
         <table class="table table-bordered table-striped">
           <thead>
             <tr>
@@ -107,7 +113,7 @@ if ($totalRows) {
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($rows as $r) : ?>
+            <?php foreach ($rows as $r): ?>
               <tr>
                 <td>
                   <div class="form-check">
@@ -134,23 +140,24 @@ if ($totalRows) {
       </div>
     </div>
   </div>
+</div>
 
-  <!-- 確認刪除 彈出視窗 -->
-  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">確定刪除此筆資料？</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">保留</button>
-          <!-- 這裡有問題 -->
-          <button type="button" class="btn btn-danger" herf="activities-delete.php?id=<?php $r['id'] ?>">確認刪除</button>
-        </div>
+<!-- 確認刪除 彈出視窗 -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">確定刪除此筆資料？</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">保留</button>
+        <!-- 這裡有問題 -->
+        <button type="button" class="btn btn-danger" herf="activities-delete.php?id=<?php $r['id'] ?>">確認刪除</button>
       </div>
     </div>
   </div>
+</div>
 </div>
 <?php include __DIR__ . '/part/scripts.php' ?>
 <script>
