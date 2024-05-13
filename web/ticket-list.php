@@ -191,7 +191,7 @@ echo json_encode([
                                 <td></td>
                                 <td></td>
                                 <td>
-                                    <a class="btn btn-warning" href="ticket-edit.php?id=<?= $r['tid'] ?>">
+                                    <a class="btn btn-warning" href="ticket-edit.php?tid=<?= $r['tid'] ?>">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                 </td>
