@@ -17,7 +17,7 @@ if (!isset($_POST['artist_name']) || !isset($_POST['email']) || !isset($_POST['p
     exit; // 結束 PHP 程式
 }
 
-$sql = "INSERT INTO `artist`(`first_name`, `email`, `password`, `ManagementCompany`, `phone_number`, `debutDate`, `artist_picture`) VALUES (
+$sql = "INSERT INTO `artist`(`artist_name`, `email`, `password`, `ManagementCompany`, `phone_number`, `debutDate`, `artist_picture`) VALUES (
     ?,
     ?,
     ?,
