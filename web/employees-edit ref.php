@@ -53,7 +53,7 @@ if (empty($row)) {
             <div class="row g-3">
               <div class="col-sm-6">
                 <label for="first_name" class="form-label">First name</label>
-                <input type="text" class="form-control" id="first_name" name="first_name" value="<?= $row['first_name'] ?>" required>
+                <input type="text" class="form-control" id="first_name" name="first_name" required>
                 <div class="invalid-feedback">
                   Valid first name is required.
                 </div>
@@ -61,51 +61,44 @@ if (empty($row)) {
 
               <div class="col-sm-6">
                 <label for="last_name" class="form-label">Last name</label>
-                <input type="text" class="form-control" id="last_name" name="last_name" value="<?= $row['last_name'] ?>" required>
+                <input type="text" class="form-control" id="last_name" name="last_name" required>
                 <div class="invalid-feedback">
                   Valid last name is required.
                 </div>
               </div>
 
-              <!-- Email Start -->
 
               <div class="col-12">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" value="<?= $row['email'] ?>" required>
+                <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
                 <div class="invalid-feedback">
                   Please enter a valid email address for shipping updates.
                 </div>
               </div>
-              <!-- Email End -->
 
-              <!-- Passwords Start -->
               <div class="col-12">
                 <label for="passwords" class="form-label">Passwords</label>
-                <input type="password" class="form-control" id="passwords" name="passwords" value="<?= $row['passwords'] ?>" required>
+                <input type="password" class="form-control" id="passwords" name="passwords" placeholder="" required>
                 <div class="invalid-feedback">
                   Please enter a valid password for shipping updates.
                 </div>
               </div>
-              <!-- Passwords End -->
 
-              <!-- Gender Start -->
-              <div class="mb-3">
+              <div class="col-6">
                 <label for="gender" class="form-label">Gender</label><br>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" id="male" name="gender" value="Male" <?= $row['gender'] === 'Male' ? 'checked' : '' ?> required>
-                  <label class="form-check-label" for="male">男 - Male</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" id="female" name="gender" value="Female" <?= $row['gender'] === 'Female' ? 'checked' : '' ?> required>
-                  <label class="form-check-label" for="female">女 - Female</label>
+
+                <div class="col-12 form-control">
+                  <input type="radio" name="gender" value="male" required>男 - Male
+                  <input type="radio" name="gender" value="female" class="ms-3" required>女 - Female
+                  <div class="invalid-feedback">
+                    Gender required.
+                  </div>
                 </div>
               </div>
-              <!-- Gender End -->
-
 
               <div class="col-6">
                 <label for="phone_number" class="form-label">Phone Number</label>
-                <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="09xxxxxxxx" pattern="[0]{1}[9]{1}[0-9]{8}" maxlength="10" value="<?= $row['phone_number'] ?>" required>
+                <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="09xxxxxxxx" pattern="[0]{1}[9]{1}[0-9]{8}" maxlength="10" required>
                 <div class="invalid-feedback">
                   Phone number required.
                 </div>
@@ -121,8 +114,12 @@ if (empty($row)) {
       </div>
       <!-- NEW END -->
 
+
+
+
+
       <!-- OLD Start -->
-      <!-- <div class="card mt-5" style="width: 18rem;">
+      <div class="card mt-5" style="width: 18rem;">
         <div class="card-body">
           <h5 class="card-title">編輯資料</h5>
           <form name="form1" onsubmit="sendData(event)">
@@ -174,11 +171,10 @@ if (empty($row)) {
             </button>
           </form>
         </div>
-      </div> -->
-      <!-- OLD End -->
-
+      </div>
     </div>
   </div>
+  <!-- OLD End -->
 </div>
 
 <!-- Modal Start-->

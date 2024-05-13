@@ -13,7 +13,7 @@ $sql = "DELETE FROM `employees` WHERE id=$id";
 $pdo->query($sql);
 
 # $_SERVER['HTTP_REFERER']: 從哪個頁面連過來的
-$comeFrom = 'employees-delete-list.php';
+$comeFrom = 'employees-list-admin.php';
 if (isset($_SERVER['HTTP_REFERER'])) {
   $comeFrom = $_SERVER['HTTP_REFERER'];
 }
