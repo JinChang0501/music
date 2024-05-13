@@ -68,21 +68,19 @@ $pageName = 'members-add';
 
               <div class="col-4">
                 <label for="gender" class="form-label">Gender</label><br>
-                <div class="form-control">
-                  <div class="row">
-                    <div class="col-6"><input type="radio" name="gender" value="male" required>男 (Male)</div>
 
-                    <div class="col-6"><input type="radio" name="gender" value="female" required>女 (Female)</div>
-                    <div class="invalid-feedback">
-                      Gender required.
-                    </div>
+                <div class="col-12 form-control">
+                  <input type="radio" name="gender" value="male" required>男 - Male
+                  <input type="radio" name="gender" value="female" class="ms-3" required>女 - Female
+                  <div class="invalid-feedback">
+                    Gender required.
                   </div>
                 </div>
               </div>
 
               <div class="col-4">
                 <label for="phone_number" class="form-label">Phone Number</label>
-                <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="09xxxxxxxx" required>
+                <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="09xxxxxxxx" pattern="[0]{1}[9]{1}[0-9]{8}" maxlength="10" required>
                 <div class="invalid-feedback">
                   Phone number required.
                 </div>
@@ -104,7 +102,10 @@ $pageName = 'members-add';
                 </div>
               </div>
             </div>
-            <button class="btn btn-primary my-3" type="submit">新增</button>
+            <div class="text-end">
+              <button class="btn btn-primary my-3" type="submit">新增</button>
+              <button class="btn btn-secondary my-3" type="reset">清除</button>
+            </div>
           </form>
         </div>
       </div>
@@ -196,6 +197,22 @@ $pageName = 'members-add';
 
 <?php include __DIR__ . "/part/scripts.php"; ?>
 <script>
+  const emailValue = document.getElementById('email').value;
+  console.log(emailValue);
+
+
+
+
+
+
+  email.addEventListener('keydown', function() {})
+
+
+
+
+
+
+
   const first_nameField = document.form1.first_name;
   const last_nameField = document.form1.last_name;
   const emailField = document.form1.email;

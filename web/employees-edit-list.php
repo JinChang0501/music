@@ -156,15 +156,6 @@ include __DIR__ . "/part/navbar-head.php";
     }
   }
 
-  // const checkall = document.getElementById("checkall");
-  // const checkboxes = document.getElementsByClassName("checkboxes");
-  // checkall.addEventListener('click', function() {
-
-  //   if (checkall.checked === true) {
-  //     checkboxes.checked = true;
-  //   }
-  // });
-
   const checkall = document.getElementById("checkall");
   const checkboxes = document.getElementsByClassName("checkboxes");
 

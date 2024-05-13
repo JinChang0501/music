@@ -40,8 +40,9 @@ if (empty($row)) {
     <div class="col-2">
       <?php include __DIR__ . "/part/left-bar.php"; ?>
     </div>
-    <div class="col-10">
-      <div class="card mt-5" style="width: 18rem;">
+    <O class="col-10">
+      <!-- OLD END-->
+      <!-- <div class="card mt-5" style="width: 18rem;">
         <div class="card-body">
           <h5 class="card-title">編輯資料</h5>
           <form name="form1" onsubmit="sendData(event)">
@@ -93,8 +94,9 @@ if (empty($row)) {
             </button>
           </form>
         </div>
-      </div>
-    </div>
+      </div> -->
+      <!-- OLD END -->
+    </O>
   </div>
 
 </div>

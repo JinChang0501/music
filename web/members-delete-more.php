@@ -15,7 +15,7 @@ foreach ($idsArray as $id) {
 }
 
 # $_SERVER['HTTP_REFERER']: 從哪個頁面連過來的
-$comeFrom = 'members-delete-list.php';
+$comeFrom = 'members-list-admin.php';
 if (isset($_SERVER['HTTP_REFERER'])) {
   $comeFrom = $_SERVER['HTTP_REFERER'];
 }

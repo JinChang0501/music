@@ -122,7 +122,7 @@ if (empty($row)) {
       </div>
       <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary" onclick="location.href='members-edit-list.php'">到列表頁</button>
+        <button type="button" class="btn btn-primary" onclick="location.href='members-list-admin.php'">到列表頁</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續更新</button>
       </div>
     </div>

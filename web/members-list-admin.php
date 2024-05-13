@@ -46,16 +46,9 @@ $sql = sprintf(
 
 $rows = $pdo->query($sql)->fetchAll();
 
-// echo json_encode([
-//     'totalRows' => $totalRows,
-//     'totalPages' => $totalPages,
-//     'rows' => $rows,
-// ]);
-
 
 include __DIR__ . "/part/html-header.php";
 include __DIR__ . "/part/navbar-head.php";
-// include __DIR__ . "/part/left-bar.php";
 ?>
 
 
@@ -68,6 +61,7 @@ include __DIR__ . "/part/navbar-head.php";
     </div>
 
     <div class="col-10">
+      <!-- 頁面選單 Start -->
       <nav aria-label="Page navigation example">
         <ul class="pagination">
           <!-- arrow left start -->
@@ -103,11 +97,24 @@ include __DIR__ . "/part/navbar-head.php";
           <!-- arrow right end -->
         </ul>
       </nav>
+      <!-- 頁面選單 End -->
+      <!-- 按鈕列 Start -->
+      <div class="row">
+        <!-- <div class="col-2 mb-4"><button class="bg-warning rounded-2" id="checkall">一鍵全選</button></div> -->
+        <div class="col-2 mb-4"><button class="bg-warning rounded-2" id="dltAllSelect">刪除所選</button></div>
 
+      </div>
+      <!-- 按鈕列 End -->
       <!--  -->
       <table class="table table-bordered table-striped">
         <thead>
           <tr>
+            <th scope="col" class="text-center">
+              <input class="form-check-input" type="checkbox" value="" id="checkall">
+            </th>
+            <!-- <th scope="col" class="text-center">選擇</th> -->
+            <th class="text-center"><i class="fa-solid fa-trash text-center"></i></th>
+
             <th scope="col" class="text-center">#</th>
             <th scope="col" class="text-center">First_name</th>
             <th scope="col" class="text-center">Last_name</th>
@@ -118,11 +125,17 @@ include __DIR__ . "/part/navbar-head.php";
             <th scope="col" class="text-center">Birthday</th>
             <th scope="col" class="text-center">Address</th>
             <th scope="col" class="text-center">Created_at</th>
+            <th class="text-center"><i class="fa-solid fa-pen-to-square"></i></th>
+
           </tr>
         </thead>
         <tbody>
           <?php foreach ($rows as $r) : ?>
             <tr>
+              <td scope="col" style="text-align: center;">
+                <input class="checkboxes form-check-input" type="checkbox" value="<?= $r['id'] ?>" id="flexCheckDefault<?= $r['id'] ?>">
+              </td>
+              <td class="text-center"><a href="javascript: deleteOne(<?= $r['id'] ?>)"><i class="fa-solid fa-trash"></i></a></td>
               <td class="text-center"><?= $r['id'] ?></td>
               <td class="text-center"><?= $r['first_name'] ?></td>
               <td class="text-center"><?= $r['last_name'] ?></td>
@@ -132,8 +145,8 @@ include __DIR__ . "/part/navbar-head.php";
               <td class="text-center"><?= $r['phone_number'] ?></td>
               <td class="text-center"><?= $r['birthday'] ?></td>
               <td><?= (!empty($r['address'])) ? htmlentities($r['address']) : '未填' ?></td>
-
               <td class="text-center"><?= $r['created_at'] ?></td>
+              <td class="text-center"><a href="members-edit.php?id=<?= $r['id'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td>
             </tr>
           <?php endforeach; ?>
         </tbody>
@@ -146,18 +159,9 @@ include __DIR__ . "/part/navbar-head.php";
 <script>
   const deleteOne = (id) => {
     if (confirm(`確定要刪除${id}的資料嗎?`)) {
-      location.href = `delete.php?id=${id}`;
+      location.href = `members-delete.php?id=${id}`;
     }
   }
-
-  // const checkall = document.getElementById("checkall");
-  // const checkboxes = document.getElementsByClassName("checkboxes");
-  // checkall.addEventListener('click', function() {
-
-  //   if (checkall.checked === true) {
-  //     checkboxes.checked = true;
-  //   }
-  // });
 
   const checkall = document.getElementById("checkall");
   const checkboxes = document.getElementsByClassName("checkboxes");
@@ -171,6 +175,32 @@ include __DIR__ . "/part/navbar-head.php";
       for (let i = 0; i < checkboxes.length; i++) {
         checkboxes[i].checked = false;
       }
+    }
+  });
+
+
+  // 刪除所選Script
+  const dltAllSelect = document.getElementById("dltAllSelect");
+  const checkboxes2 = document.querySelectorAll(".checkboxes");
+
+  dltAllSelect.addEventListener('click', function() {
+    let selectedIds = []; // 儲存被勾選項目的 ID
+
+    for (let i = 0; i < checkboxes2.length; i++) {
+      if (checkboxes2[i].checked) {
+        const id = checkboxes2[i].value; // 獲取被勾選項目的 ID
+        selectedIds.push(id); // 將 ID 加入到 selectedIds 陣列中
+      }
+    }
+
+    if (selectedIds.length > 0) {
+      if (confirm(`確定要刪除這 ${selectedIds.length} 筆資料嗎?`)) {
+        // 執行刪除操作，這裡可以使用 AJAX 或者其他方式向後端發送刪除請求
+        // 這裡假設你已經有了一個可以處理刪除的後端接口
+        location.href = `members-delete-more.php?ids=${selectedIds.join(',')}`;
+      }
+    } else {
+      alert('請先選擇要刪除的資料');
     }
   });
 </script>

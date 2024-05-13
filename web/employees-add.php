@@ -24,7 +24,79 @@ $pageName = 'employees-add';
   <div class="row">
     <div class="col-2 p-0"><?php include __DIR__ . "/part/left-bar.php"; ?></div>
     <div class="col-10">
-      <div class="card mt-5" style="width: 18rem;">
+
+      <!-- NEW START-->
+      <div class="row">
+        <div class="col-8 mx-auto border rounded-3 my-3 bg-white shadow">
+          <h4 class="my-3">新增員工</h4>
+          <form name="form1" onsubmit="sendData(event)" class="needs-validation" novalidate>
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label for="first_name" class="form-label">First name</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" required>
+                <div class="invalid-feedback">
+                  Valid first name is required.
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <label for="last_name" class="form-label">Last name</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" required>
+                <div class="invalid-feedback">
+                  Valid last name is required.
+                </div>
+              </div>
+
+
+              <div class="col-12">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
+                <div class="invalid-feedback">
+                  Please enter a valid email address for shipping updates.
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label for="passwords" class="form-label">Passwords</label>
+                <input type="password" class="form-control" id="passwords" name="passwords" placeholder="" required>
+                <div class="invalid-feedback">
+                  Please enter a valid password for shipping updates.
+                </div>
+              </div>
+
+              <div class="col-6">
+                <label for="gender" class="form-label">Gender</label><br>
+
+                <div class="col-12 form-control">
+                  <input type="radio" name="gender" value="male" required>男 - Male
+                  <input type="radio" name="gender" value="female" class="ms-3" required>女 - Female
+                  <div class="invalid-feedback">
+                    Gender required.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-6">
+                <label for="phone_number" class="form-label">Phone Number</label>
+                <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="09xxxxxxxx" pattern="[0]{1}[9]{1}[0-9]{8}" maxlength="10" required>
+                <div class="invalid-feedback">
+                  Phone number required.
+                </div>
+              </div>
+
+            </div>
+            <div class="text-end">
+              <button class="btn btn-primary my-3" type="submit">新增</button>
+              <button class="btn btn-secondary my-3" type="reset">清除</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- NEW END -->
+
+
+      <!-- OLD -->
+      <!-- <div class="card mt-5" style="width: 18rem;">
         <div class="card-body">
           <h5 class="card-title">新增員工資料</h5>
           <form name="form1" onsubmit="sendData(event)">
@@ -67,7 +139,8 @@ $pageName = 'employees-add';
             <button type="submit" class="btn btn-primary">新增</button>
           </form>
         </div>
-      </div>
+      </div> -->
+      <!-- OLD -->
     </div>
   </div>
 </div>
