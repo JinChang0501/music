@@ -106,10 +106,12 @@ if (!isset($pageName))
             </h2>
             <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="heading4" data-bs-parent="#accordionExample">
               <div class="accordion-body p-0"> <!-- p-0 把li上下左右的空間清掉不要動-->
-                <li class="li-hover"><a class="dropdown-item py-3 border  " href="#">增加會員資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">刪除會員資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">編輯會員資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">查詢會員資料</a></li>
+                <li class="li-hover">
+                  <a class="dropdown-item py-3 border <?= $pageName == 'notification-list' ? 'bg-color' : '' ?>" href="notification-list.php">通知列表</a>
+                </li>
+                <li class="li-hover">
+                  <a class="dropdown-item py-3 border <?= $pageName == 'notification-add' ? 'bg-color' : '' ?>" href="notification-add.php">新增通知</a>
+                </li>
               </div>
             </div>
           </div>
@@ -123,10 +125,12 @@ if (!isset($pageName))
             </h2>
             <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="heading5" data-bs-parent="#accordionExample">
               <div class="accordion-body p-0"> <!-- p-0 把li上下左右的空間清掉不要動-->
-                <li class="li-hover"><a class="dropdown-item py-3 border  " href="#">增加會員資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">刪除會員資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">編輯會員資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">查詢會員資料</a></li>
+                <li class="li-hover">
+                  <a class="dropdown-item py-3 border <?= $pageName == 'activities-list' ? 'bg-color' : '' ?>" href="activities-list.php">活動列表</a>
+                </li>
+                <li class="li-hover">
+                  <a class="dropdown-item py-3 border <?= $pageName == 'activities-add' ? 'bg-color' : '' ?>" href="activities-add.php">新增活動</a>
+                </li>
               </div>
             </div>
           </div>
@@ -149,38 +153,42 @@ if (!isset($pageName))
           </div>
           <!-- 7 -->
           <div class="accordion-item">
-            <h2 class="accordion-header" id="heading7">
-              <button class="accordion-button collapsed fs-5 fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse7" aria-expanded="false" aria-controls="collapse7">
+            <h2 class="accordion-header" id="heading5">
+              <button class="accordion-button collapsed fs-5 fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
                 商品資料管理
               </button>
             </h2>
-            <div id="collapse7" class="accordion-collapse collapse" aria-labelledby="heading7" data-bs-parent="#accordionExample">
-              <div class="accordion-body p-0"> <!-- p-0 把li上下左右的空間清掉不要動-->
-                <li class="li-hover"><a class="dropdown-item py-3 border  " href="product-add.php">增加商品資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="product-list.php">編輯與刪除商品資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">查詢商品資料</a></li>
+            <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="heading5" data-bs-parent="#accordionExample">
+              <div id="collapse7" class="accordion-collapse collapse" aria-labelledby="heading7" data-bs-parent="#accordionExample">
+                <div class="accordion-body p-0"> <!-- p-0 把li上下左右的空間清掉不要動-->
+                  <li class="li-hover"><a class="dropdown-item py-3 border  " href="product-add.php">增加商品資料</a></li>
+                  <li class="li-hover"><a class="dropdown-item py-3 border" href="product-list.php">編輯與刪除商品資料</a></li>
+                  <li class="li-hover"><a class="dropdown-item py-3 border" href="#">查詢商品資料</a></li>
+                </div>
               </div>
             </div>
-          </div>
-          <!-- 8 -->
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="heading8">
-              <button class="accordion-button collapsed fs-5 fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse8" aria-expanded="false" aria-controls="collapse8">
-                訂單資料管理
-              </button>
-            </h2>
-            <div id="collapse8" class="accordion-collapse collapse" aria-labelledby="heading8" data-bs-parent="#accordionExample">
-              <div class="accordion-body p-0"> <!-- p-0 把li上下左右的空間清掉不要動-->
-                <li class="li-hover"><a class="dropdown-item py-3 border  " href="#">增加訂單資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">刪除訂單資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">編輯訂單資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">查詢訂單資料</a></li>
-              </div>
+            <!-- 8 -->
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="heading5">
+                <button class="accordion-button collapsed fs-5 fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                  <h2 class="accordion-header" id="heading8">
+                    <button class="accordion-button collapsed fs-5 fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse8" aria-expanded="false" aria-controls="collapse8">
+                      訂單資料管理
+                    </button>
+                  </h2>
+                  <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="heading5" data-bs-parent="#accordionExample">
+                    <div id="collapse8" class="accordion-collapse collapse" aria-labelledby="heading8" data-bs-parent="#accordionExample">
+                      <div class="accordion-body p-0"> <!-- p-0 把li上下左右的空間清掉不要動-->
+                        <li class="li-hover"><a class="dropdown-item py-3 border  " href="#">增加訂單資料</a></li>
+                        <li class="li-hover"><a class="dropdown-item py-3 border" href="#">刪除訂單資料</a></li>
+                        <li class="li-hover"><a class="dropdown-item py-3 border" href="#">編輯訂單資料</a></li>
+                        <li class="li-hover"><a class="dropdown-item py-3 border" href="#">查詢訂單資料</a></li>
+                      </div>
+                    </div>
+                  </div>
+
+
             </div>
-          </div>
-
-
-        </div>
       </ul>
     </div>
   </div>

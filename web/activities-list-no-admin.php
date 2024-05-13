@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/../config/pdo-connect.php';
 $title = '活動列表(未登入)';
-$pageName = 'list-activities';
+$pageName = 'activities-list';
 
 
 $perPage = 10;
@@ -65,12 +65,12 @@ if ($totalRows) {
                   <i class="fa-solid fa-angle-left"></i>
                 </a>
               </li>
-              <?php for ($i = $page - 5; $i <= $page + 5; $i++) :
-                if ($i >= 1 and $i <= $totalPages) : ?>
+              <?php for ($i = $page - 5; $i <= $page + 5; $i++):
+                if ($i >= 1 and $i <= $totalPages): ?>
                   <li class="page-item <?= $i == $page ? 'active' : '' ?>">
                     <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
                   </li>
-              <?php endif;
+                <?php endif;
               endfor; ?>
               <li class="page-item">
                 <a class="page-link" href="?page=<?= $page + 1 ?>">
@@ -102,7 +102,7 @@ if ($totalRows) {
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($rows as $r) : ?>
+          <?php foreach ($rows as $r): ?>
             <tr>
               <td><?= $r['id'] ?></td>
               <td><?= $r['activity_class'] ?></td>
