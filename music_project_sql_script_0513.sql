@@ -372,13 +372,13 @@ DROP TABLE IF EXISTS `ticket`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ticket` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `tid` int NOT NULL AUTO_INCREMENT,
   `activities_id` int NOT NULL,
   `ticket_area` varchar(50) DEFAULT NULL,
   `counts` int NOT NULL,
   `price` int NOT NULL,
   `created_at` datetime NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`tid`),
   KEY `activities_id` (`activities_id`),
   CONSTRAINT `ticket_ibfk_1` FOREIGN KEY (`activities_id`) REFERENCES `activities` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -414,7 +414,7 @@ CREATE TABLE `ticket_order` (
   KEY `user_id` (`user_id`) USING BTREE,
   CONSTRAINT `ticket_order_ibfk_1` FOREIGN KEY (`ticket_status`) REFERENCES `ticket_status` (`id`),
   CONSTRAINT `ticket_order_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `members` (`id`),
-  CONSTRAINT `ticket_order_ibfk_3` FOREIGN KEY (`ticket_id`) REFERENCES `ticket` (`id`)
+  CONSTRAINT `ticket_order_ibfk_3` FOREIGN KEY (`ticket_id`) REFERENCES `ticket` (`tid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

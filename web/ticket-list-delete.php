@@ -2,13 +2,13 @@
 require __DIR__. '/admin-required.php';
 require __DIR__ . '/../config/pdo-connect.php';
 
-$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-if ($id < 1) {
+$tid = isset($_GET['tid']) ? intval($_GET['tid']) : 0;
+if ($tid < 1) {
   header('Location: ticket-list.php');
   exit;
 }
 
-$sql = "DELETE FROM ticket WHERE id=$id";
+$sql = "DELETE FROM ticket WHERE tid=$tid";
 $pdo->query($sql);
 
 # $_SERVER['HTTP_REFERER']: 從哪個頁面連過來的
