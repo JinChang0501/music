@@ -5,7 +5,7 @@ require __DIR__ . '/../config/pdo-connect.php';
 $title = '上架購票清單';
 $pageName = 'ticket-list';
 
-$perPage = 3; # 每一頁最多有幾筆
+$perPage = 5; # 每一頁最多有幾筆
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 if ($page < 1) {
@@ -13,7 +13,7 @@ if ($page < 1) {
     exit; # 結束這支程式
 }
 
-$t_sql = "SELECT COUNT(id) FROM ticket;";
+$t_sql = "SELECT COUNT(tid) FROM ticket;";
 
 # 總筆數
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
@@ -32,7 +32,7 @@ if ($totalRows) {
 
     # 取得分頁資料
     $sql = sprintf(
-        "SELECT * FROM ticket JOIN activities ON ticket.activities_id = activities.id JOIN aclass ON activities.id = aclass.id JOIN artist ON activities.id = artist.id ORDER BY ticket.id ASC LIMIT %s, %s",
+        "SELECT * FROM ticket JOIN activities ON ticket.activities_id = activities.actid JOIN aclass ON activities.actid = aclass.id JOIN artist ON activities.actid = artist.id ORDER BY ticket.tid ASC LIMIT %s, %s",
         ($page - 1) * $perPage,
         $perPage
     );
@@ -65,6 +65,7 @@ echo json_encode([
     .model-a:hover {
         color: white;
     }
+
 </style>
 
 <div class="container-fluid p-0">
@@ -87,8 +88,9 @@ echo json_encode([
                         <li><a class="dropdown-item active" href="#">活動名稱</a></li>
                         <li><a class="dropdown-item" href="#">活動描述</a></li>
                     </ul>
-                    <input type="search" class="form-control border-5" name="search" placeholder="請輸入要搜尋的內容...">
-                    <input type="submit" class="btn btn-secondary fw-bold" value="搜尋">
+                    <input type="search" class="textSearch form-control border-5" name="search"
+                        placeholder="請輸入要搜尋的內容...">
+                    <input type="submit" class="search btn btn-secondary fw-bold" value="搜尋">
                 </div>
 
             </div>
@@ -131,9 +133,9 @@ echo json_encode([
                 <div>
                     <a class="btn btn-secondary fw-bold" href="ticket-add.php">新增購票</a>
                     <a class="btn btn-secondary fw-bold" href="ticket-add.php">刪除所選</a>
-                    <a class="btn btn-secondary fw-bold" href="javascript:;">音樂祭</a>
-                    <a class="btn btn-secondary fw-bold" href="javascript:;">演唱會</a>
-                    <a class="btn btn-secondary fw-bold" href="javascript:;">顯示全部</a>
+                    <a class="musicFestival btn btn-secondary fw-bold" href="javascript:;">music festival</a>
+                    <a class="concert btn lightgraytn btn-secondary fw-bold" href="javascript:;">concert</a>
+                    <a class="reload btn btn-secondary fw-bold" href="javascript:;">顯示全部</a>
                 </div>
 
                 <div data-bs-toggle="modal" data-bs-target="#Modal">
@@ -170,10 +172,10 @@ echo json_encode([
                         <?php foreach ($rows as $r): ?>
                             <tr>
                                 <td><input type="checkbox"></td>
-                                <td><a class="btn btn-danger" href="javascript: deleteOne(<?= $r['id'] ?>)">
+                                <td><a class="btn btn-danger" href="javascript: deleteOne(<?= $r['tid'] ?>)">
                                         <i class="bi bi-trash3"></i>
                                     </a></td>
-                                <td><?= $r['id'] ?></td>
+                                <td><?= $r['tid'] ?></td>
                                 <td><img src="<?= $r['picture'] ?>" class="image img-thumbnail" alt="activities_picture">
                                 </td>
                                 <td><?= $r['activity_name'] ?></td>
@@ -189,7 +191,7 @@ echo json_encode([
                                 <td></td>
                                 <td></td>
                                 <td>
-                                    <a class="btn btn-warning" href="ticket-edit.php?id=<?= $r['id'] ?>">
+                                    <a class="btn btn-warning" href="ticket-edit.php?id=<?= $r['tid'] ?>">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                 </td>
@@ -297,11 +299,157 @@ echo json_encode([
 
 <?php include __DIR__ . "/part/scripts.php"; ?>
 <script>
-    const deleteOne = (id) => {
-        if (confirm(`是否要刪除編號為 ${id} 的資料?`)) {
-            location.href = `ticket-list-delete.php?id=${id}`;
+    // search
+
+    const searchInput = document.querySelector('.textSearch');
+    const searchButton = document.querySelector('.search');
+
+    searchButton.addEventListener('click', function () {
+        const searchText = searchInput.value;
+        // 使用 AJAX 向後端發送請求
+        fetch(`ticket-search-api.php?keyword=${searchText}`)
+            .then(response => response.json())
+            .then(data => {
+                // 更新前端頁面，例如更新表格內容
+                updateTable(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+
+    // search
+
+    // reload
+
+    const reload = document.querySelector('.reload');
+
+    reload.addEventListener('click', function () {
+        // 在 JavaScript 中重新整理頁面
+        location.reload();
+    });
+
+    // reload
+
+    /* musicFestival-api */
+
+    const musicFestival = document.querySelector('.musicFestival');
+
+    musicFestival.addEventListener('click', function () {
+        // 發送 AJAX 請求到後端
+        fetch('ticket-musicFestival-api.php')
+            .then(response => response.json())
+            .then(data => {
+                // 更新前端頁面
+                updateTable(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+
+    function updateTable(data) {
+        const tbody = document.querySelector('.tb');
+        tbody.innerHTML = ''; // 清空表格內容
+        data.forEach(row => {
+            const tr = document.createElement('tr');
+            // 創建表格行並填充數據
+            tr.innerHTML = `
+            <td><input type="checkbox"></td>
+            <td><a class="btn btn-danger" href="javascript: deleteOne(${row['tid']})">
+                <i class="bi bi-trash3"></i>
+                </a></td>
+            <td>${row['tid']}</td>
+            <td><img src="${row['picture']}" class="image img-thumbnail" alt="activities_picture"></td>
+            <td>${row['activity_name']}</td>
+            <td>${row['art_name']}</td>
+            <td>${row['location']}</td>
+            <td>${row['descriptions']}</td>
+            <td>${row['a_date']}<br><br>${row['a_time']}</td>
+            <td>${row['counts']}</td>
+            <td>${row['price']}</td>
+            <td>${row['class']}</td>
+            <td>${row['ticket_area']}</td>
+            <td>${row['organizer']}</td>
+            <td></td>
+            <td></td>
+            <td>
+                <a class="btn btn-warning" href="ticket-edit.php?id=${row['tid']}">
+                    <i class="bi bi-pencil-square"></i>
+                </a>
+            </td>
+        `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    /* musicFestival-api */
+
+    /* concert-api */
+
+    const concert = document.querySelector('.concert');
+
+    concert.addEventListener('click', function () {
+        // 發送 AJAX 請求到後端
+        fetch('ticket-concert-api.php')
+            .then(response => response.json())
+            .then(data => {
+                // 更新前端頁面
+                updateTable(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+
+    function updateTable(data) {
+        const tbody = document.querySelector('.tb');
+        tbody.innerHTML = ''; // 清空表格內容
+        data.forEach(row => {
+            const tr = document.createElement('tr');
+            // 創建表格行並填充數據
+            tr.innerHTML = `
+        <td><input type="checkbox"></td>
+        <td><a class="btn btn-danger" href="javascript: deleteOne(${row['tid']})">
+            <i class="bi bi-trash3"></i>
+            </a></td>
+        <td>${row['tid']}</td>
+        <td><img src="${row['picture']}" class="image img-thumbnail" alt="activities_picture"></td>
+        <td>${row['activity_name']}</td>
+        <td>${row['art_name']}</td>
+        <td>${row['location']}</td>
+        <td>${row['descriptions']}</td>
+        <td>${row['a_date']}<br><br>${row['a_time']}</td>
+        <td>${row['counts']}</td>
+        <td>${row['price']}</td>
+        <td>${row['class']}</td>
+        <td>${row['ticket_area']}</td>
+        <td>${row['organizer']}</td>
+        <td></td>
+        <td></td>
+        <td>
+            <a class="btn btn-warning" href="ticket-edit.php?id=${row['tid']}">
+                <i class="bi bi-pencil-square"></i>
+            </a>
+        </td>
+    `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    /* concert-api */
+
+    // delete
+
+    const deleteOne = (tid) => {
+        if (confirm(`是否要刪除編號為 ${tid} 的資料?`)) {
+            location.href = `ticket-list-delete.php?id=${tid}`;
         }
     }
+
+    // delete
+
+    // 全選反選
 
     let cb_all = document.querySelector('.cb_all');
     let tbs = document.querySelector('.tb').querySelectorAll('input');
@@ -324,5 +472,8 @@ echo json_encode([
             cb_all.checked = flag;
         }
     }
+
+    // 全選反選
+
 </script>
 <?php include __DIR__ . "/part/html-footer.php"; ?>
