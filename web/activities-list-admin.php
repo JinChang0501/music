@@ -87,23 +87,29 @@ if ($totalRows) {
         </div>
       </div>
       <!-- 按鈕群組 -->
-      <div class="col mb-3">
+      <div class="col-6 mb-3">
         <input class="btn btn-primary" type="button" value="一鍵全選">
         <input class="btn btn-secondary" type="button" value="一鍵取消">
-        <button class="btn btn-danger" type="submit">刪除所選</button>
+        <button class="btn btn-danger" type="submit" id="dltAllSelect">刪除所選</button>
+      </div>
+      <!-- 搜尋 -->
+      <div class="col-6 mb-3">
+
+
       </div>
       <!-- 列表 -->
       <div class="col">
         <table class="table table-bordered table-striped">
           <thead>
             <tr>
-              <th scope="col">選取</th>
+              <th scope="col"><input class="form-check-input" type="checkbox" value="" id="checkAll"> </th>
               <th scope="col">#</th>
               <th scope="col">類別</th>
               <th scope="col">活動名稱</th>
               <th scope="col">日期</th>
               <th scope="col">時間</th>
               <th scope="col">地點</th>
+              <th scope="col">地址</th>
               <th scope="col">活動內容</th>
               <th scope="col">主辦單位</th>
               <th scope="col">表演者</th>
@@ -116,9 +122,8 @@ if ($totalRows) {
             <?php foreach ($rows as $r): ?>
               <tr>
                 <td>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                  </div>
+                  <input class="checkboxes form-check-input" type="checkbox" value="<?= $r['id'] ?>"
+                    id="flexCheckDefault<?= $r['id'] ?>">
                 </td>
                 <td><?= $r['id'] ?></td>
                 <td><?= $r['activity_class'] ?></td>
@@ -126,6 +131,7 @@ if ($totalRows) {
                 <td><?= $r['a_date'] ?></td>
                 <td><?= $r['a_time'] ?></td>
                 <td><?= $r['location'] ?></td>
+                <td><?= $r['address'] ?></td>
                 <td><?= $r['descriptions'] ?></td>
                 <td><?= $r['organizer'] ?></td>
                 <td><?= $r['artist_id'] ?></td>
@@ -161,12 +167,50 @@ if ($totalRows) {
 </div>
 <?php include __DIR__ . '/part/scripts.php' ?>
 <script>
-  // const delModal = new bootstrap.Modal('#deleteModal');
-  // delModal.show();
   const deleteOne = (id) => {
-    if (confirm(`是否要刪除編號為 ${id} 的資料？`)) {
-      location.herf = `activities-delete.php?id=${id}`;
+    if (confirm(`確定要刪除${id}的資料嗎?`)) {
+      location.href = `activities-delete.php?id=${id}`;
     }
   }
+
+  const checkAll = document.getElementById("checkAll");
+  const checkboxes = document.getElementsByClassName("checkboxes");
+
+  checkAll.addEventListener('change', function () {
+    if (checkAll.checked === true) {
+      for (let i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = true;
+      }
+    } else {
+      for (let i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = false;
+      }
+    }
+  });
+
+  // 刪除所選Script
+  const dltAllSelect = document.getElementById("dltAllSelect");
+  const checkboxes2 = document.querySelectorAll(".checkboxes");
+
+  dltAllSelect.addEventListener('click', function () {
+    let selectedIds = []; // 儲存被勾選項目的 ID
+
+    for (let i = 0; i < checkboxes2.length; i++) {
+      if (checkboxes2[i].checked) {
+        const id = checkboxes2[i].value; // 獲取被勾選項目的 ID
+        selectedIds.push(id); // 將 ID 加入到 selectedIds 陣列中
+      }
+    }
+
+    if (selectedIds.length > 0) {
+      if (confirm(`確定要刪除這 ${selectedIds.length} 筆資料嗎?`)) {
+        // 執行刪除操作，這裡可以使用 AJAX 或者其他方式向後端發送刪除請求
+        // 這裡假設你已經有了一個可以處理刪除的後端接口
+        location.href = `activities-delete-sel.php?ids=${selectedIds.join(',')}`;
+      }
+    } else {
+      alert('請先選擇要刪除的資料');
+    }
+  });
 </script>
 <?php include __DIR__ . '/part/html-footer.php' ?>

@@ -12,12 +12,17 @@ $output = [
 
 // TODO: 欄位資料檢查
 // 檢查是否有接收到必要的欄位資料
-if (!isset($_POST['activity_class']) || !isset($_POST['activity_name']) || !isset($_POST['a_date']) || !isset($_POST['a_time']) || !isset($_POST['location']) || !isset($_POST['descriptions']) || !isset($_POST['organizer']) || !isset($_POST['artist_id']) || !isset($_POST['picture'])) {
+if (!isset($_POST['activity_name'])) {
     echo json_encode($output);
     exit; // 結束 PHP 程式
 }
+// if (!isset($_POST['activity_class']) || !isset($_POST['activity_name']) || !isset($_POST['a_date']) || !isset($_POST['a_time']) || !isset($_POST['location']) || !isset($_POST['address']) || !isset($_POST['descriptions']) || !isset($_POST['organizer']) || !isset($_POST['artist_id']) || !isset($_POST['picture'])) {
+//     echo json_encode($output);
+//     exit; // 結束 PHP 程式
+// }
 
-$sql = "INSERT INTO `activities`(`activity_class`, `activity_name`, `a_date`, `a_time`, `location`, `descriptions`, `organizer`, `artist_id`,`picture`) VALUES (
+$sql = "INSERT INTO `activities`(`activity_class`, `activity_name`, `a_date`, `a_time`, `location`, `address`, `descriptions`, `organizer`, `artist_id`,`picture`) VALUES (
+    ?,
     ?,
     ?,
     ?,
@@ -34,6 +39,7 @@ $stmt->execute([
     $_POST['a_date'],
     $_POST['a_time'],
     $_POST['location'],
+    $_POST['address'],
     $_POST['descriptions'],
     $_POST['organizer'],
     $_POST['artist_id'],

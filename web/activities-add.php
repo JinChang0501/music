@@ -23,18 +23,21 @@ $pageName = 'add-activities';
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-2 p-0">
-			<?php include __DIR__ . "/part/left-bar.php"; ?></div>
-		<div class="col-10">
-			<div class="card mt-3">
+			<?php include __DIR__ . "/part/left-bar.php"; ?>
+		</div>
+		<div class="col-8 mt-3 mx-auto">
+			<div class="card my-3">
 				<div class="card-body">
-					<h5 class="card-title">新增活動資料</h5>
-					<form name="form1" onsubmit="sendData(event)">
+					<h4 class="card-title fw-bold">新增活動資料</h4>
+					<form name="form_activities" onsubmit="sendData(event)">
 						<div class="mb-3">
 							<label for="activity_class" class="form-label">類別</label>
-							<input type="text" class="form-control" id="activity_class" name="activity_class">
-							<div class="form-text"></div>
+							<select class="form-select" aria-label="Default select example" id="activity_class" name="activity_class">
+								<option selected>--</option>
+								<option value="1">演唱會</option>
+								<option value="2">音樂祭</option>
+							</select>
 						</div>
-
 						<div class="mb-3">
 							<label for="activity_name" class="form-label">活動名稱</label>
 							<input type="text" class="form-control" id="activity_name" name="activity_name">
@@ -60,8 +63,14 @@ $pageName = 'add-activities';
 						</div>
 
 						<div class="mb-3">
+							<label for="address" class="form-label">地址</label>
+							<input type="text" class="form-control" id="address" name="address">
+							<div class="form-text"></div>
+						</div>
+
+						<div class="mb-3">
 							<label for="descriptions" class="form-label">活動內容</label>
-							<textarea id="descriptions" cols="60" rows="3" name="descriptions"></textarea>
+							<textarea class="form-control" id="descriptions" rows="4" name="descriptions"></textarea>
 							<div class="form-text"></div>
 						</div>
 
@@ -92,11 +101,12 @@ $pageName = 'add-activities';
 </div>
 
 <!-- Modal Start-->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdropA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+	aria-labelledby="staticBackdropLabelA" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h1 class="modal-title fs-5" id="staticBackdropLabel">新增成功</h1>
+				<h1 class="modal-title fs-5" id="staticBackdropLabelA">新增成功</h1>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
@@ -116,57 +126,45 @@ $pageName = 'add-activities';
 
 <?php include __DIR__ . "/part/scripts.php"; ?>
 <script>
-	const first_nameField = document.form1.first_name;
-	const last_nameField = document.form1.last_name;
-	const emailField = document.form1.email;
-
-	function validateEmail(email) {
-		const re =
-			/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-		return re.test(email);
-	}
-
+	// const activity_class = document.form_activities.activity_class;
+	const activity_nameField = document.form_activities.activity_name;
 
 	const sendData = e => {
-		e.preventDefault(); // 不要讓 form1 以傳統的方式送出
+		e.preventDefault(); // 不要讓 form_activities 以傳統的方式送出
 
-		first_nameField.style.border = '1px solid #CCCCCC';
-		first_nameField.nextElementSibling.innerText = '';
-		last_nameField.style.border = '1px solid #CCCCCC';
-		last_nameField.nextElementSibling.innerText = '';
-		emailField.style.border = '1px solid #CCCCCC';
-		emailField.nextElementSibling.innerText = '';
+		// activity_class.style.border = '1px solid #CCCCCC';
+		// activity_class.nextElementSibling.innerText = '';
+		activity_nameField.style.border = '1px solid #CCCCCC';
+		activity_nameField.nextElementSibling.innerText = '';
 
 		// TODO: 欄位資料檢查
 		let isPass = true; // 表單有沒有通過檢查
-		if (first_nameField.value.length < 2) {
+
+		// if ((activity_class.value < 1) || (activity_class.value > 2)) {
+		// 	isPass = false;
+		// 	activity_nameField.style.border = '1px solid red';
+		// 	activity_nameField.nextElementSibling.innerText = '請選擇類別';
+		// }
+
+		if (activity_nameField.value.length < 2) {
 			isPass = false;
-			first_nameField.style.border = '1px solid red';
-			first_nameField.nextElementSibling.innerText = '請填寫正確的姓名';
+			activity_nameField.style.border = '1px solid red';
+			activity_nameField.nextElementSibling.innerText = '請填寫正確的活動名稱';
 		}
 
-		if (last_nameField.value.length < 0) {
-			isPass = false;
-			last_nameField.style.border = '1px solid red';
-			last_nameField.nextElementSibling.innerText = '請填寫正確的姓名';
-		}
 
-		if (!validateEmail(emailField.value)) {
-			isPass = false;
-			emailField.style.border = '1px solid red';
-			emailField.nextElementSibling.innerText = '請填寫正確的 Email';
-		}
+
 		// 有通過檢查, 才要送表單
 		if (isPass) {
-			const fd = new FormData(document.form1); // 沒有外觀的表單物件
-			fetch('members-add-api.php', {
-					method: 'POST',
-					body: fd, // Content-Type: multipart/form-data
-				}).then(r => r.json())
+			const fd = new FormData(document.form_activities); // 沒有外觀的表單物件
+			fetch('activities-add-api.php', {
+				method: 'POST',
+				body: fd, // Content-Type: multipart/form-data
+			}).then(r => r.json())
 				.then(data => {
 					console.log(data);
 					if (data.success) {
-						myModal.show();
+						myModalA.show();
 					} else {
 
 					}
@@ -174,6 +172,6 @@ $pageName = 'add-activities';
 				.catch(ex => console.log(ex))
 		}
 	};
-	const myModal = new bootstrap.Modal('#staticBackdrop')
+	const myModalA = new bootstrap.Modal('#staticBackdropA')
 </script>
 <?php include __DIR__ . "/part/html-footer.php"; ?>
