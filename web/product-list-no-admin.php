@@ -3,16 +3,17 @@ require __DIR__ . '/../config/pdo-connect.php';
 $title = '商品列表';
 $pageName = 'list-no-admin';
 
-$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$perPage = 20; # 每頁有幾筆
 
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 if ($page < 1) {
   header('Location: ?page=1');
   exit;
 }
 
-$perPage = 20; # 每頁有幾筆
+
 # 算總筆數 $totalRows
-$t_sql = "SELECT COUNT(1) FROM products";
+$t_sql = "SELECT COUNT(id) FROM products";
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 
 $totalPages = 0;
@@ -96,7 +97,7 @@ if ($totalRows) {
 
 <?php include __DIR__ . '/part/scripts.php' ?>
 <script>
-  function delete_one(sid){
+  function delete_one(id){
     if(confirm(`是否要刪除編號為 ${id} 的資料?`)){
       location.href = `product-delete.php?sid=${id}`;
     }

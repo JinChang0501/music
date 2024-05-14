@@ -13,7 +13,7 @@ if ($page < 1) {
 }
 
 # 算總筆數 $totalRows
-$t_sql = "SELECT COUNT(id) FROM products";
+$t_sql = "SELECT COUNT(id) FROM `products`";
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 
 $totalPages = 0;
@@ -78,7 +78,7 @@ if ($totalRows) {
         <table class="table table-bordered table-striped">
           <thead>
             <tr>
-              <th class="text-center">
+              <th scope="col" class="text-center">
                 <button type="submit" class="btn btn-success" disabled>
                   <i class="fa-solid fa-file-pen"></i>編輯
                 </button>
@@ -116,7 +116,7 @@ if ($totalRows) {
                 </a>
               </td>
               </tr>
-            <?php endforeach ?>
+            <?php endforeach; ?>
           </tbody>
         </table>
       </form>
@@ -133,19 +133,6 @@ if ($totalRows) {
       location.href = `product-delete.php?id=${id}`;
     }
   }
-// 不知道要不要
-  function sendMultiDel(event){
-    event.preventDefault();
 
-    const fd = new FormData(document.form1);
-
-    fetch('handle-multi-del.php', {
-      method: 'POST',
-      body: fd
-    }).then(r=>r.json()).then(result=>{
-
-    }).catch(ex=>console.log(ex));
-  }
-  // 不知道要不要
 </script>
 <?php include __DIR__ . '/part/html-footer.php' ?>
