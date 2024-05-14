@@ -4,10 +4,10 @@ if (!isset($_SESSION)) {
 }
 
 
-$title = '通訊錄列表';
-$pageName = 'members-list';
+$title = '員工列表(已登入)';
+$pageName = 'employees-list';
 
-require __DIR__ . '/../config/pdo-connect.php';
+require __DIR__ . './../config/pdo-connect.php';
 
 $per_page = 20; #每頁有幾筆
 
@@ -19,7 +19,7 @@ if ($page < 1) {
 }
 
 #總筆數
-$t_sql = "SELECT COUNT(id) FROM `members`";
+$t_sql = "SELECT COUNT(id) FROM employees";
 
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 
@@ -39,18 +39,69 @@ if ($page > $totalPages) {
 
 
 $sql = sprintf(
-  "SELECT * FROM `members` order by id desc LIMIT %s,%s",
+  "SELECT * FROM `employees` order by id desc LIMIT %s,%s",
   ($page - 1) * $per_page,
   $per_page
 );
 
 $rows = $pdo->query($sql)->fetchAll();
 
+// echo json_encode([
+//     'totalRows' => $totalRows,
+//     'totalPages' => $totalPages,
+//     'rows' => $rows,
+// ]);
+
 
 include __DIR__ . "/part/html-header.php";
 include __DIR__ . "/part/navbar-head.php";
+
 ?>
 
+<style>
+  /* NEW */
+
+  /* 第一欄和第二欄固定在最左側 */
+  td:first-child,
+  th:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    background-color: lightpink;
+  }
+
+  td:nth-child(2),
+  th:nth-child(2) {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    background-color: lightpink;
+  }
+
+
+
+  /* 最後一欄固定在最右側 */
+  td:last-child,
+  th:last-child {
+    position: sticky;
+    right: 0;
+    z-index: 1;
+    background-color: blue;
+  }
+
+  /* 表頭固定在最上方 */
+  thead tr th {
+    position: sticky;
+    top: 0;
+    background-color: lightblue;
+  }
+
+  /* 其他樣式設定 */
+  td,
+  th {
+    border: 1px solid gray;
+  }
+</style>
 
 <div class="container-fluid">
   <div class="row">
@@ -105,53 +156,46 @@ include __DIR__ . "/part/navbar-head.php";
           <input type="search" class="form-control form-control-dark my-3" placeholder="Search..." aria-label="Search">
         </form>
       </div>
-      <!-- 按鈕列 End -->
+
       <!--  -->
       <div style="overflow-x: auto;">
-        <table class="table table-bordered table-striped" data-toggle="table">
+        <table class="table table-bordered table-striped">
           <thead>
             <tr>
               <th scope="col" class="text-center">
-                <input class="form-check-input text-center" type="checkbox" value="" id="checkall">
+                <input class="form-check-input" type="checkbox" id="checkall">
               </th>
-              <!-- <th scope="col" class="text-center">選擇</th> -->
-              <!-- <th class="text-center"><i class="fa-solid fa-trash text-center"></i></th> -->
-              <th scope="col" class="text-center">#</th>
-              <th scope="col" class="text-center">First_name</th>
-              <th scope="col" class="text-center">Last_name</th>
-              <th scope="col" class="text-center">Email</th>
-              <th scope="col" class="text-center">Passwords</th>
-              <th scope="col" class="text-center">Gender</th>
-              <th scope="col" class="text-center">Phone_Number</th>
-              <th scope="col" class="text-center">Birthday</th>
-              <th scope="col" class="text-center">Address</th>
-              <th scope="col" class="text-center">Created_at</th>
-              <th class="text-center"><i class="fa-solid fa-pen-to-square"></i></th>
+              <!-- <th><i class="fa-solid fa-trash text-center"></i></th> -->
 
+              <th scope="col" class="text-center text-nowrap">#</th>
+              <th scope="col" class="text-center text-nowrap">First name</th>
+              <th scope="col" class="text-center text-nowrap">Last name</th>
+              <th scope="col" class="text-center text-nowrap">Email</th>
+              <th scope="col" class="text-center text-nowrap">Passwords</th>
+              <th scope="col" class="text-center text-nowrap">Gender</th>
+              <th scope="col" class="text-center text-nowrap">Phone number</th>
+              <th scope="col" class="text-center">Created_at</th>
+              <th><i class="fa-solid fa-pen-to-square"></i></th>
             </tr>
           </thead>
           <tbody>
             <?php foreach ($rows as $r) : ?>
               <tr>
-                <td scope="col">
-                  <div>
-                    <input class="checkboxes form-check-input mx-auto text-center d-flex " type="checkbox" value="<?= $r['id'] ?>" id="flexCheckDefault<?= $r['id'] ?>">
-                  </div>
+                <td scope="col" style="text-align: center;">
+                  <input class="checkboxes form-check-input" type="checkbox" value="<?= $r['id'] ?>" id="flexCheckDefault<?= $r['id'] ?>">
                 </td>
+                <!-- <td><a href="javascript: deleteOne(<?= $r['id'] ?>)"><i class="fa-solid fa-trash text-danger"></i></a></td> -->
 
-
-                <!-- <td class="text-center"><a href="javascript: deleteOne(<?= $r['id'] ?>)"><i class="fa-solid fa-trash text-danger"></i></a></td> -->
                 <td class="text-center"><?= $r['id'] ?></td>
-                <td class="text-center text-nowrap"><?= $r['first_name'] ?></td>
-                <td class="text-center text-nowrap"><?= $r['last_name'] ?></td>
-                <td class="text-center text-nowrap"><?= $r['email'] ?></td>
-                <td class="text-center text-nowrap"><?= $r['passwords'] ?></td>
-                <td class="text-center text-nowrap"><?= $r['gender'] ?></td>
-                <td class="text-center text-nowrap"><?= $r['phone_number'] ?></td>
-                <td class="text-center text-nowrap"><?= $r['birthday'] ?></td>
-                <td class="text-center text-nowrap"><?= (!empty($r['address'])) ? htmlentities($r['address']) : '未填' ?></td>
+                <td class="text-center"><?= $r['first_name'] ?></td>
+                <td class="text-center"><?= $r['last_name'] ?></td>
+                <td class="text-center"><?= $r['email'] ?></td>
+                <td class="text-center"><?= $r['passwords'] ?></td>
+                <td class="text-center"><?= $r['gender'] ?></td>
+                <td class="text-center"><?= $r['phone_number'] ?></td>
                 <td class="text-center text-nowrap"><?= $r['created_at'] ?></td>
-                <td class="text-center"><a href="members-edit.php?id=<?= $r['id'] ?>"><i class="fa-solid fa-pen-to-square text-warning"></i></a></td>
+                <td><a href="employees-edit.php?id=<?= $r['id'] ?>"><i class="fa-solid fa-pen-to-square text-warning"></i></a></td>
+
               </tr>
             <?php endforeach; ?>
           </tbody>
@@ -166,9 +210,10 @@ include __DIR__ . "/part/navbar-head.php";
 <script>
   const deleteOne = (id) => {
     if (confirm(`確定要刪除${id}的資料嗎?`)) {
-      location.href = `members-delete.php?id=${id}`;
+      location.href = `employees-delete.php?id=${id}`;
     }
   }
+
 
   const checkall = document.getElementById("checkall");
   const checkboxes = document.getElementsByClassName("checkboxes");
@@ -184,8 +229,6 @@ include __DIR__ . "/part/navbar-head.php";
       }
     }
   });
-
-
   // 刪除所選Script
   const dltAllSelect = document.getElementById("dltAllSelect");
   const checkboxes2 = document.querySelectorAll(".checkboxes");
@@ -204,7 +247,7 @@ include __DIR__ . "/part/navbar-head.php";
       if (confirm(`確定要刪除這 ${selectedIds.length} 筆資料嗎?`)) {
         // 執行刪除操作，這裡可以使用 AJAX 或者其他方式向後端發送刪除請求
         // 這裡假設你已經有了一個可以處理刪除的後端接口
-        location.href = `members-delete-more.php?ids=${selectedIds.join(',')}`;
+        location.href = `employees-delete-more.php?ids=${selectedIds.join(',')}`;
       }
     } else {
       alert('請先選擇要刪除的資料');

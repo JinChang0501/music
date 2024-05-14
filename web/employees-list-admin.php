@@ -58,7 +58,66 @@ include __DIR__ . "/part/navbar-head.php";
 
 ?>
 
+<!-- <style>
+  td:first-child,
+  th:first-child {
+    position: sticky;
+    left: 0;
+    /* 首行永遠固定於左 */
+    z-index: 1;
 
+    background-color: lightpink;
+
+  }
+
+  thead tr th {
+    position: sticky;
+    top: 0;
+    /* 列首永遠固定於上 */
+
+  }
+
+  th:first-child {
+    z-index: 2;
+    background-color: lightblue;
+
+  }
+
+  /* NEW */
+
+  /* 第一欄和第二欄固定在最左側 */
+  td:first-child,
+
+  td:nth-child(2) {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background-color: lightpink;
+  }
+
+
+  /* 最後一欄固定在最右側 */
+  td:last-child,
+  th:last-child {
+    position: sticky;
+    right: 0;
+    z-index: 1;
+    background-color: lightgreen;
+  }
+
+  /* 表頭固定在最上方 */
+  thead tr th {
+    position: sticky;
+    top: 0;
+    background-color: lightblue;
+  }
+
+  /* 其他樣式設定 */
+  td,
+  th {
+    border: 1px solid gray;
+  }
+</style> -->
 
 <div class="container-fluid">
   <div class="row">
@@ -67,7 +126,7 @@ include __DIR__ . "/part/navbar-head.php";
       <?php include __DIR__ . "/part/left-bar.php"; ?>
     </div>
 
-    <div class="col-10" style="overflow-x: auto;">
+    <div class="col-10">
       <!-- 頁面選單 Start -->
       <nav aria-label="Page navigation example">
         <ul class="pagination">
@@ -106,61 +165,109 @@ include __DIR__ . "/part/navbar-head.php";
       </nav>
       <!-- 頁面選單 End -->
       <!-- 按鈕列 Start -->
-      <div class="row">
-        <div class="col-2 mb-4"><button class="bg-warning rounded-2" id="dltAllSelect">刪除所選</button></div>
-
+      <div class="row d-flex justify-content-between">
+        <!-- <div class="col-2 mb-4"><button class="bg-warning rounded-2" id="checkall">一鍵全選</button></div> -->
+        <div class="col-2 my-auto"><button class="bg-warning rounded-2" id="dltAllSelect">刪除所選</button></div>
+        <form class="col-12 col-lg-auto mb-lg-0">
+          <input type="search" class="form-control form-control-dark my-3" placeholder="Search..." aria-label="Search" id="searching">
+        </form>
       </div>
-      <!-- 按鈕列 End -->
-
       <!--  -->
-      <table class="table table-bordered table-striped">
-        <thead>
-          <tr>
-            <th scope="col" class="text-center">
-              <input class="form-check-input" type="checkbox" id="checkall">
-            </th>
-            <th><i class="fa-solid fa-trash text-center"></i></th>
-
-            <th scope="col" class="text-center">#</th>
-            <th scope="col" class="text-center">First name</th>
-            <th scope="col" class="text-center">Last name</th>
-            <th scope="col" class="text-center">Email</th>
-            <th scope="col" class="text-center">Passwords</th>
-            <th scope="col" class="text-center">Gender</th>
-            <th scope="col" class="text-center">Phone number</th>
-            <th scope="col" class="text-center">Created_at</th>
-            <th><i class="fa-solid fa-pen-to-square"></i></th>
-
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($rows as $r) : ?>
+      <!-- 表單Start -->
+      <div style="overflow-x: auto;">
+        <table class="table table-bordered table-striped" data-toggle="table">
+          <thead>
             <tr>
-              <td scope="col" style="text-align: center;">
-                <input class="checkboxes form-check-input" type="checkbox" value="<?= $r['id'] ?>" id="flexCheckDefault<?= $r['id'] ?>">
-              </td>
-              <td><a href="javascript: deleteOne(<?= $r['id'] ?>)"><i class="fa-solid fa-trash text-danger"></i></a></td>
+              <th scope="col" class="text-center">
+                <input class="form-check-input" type="checkbox" id="checkall">
+              </th>
+              <!-- <th><i class="fa-solid fa-trash text-center"></i></th> -->
 
-              <td class="text-center"><?= $r['id'] ?></td>
-              <td class="text-center"><?= $r['first_name'] ?></td>
-              <td class="text-center"><?= $r['last_name'] ?></td>
-              <td class="text-center"><?= $r['email'] ?></td>
-              <td class="text-center"><?= $r['passwords'] ?></td>
-              <td class="text-center"><?= $r['gender'] ?></td>
-              <td class="text-center"><?= $r['phone_number'] ?></td>
-              <td class="text-center"><?= $r['created_at'] ?></td>
-              <td><a href="employees-edit.php?id=<?= $r['id'] ?>"><i class="fa-solid fa-pen-to-square text-warning"></i></a></td>
-
+              <th scope="col" class="text-center text-nowrap" data-sortable="true">#</th>
+              <th scope="col" class="text-center text-nowrap">First name <a href="sort_first_name.php"><i class="bi bi-sort-alpha-down"></i></a></th>
+              <th scope="col" class="text-center text-nowrap">Last name</th>
+              <th scope="col" class="text-center text-nowrap">Email</th>
+              <th scope="col" class="text-center text-nowrap">Passwords</th>
+              <th scope="col" class="text-center text-nowrap">Gender</th>
+              <th scope="col" class="text-center text-nowrap">Phone number</th>
+              <th scope="col" class="text-center">Created_at</th>
+              <th><i class="fa-solid fa-pen-to-square"></i></th>
             </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <?php foreach ($rows as $r) : ?>
+              <tr>
+                <td scope="col" class="text-center">
+                  <input class="checkboxes form-check-input" type="checkbox" value="<?= $r['id'] ?>" id="flexCheckDefault<?= $r['id'] ?>">
+                </td>
+                <!-- <td><a href="javascript: deleteOne(<?= $r['id'] ?>)"><i class="fa-solid fa-trash text-danger"></i></a></td> -->
+
+                <td class="text-center"><?= $r['id'] ?></td>
+                <td class="text-center"><?= $r['first_name'] ?></td>
+                <td class="text-center"><?= $r['last_name'] ?></td>
+                <td class="text-center"><?= $r['email'] ?></td>
+                <td class="text-center"><?= $r['passwords'] ?></td>
+                <td class="text-center"><?= $r['gender'] ?></td>
+                <td class="text-center"><?= $r['phone_number'] ?></td>
+                <td class="text-center text-nowrap"><?= $r['created_at'] ?></td>
+                <td><a href="employees-edit.php?id=<?= $r['id'] ?>"><i class="fa-solid fa-pen-to-square text-warning"></i></a></td>
+
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+
     </div>
   </div>
 </div>
 
 <?php include __DIR__ . "/part/scripts.php" ?>
 <script>
+  // 搜尋功能
+  document.addEventListener("DOMContentLoaded", function() {
+    const searchForm = document.getElementById("searchForm");
+
+    searchForm.addEventListener("submit", function(event) {
+      event.preventDefault(); // 防止表單默認提交
+
+      const formData = new FormData(searchForm);
+      const searchTerm = formData.get("searchTerm");
+
+      fetch(`employees-search-api.php?searchTerm=${searchTerm}`)
+        .then(response => response.json())
+        .then(data => {
+          // 在這裡處理後端返回的搜尋結果，例如更新表格內容等
+          console.log(data);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    });
+  });
+
+  // document.addEventListener("DOMContentLoaded", function() {
+  //   const searchInput = document.getElementById("searching");
+  //   const tableRows = document.querySelectorAll("tbody tr");
+
+  //   searchInput.addEventListener("input", function() {
+  //     const searchTerm = searchInput.value.toLowerCase();
+
+  //     tableRows.forEach(function(row) {
+  //       const rowData = row.textContent.toLowerCase();
+
+  //       if (rowData.includes(searchTerm)) {
+  //         row.style.display = "";
+  //       } else {
+  //         row.style.display = "none";
+  //       }
+  //     });
+  //   });
+  // });
+
+
+
+
   const deleteOne = (id) => {
     if (confirm(`確定要刪除${id}的資料嗎?`)) {
       location.href = `employees-delete.php?id=${id}`;
