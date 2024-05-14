@@ -75,7 +75,7 @@ $pageName = 'product-add';
 			</div>
 			<div class="modal-footer">
 
-				<button type="button" class="btn btn-primary" onclick="location.href='list-members.php'">到列表頁</button>
+				<button type="button" class="btn btn-primary" onclick="location.href='product-list.php'">到列表頁</button>
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續新增</button>
 			</div>
 		</div>
@@ -86,10 +86,8 @@ $pageName = 'product-add';
 <?php include __DIR__ . '/part/scripts.php' ?>
 <script>
   const nameField = document.form1.product_name;
-  const pictureField = document.form1.picture;
-  const priceField = document.form1.price;
   const quantityField = document.form1.purchase_quantity;
-  const activeField = document.form1.activitie_id;
+  
   
   
   const sendData = e => {
@@ -97,24 +95,16 @@ $pageName = 'product-add';
     // 回復欄位的外觀
     nameField.style.border = '1px solid #CCC';
     nameField.nextElementSibling.innerHTML = '';
-    pictureField.style.border = '1px solid #CCC';
-    pictureField.nextElementSibling.innerHTML = '';
-    priceField.style.border = '1px solid #CCC';
-    priceField.nextElementSibling.innerHTML = '';
     quantityField.style.border = '1px solid #CCC';
     quantityField.nextElementSibling.innerHTML = '';
-    activeField.style.border = '1px solid #CCC';
-    activeField.nextElementSibling.innerHTML = '';
-    
-    
-    
+        
     let isPass = true; // 整個表單有沒有通過檢查
 
     // TODO: 檢查各個欄位的資料, 有沒有符合規定
     if (nameField.value.length < 2) {
       isPass = false; // 沒有通過檢查
       nameField.style.border = '1px solid red';
-      nameField.nextElementSibling.innerHTML = '請填寫正確的名稱';
+      nameField.nextElementSibling.innerHTML = '請填寫正確的商品名稱';
     }
     if (quantityEl.value.length < 1) {
       isPass = false; // 沒有通過檢查
@@ -144,7 +134,7 @@ $pageName = 'product-add';
     }
   };
 
-  const successModal = new bootstrap.Modal('#successModal')
+  const successModal = new bootstrap.Modal('#staticBackdrop')
   
 </script>
 <?php include __DIR__ . '/part/html-footer.php' ?>
