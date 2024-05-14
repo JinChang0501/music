@@ -21,7 +21,7 @@ $pageName = 'ticket-add'; ?>
         <div class="col-7 mx-auto">
 
             <form id="ticketForm" name="ticketForm" class="needs-validation shadow-lg add" novalidate
-                onsubmit="sendData(event)">
+                >
 
                 <h1 class="text-center mb-5 fw-bold">新增購票</h1>
 
@@ -30,8 +30,9 @@ $pageName = 'ticket-add'; ?>
                         <label for="activities_id" class="form-label fs-5 fw-bold">選擇活動</label>
                     </div>
                     <div class="col-8">
-                        <select name="activities_id" class="form-select rounded-3 border-4" id="activities_id"
-                            required></select>
+                        <select name="activities_id" class="form-select rounded-3 border-4" id="activities_id" required>
+
+                        </select>
                         <div class="invalid-feedback">
                             請選擇活動
                         </div>
@@ -44,12 +45,12 @@ $pageName = 'ticket-add'; ?>
                     </div>
                     <div class="col-8">
                         <select name="ticket_area" class="form-select rounded-3 border-4" id="ticket_area" required>
-                            <option selected disabled value="">--- &nbsp;選擇區域&nbsp;---</option>
-                            <option>A</option>
-                            <option>B</option>
-                            <option>C</option>
-                            <option>D</option>
-                            <option>E</option>
+                            <option selected disabled>--- &nbsp;選擇區域&nbsp;---</option>
+                            <option  value="A">A</option>
+                            <option  value="B">B</option>
+                            <option  value="C">C</option>
+                            <option  value="D">D</option>
+                            <option  value="E">E</option>
                         </select>
                         <div class="invalid-feedback">
                             請選擇區域
@@ -97,8 +98,7 @@ $pageName = 'ticket-add'; ?>
                 </div> -->
 
                 <div class="text-start ms-5">
-                    <button type="submit" class="btn btn-primary fs-5 fw-bold" data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop">送出</button>
+                    <button type="submit" class="btn btn-primary fs-5 fw-bold">送出</button>
                 </div>
 
             </form>
@@ -107,7 +107,7 @@ $pageName = 'ticket-add'; ?>
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal success -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -133,6 +133,7 @@ $pageName = 'ticket-add'; ?>
 <?php include __DIR__ . "/part/scripts.php"; ?>
 
 <script>
+    const myModal = new bootstrap.Modal('#staticBackdrop')
     const sendData = e => {
         e.preventDefault(); // 不要讓 form1 以傳統的方式送出
 
@@ -188,6 +189,11 @@ $pageName = 'ticket-add'; ?>
             defaultOption.value = ""; // 給定一個空的 value
             defaultOption.textContent = "--- 請選擇活動 ---";
             activitiesSelect.appendChild(defaultOption);
+            // 添加事件監聽器
+            activitiesSelect.addEventListener('click', function () {
+                // 將第一個選項取消禁用
+                defaultOption.disabled = true;
+            });
             // 將activities資料動態添加到下拉選單中
             data.forEach(activities => {
                 const option = document.createElement('option');
@@ -215,9 +221,6 @@ $pageName = 'ticket-add'; ?>
         })
         .catch(error => console.error('Error fetching activities:', error));
 
-
-
-    const myModal = new bootstrap.Modal('#staticBackdrop');
 </script>
 
 <?php include __DIR__ . "/part/html-footer.php"; ?>

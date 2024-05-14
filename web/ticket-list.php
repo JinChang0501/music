@@ -32,7 +32,16 @@ if ($totalRows) {
 
     # 取得分頁資料
     $sql = sprintf(
-        "SELECT * FROM ticket JOIN activities ON ticket.activities_id = activities.actid JOIN aclass ON activities.actid = aclass.id JOIN artist ON activities.actid = artist.id ORDER BY ticket.tid ASC LIMIT %s, %s",
+        "SELECT 
+        *
+    FROM 
+        ticket
+    JOIN 
+        activities ON ticket.activities_id = activities.actid
+    JOIN 
+        aclass ON activities.activity_class = aclass.id
+    JOIN 
+        artist ON activities.artist_id = artist.id ORDER BY ticket.tid ASC LIMIT %s, %s",
         ($page - 1) * $perPage,
         $perPage
     );
@@ -65,7 +74,6 @@ echo json_encode([
     .model-a:hover {
         color: white;
     }
-
 </style>
 
 <div class="container-fluid p-0">
@@ -188,7 +196,7 @@ echo json_encode([
                                 <td><?= $r['class'] ?></td>
                                 <td><?= $r['ticket_area'] ?></td>
                                 <td><?= $r['organizer'] ?></td>
-                                <td></td>
+                                <td><?= $r['created_at'] ?></td>
                                 <td></td>
                                 <td>
                                     <a class="btn btn-warning" href="ticket-edit.php?tid=<?= $r['tid'] ?>">
@@ -443,7 +451,7 @@ echo json_encode([
 
     const deleteOne = (tid) => {
         if (confirm(`是否要刪除編號為 ${tid} 的資料?`)) {
-            location.href = `ticket-list-delete.php?id=${tid}`;
+            location.href = `ticket-list-delete.php?tid=${tid}`;
         }
     }
 

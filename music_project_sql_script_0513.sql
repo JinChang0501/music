@@ -1,29 +1,22 @@
 -- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
 -- Host: localhost    Database: music_project
--- ------------------------------------------------------
--- Server version	8.0.36
 -- drop database music_project;
 create database music_project;
 use music_project;
 show warnings;
+    
 SELECT 
-	actid,
-    activities.picture,
-    activities.activity_name,
-    artist.art_name,
-    activities.location,
-    activities.descriptions,
-    activities.a_date,
-    activities.a_time,
-    aclass.class,
-    activities.organizer
+  *
 FROM 
-    activities
+    ticket
 JOIN 
-    artist ON activities.artist_id = artist.id
+    activities ON ticket.activities_id = activities.actid
 JOIN 
-    aclass ON activities.activity_class = aclass.id;
+    aclass ON activities.activity_class = aclass.id
+JOIN 
+    artist ON activities.artist_id = artist.id;
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -342,7 +335,7 @@ CREATE TABLE `orders` (
   KEY `market_id` (`market_id`),
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `members` (`id`),
   CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`market_id`) REFERENCES `markets` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -402,7 +395,7 @@ CREATE TABLE `ticket` (
   PRIMARY KEY (`tid`),
   KEY `activities_id` (`activities_id`),
   CONSTRAINT `ticket_ibfk_1` FOREIGN KEY (`activities_id`) REFERENCES `activities` (`actid`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -411,9 +404,116 @@ CREATE TABLE `ticket` (
 
 LOCK TABLES `ticket` WRITE;
 /*!40000 ALTER TABLE `ticket` DISABLE KEYS */;
-INSERT INTO `ticket` VALUES (1,1,'A',50,1000,'2024-05-13 14:07:03'),(2,1,'B',100,2000,'2024-05-13 14:07:03'),(3,1,'C',150,3000,'2024-05-13 14:07:03'),(4,1,'D',200,4000,'2024-05-13 14:07:03'),(5,1,'E',250,5000,'2024-05-13 14:07:03'),(6,2,'A',50,1000,'2024-05-13 14:07:03'),(7,2,'B',100,2000,'2024-05-13 14:07:03'),(8,2,'C',150,3000,'2024-05-13 14:07:03'),(9,3,'A',50,1000,'2024-05-13 14:07:03'),(10,3,'B',100,2000,'2024-05-13 14:07:03'),(11,3,'C',150,3000,'2024-05-13 14:07:03'),(12,3,'D',200,4000,'2024-05-13 14:07:03'),(13,4,'A',50,1000,'2024-05-13 14:07:03'),(14,4,'B',100,2000,'2024-05-13 14:07:03'),(15,5,'A',50,1000,'2024-05-13 14:07:03'),(16,1,'A',50,1000,'2024-05-13 14:07:03'),(17,1,'B',100,2000,'2024-05-13 14:07:03'),(18,1,'C',150,3000,'2024-05-13 14:07:03'),(19,1,'D',200,4000,'2024-05-13 14:07:03'),(20,1,'E',250,5000,'2024-05-13 14:07:03'),(21,2,'A',50,1000,'2024-05-13 14:07:03'),(22,2,'B',100,2000,'2024-05-13 14:07:03'),(23,2,'C',150,3000,'2024-05-13 14:07:03'),(24,3,'A',50,1000,'2024-05-13 14:07:03'),(25,3,'B',100,2000,'2024-05-13 14:07:03'),(26,3,'C',150,3000,'2024-05-13 14:07:03'),(27,3,'D',200,4000,'2024-05-13 14:07:03'),(28,4,'A',50,1000,'2024-05-13 14:07:03'),(29,4,'B',100,2000,'2024-05-13 14:07:03'),(30,5,'A',50,1000,'2024-05-13 14:07:03'),(31,1,'A',50,1000,'2024-05-13 14:07:03'),(32,1,'B',100,2000,'2024-05-13 14:07:03'),(33,1,'C',150,3000,'2024-05-13 14:07:03'),(34,1,'D',200,4000,'2024-05-13 14:07:03'),(35,1,'E',250,5000,'2024-05-13 14:07:03'),(36,2,'A',50,1000,'2024-05-13 14:07:03'),(37,2,'B',100,2000,'2024-05-13 14:07:03'),(38,2,'C',150,3000,'2024-05-13 14:07:03'),(39,3,'A',50,1000,'2024-05-13 14:07:03'),(40,3,'B',100,2000,'2024-05-13 14:07:03'),(41,3,'C',150,3000,'2024-05-13 14:07:03'),(42,3,'D',200,4000,'2024-05-13 14:07:03'),(43,4,'A',50,1000,'2024-05-13 14:07:03'),(44,4,'B',100,2000,'2024-05-13 14:07:03'),(45,5,'A',50,1000,'2024-05-13 14:07:03'),(46,5,'B',100,2000,'2024-05-13 14:07:03'),(47,3,'B',200,2000,'2024-05-13 14:20:32');
+INSERT INTO `ticket` (`activities_id`, `ticket_area`, `counts`, `price`, `created_at`) VALUES
+(1, 'A', 50, 1000, NOW()),
+(1, 'B', 100, 2000, NOW()),
+(1, 'C', 150, 3000, NOW()),
+(1, 'D', 200, 4000, NOW()),
+(1, 'E', 250, 5000, NOW()),
+(2, 'A', 50, 1000, NOW()),
+(2, 'B', 100, 2000, NOW()),
+(2, 'C', 150, 3000, NOW()),
+(2, 'D', 200, 4000, NOW()),
+(2, 'E', 250, 5000, NOW()),
+(3, 'A', 50, 1000, NOW()),
+(3, 'B', 100, 2000, NOW()),
+(3, 'C', 150, 3000, NOW()),
+(3, 'D', 200, 4000, NOW()),
+(3, 'E', 250, 5000, NOW()),
+(4, 'A', 50, 1000, NOW()),
+(4, 'B', 100, 2000, NOW()),
+(4, 'C', 150, 3000, NOW()),
+(4, 'D', 200, 4000, NOW()),
+(4, 'E', 250, 5000, NOW()),
+(5, 'A', 50, 1000, NOW()),
+(5, 'B', 100, 2000, NOW()),
+(5, 'C', 150, 3000, NOW()),
+(5, 'D', 200, 4000, NOW()),
+(5, 'E', 250, 5000, NOW()),
+(6, 'A', 50, 1000, NOW()),
+(6, 'B', 100, 2000, NOW()),
+(6, 'C', 150, 3000, NOW()),
+(6, 'D', 200, 4000, NOW()),
+(6, 'E', 250, 5000, NOW()),
+(7, 'A', 50, 1000, NOW()),
+(7, 'B', 100, 2000, NOW()),
+(7, 'C', 150, 3000, NOW()),
+(7, 'D', 200, 4000, NOW()),
+(7, 'E', 250, 5000, NOW()),
+(8, 'A', 50, 1000, NOW()),
+(8, 'B', 100, 2000, NOW()),
+(8, 'C', 150, 3000, NOW()),
+(8, 'D', 200, 4000, NOW()),
+(8, 'E', 250, 5000, NOW()),
+(9, 'A', 50, 1000, NOW()),
+(9, 'B', 100, 2000, NOW()),
+(9, 'C', 150, 3000, NOW()),
+(9, 'D', 200, 4000, NOW()),
+(9, 'E', 250, 5000, NOW()),
+(10, 'A', 50, 1000, NOW()),
+(10, 'B', 100, 2000, NOW()),
+(10, 'C', 150, 3000, NOW()),
+(10, 'D', 200, 4000, NOW()),
+(10, 'E', 250, 5000, NOW()),
+(11, 'A', 50, 1000, NOW()),
+(11, 'B', 100, 2000, NOW()),
+(11, 'C', 150, 3000, NOW()),
+(11, 'D', 200, 4000, NOW()),
+(11, 'E', 250, 5000, NOW()),
+(12, 'A', 50, 1000, NOW()),
+(12, 'B', 100, 2000, NOW()),
+(12, 'C', 150, 3000, NOW()),
+(12, 'D', 200, 4000, NOW()),
+(12, 'E', 250, 5000, NOW()),
+(13, 'A', 50, 1000, NOW()),
+(13, 'B', 100, 2000, NOW()),
+(13, 'C', 150, 3000, NOW()),
+(13, 'D', 200, 4000, NOW()),
+(13, 'E', 250, 5000, NOW()),
+(14, 'A', 50, 1000, NOW()),
+(14, 'B', 100, 2000, NOW()),
+(14, 'C', 150, 3000, NOW()),
+(14, 'D', 200, 4000, NOW()),
+(14, 'E', 250, 5000, NOW()),
+(15, 'A', 50, 1000, NOW()),
+(15, 'B', 100, 2000, NOW()),
+(15, 'C', 150, 3000, NOW()),
+(15, 'D', 200, 4000, NOW()),
+(15, 'E', 250, 5000, NOW()),
+(16, 'A', 50, 1000, NOW()),
+(16, 'B', 100, 2000, NOW()),
+(16, 'C', 150, 3000, NOW()),
+(16, 'D', 200, 4000, NOW()),
+(16, 'E', 250, 5000, NOW()),
+(17, 'A', 50, 1000, NOW()),
+(17, 'B', 100, 2000, NOW()),
+(17, 'C', 150, 3000, NOW()),
+(17, 'D', 200, 4000, NOW()),
+(17, 'E', 250, 5000, NOW()),
+(18, 'A', 50, 1000, NOW()),
+(18, 'B', 100, 2000, NOW()),
+(18, 'C', 150, 3000, NOW()),
+(18, 'D', 200, 4000, NOW()),
+(18, 'E', 250, 5000, NOW()),
+(19, 'A', 50, 1000, NOW()),
+(19, 'B', 100, 2000, NOW()),
+(19, 'C', 150, 3000, NOW()),
+(19, 'D', 200, 4000, NOW()),
+(19, 'E', 250, 5000, NOW()),
+(20, 'A', 50, 1000, NOW()),
+(20, 'B', 100, 2000, NOW()),
+(20, 'C', 150, 3000, NOW()),
+(20, 'D', 200, 4000, NOW()),
+(20, 'E', 250, 5000, NOW()),
+(21, 'A', 50, 1000, NOW()),
+(21, 'B', 100, 2000, NOW()),
+(21, 'C', 150, 3000, NOW()),
+(21, 'D', 200, 4000, NOW()),
+(21, 'E', 250, 5000, NOW());
 /*!40000 ALTER TABLE `ticket` ENABLE KEYS */;
 UNLOCK TABLES;
+-- drop table ticket;
+
 
 --
 -- Table structure for table `ticket_order`
@@ -436,7 +536,7 @@ CREATE TABLE `ticket_order` (
   CONSTRAINT `ticket_order_ibfk_1` FOREIGN KEY (`ticket_status`) REFERENCES `ticket_status` (`id`),
   CONSTRAINT `ticket_order_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `members` (`id`),
   CONSTRAINT `ticket_order_ibfk_3` FOREIGN KEY (`ticket_id`) REFERENCES `ticket` (`tid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -460,7 +560,7 @@ CREATE TABLE `ticket_status` (
   `id` int NOT NULL AUTO_INCREMENT,
   `t_status` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
