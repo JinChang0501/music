@@ -51,7 +51,7 @@ if (empty($row)) {
                 <input type="hidden" name="sid" value="<?= $row['tid'] ?>">
 
 
-                <h1 class="text-center mb-5 fw-bold">新增購票</h1>
+                <h1 class="text-center mb-5 fw-bold">編輯購票</h1>
 
                 <div class="row mb-4 justify-content-evenly">
                     <div class="col-2 form-label">
@@ -104,6 +104,9 @@ if (empty($row)) {
                         </div>
                     </div>
                 </div>
+
+                <input type="text" name="editTime" value="<?= $row['created_at'] ?>">
+
 
                 <!-- <div class="row mb-4 justify-content-evenly">
                     <div class="col-2 form-label">
@@ -174,11 +177,35 @@ if (empty($row)) {
     </div>
 </div>
 
+<!-- Modal edit-same -->
+<div class="modal fade" id="staticBackdrop3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">新增資料相同請重新輸入</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning" role="alert">
+                    新增資料相同請重新輸入
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" onclick="location.href='ticket-list.php'">到列表頁</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續新增</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php include __DIR__ . "/part/scripts.php"; ?>
 
 <script>
     const myModal = new bootstrap.Modal('#staticBackdrop')
     const myModal2 = new bootstrap.Modal('#staticBackdrop2')
+    const myModal3 = new bootstrap.Modal('#staticBackdrop3')
     const sendData = e => {
         e.preventDefault(); // 不要讓 form1 以傳統的方式送出
 
@@ -194,6 +221,17 @@ if (empty($row)) {
             isPass = false;
         }
 
+        // 如果欄位的值與 ticket-list 傳入的值相同，則不送出表單
+        const ticketValuesMatch = activities_id === "<?= $row['activities_id'] ?>" &&
+            ticket_area === "<?= $row['ticket_area'] ?>" &&
+            counts === "<?= $row['counts'] ?>" &&
+            price === "<?= $row['price'] ?>";
+
+        if (ticketValuesMatch) {
+            isPass = false; // 不通過檢查
+            myModal3.show();
+        }
+
         // 有通過檢查, 才要送表單
         if (isPass) {
             const fd = new FormData(); // 創建 FormData 物件
@@ -202,7 +240,7 @@ if (empty($row)) {
             fd.append('counts', counts);
             fd.append('price', price);
 
-            fetch('ticket-add-api.php', {
+            fetch('ticket-edit-api.php', {
                 method: 'POST',
                 body: fd,
             })
