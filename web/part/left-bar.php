@@ -167,7 +167,6 @@ if (!isset($pageName))
                 <li class="li-hover"><a class="dropdown-item py-3 border" href="artist-add.php">新增藝人資料</a></li>
                 <li class="li-hover"><a class="dropdown-item py-3 border" href="artist-edit.php">編輯藝人資料</a></li>
                 <li class="li-hover"><a class="dropdown-item py-3 border" href="artist-list.php">查詢藝人資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">音樂上下架管理</a></li>
               </div>
             </div>
           </div>
