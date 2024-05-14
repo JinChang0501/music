@@ -221,41 +221,49 @@ if (empty($row)) {
         }
     };
 
-
-
-    // 發送AJAX請求獲取activities資料
-    fetch('ticket-get-activities-api.php')
+    // 獲取AJAX請求獲取ticket_area資料
+    fetch('ticket-allData.php')
         .then(response => response.json())
         .then(data => {
-
-
-            // ticket_area
-
+            // 獲取下拉選單元素
             const areaSelect = document.getElementById('ticket_area');
 
             // 清空下拉選單
             areaSelect.innerHTML = '';
+
             // 先添加預設的選項
-            const areaValue = "<?php echo $row['ticket_area'] ?>";
-            const areaDefaultOption = document.createElement('option');
-            areaDefaultOption.value = areaValue;
-            areaDefaultOption.innerText = areaValue;
-            // 動態生成 ABCDE 選項
-            data.forEach(optionText => {
+            const areaOp = "<?php echo $row['ticket_area'] ?>";
+            const defaultOption = document.createElement('option');
+            defaultOption.value = areaOp;
+            defaultOption.innerText = areaOp;
+            areaSelect.appendChild(defaultOption);
+
+            // 定義要包含的選項，排除 ticket_area
+            const allowedOptions = ['A', 'B', 'C', 'D', 'E'].filter(option => option !== areaOp);
+
+            // 將區域資料動態添加到下拉選單中
+            allowedOptions.forEach(optionValue => {
                 const option = document.createElement('option');
-                option.value = optionText;
-                option.textContent = optionText;
+                option.value = optionValue;
+                option.textContent = optionValue;
                 areaSelect.appendChild(option);
             });
 
-            // ticket_area
+            // 添加事件監聽器
+            areaSelect.addEventListener('change', () => {
+                const selectedArea = areaSelect.value;
+                console.log(selectedArea);
+            });
 
+            // 為表單添加提交事件監聽器
+            const ticketForm = document.getElementById('ticketForm');
+            ticketForm.addEventListener('submit', sendData);
+        })
 
-
-
-
-
-
+    // 獲取AJAX請求獲取ticket-get-activities-api.php資料
+    fetch('ticket-get-activities-api.php')
+        .then(response => response.json())
+        .then(data => {
 
             // 獲取下拉選單元素
             const activitiesSelect = document.getElementById('activities_id');
@@ -268,14 +276,16 @@ if (empty($row)) {
             const defaultOption = document.createElement('option');
             defaultOption.value = actidOp;
             defaultOption.innerText = acnameOp;
-            // defaultOption.value = ""; // 給定一個空的 value
             activitiesSelect.appendChild(defaultOption);
-            // 將activities資料動態添加到下拉選單中
+
+            // 將activities資料動態添加到下拉選單中，排除actidOp
             data.forEach(activities => {
-                const option = document.createElement('option');
-                option.value = activities.actid;
-                option.textContent = activities.activity_name;
-                activitiesSelect.appendChild(option);
+                if (activities.actid !== parseInt(actidOp)) { // 排除 PHP 變數中的值
+                    const option = document.createElement('option');
+                    option.value = activities.actid;
+                    option.textContent = activities.activity_name;
+                    activitiesSelect.appendChild(option);
+                }
             });
 
             // 為表單添加提交事件監聽器
@@ -295,6 +305,7 @@ if (empty($row)) {
             // 監聽選擇活動 select 欄位的變化事件
             activitiesSelect.addEventListener('change', onActivitySelectChange);
         })
+
         .catch(error => console.error('Error fetching activities:', error));
 
 </script>

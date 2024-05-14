@@ -168,33 +168,37 @@ $pageName = 'ticket-add'; ?>
         }
     };
 
-    // ticket_area
+    // 發送AJAX請求獲取ticket_area資料
+    fetch('ticket-allData.php')
+        .then(response => response.json())
+        .then(data => {
+            // 獲取下拉選單元素
+            const areaSelect = document.getElementById('ticket_area');
 
-    const areaSelect = document.getElementById('ticket_area');
+            // 清空下拉選單
+            areaSelect.innerHTML = '';
 
-    // 清空下拉選單
-    areaSelect.innerHTML = '';
-    // 先添加預設的選項
-    const areaDefaultOption = document.createElement('option');
-    areaDefaultOption.value = ""; // 給定一個空的 value
-    areaDefaultOption.textContent = "--- 請選擇區域 ---";
-    areaSelect.appendChild(areaDefaultOption);
-    // 動態生成 ABCDE 選項
-    const options = ['A', 'B', 'C', 'D', 'E'];
-    options.forEach(optionText => {
-        const option = document.createElement('option');
-        option.value = optionText;
-        option.textContent = optionText;
-        areaSelect.appendChild(option);
-    });
-    // 添加事件監聽器
-    areaSelect.addEventListener('click', function () {
-        // 將第一個選項取消禁用
-        areaDefaultOption.disabled = true;
-    });
+            // 定義要包含的選項
+            const allowedOptions = ['A', 'B', 'C', 'D', 'E'];
 
-    // ticket_area
+            // 將區域資料動態添加到下拉選單中
+            allowedOptions.forEach(optionValue => {
+                const option = document.createElement('option');
+                option.value = optionValue;
+                option.textContent = optionValue;
+                areaSelect.appendChild(option);
+            });
 
+            // 添加事件監聽器
+            areaSelect.addEventListener('change', () => {
+                const selectedArea = areaSelect.value;
+                console.log(selectedArea);
+            });
+
+            // 為表單添加提交事件監聽器
+            const ticketForm = document.getElementById('ticketForm');
+            ticketForm.addEventListener('submit', sendData);
+        })
 
     // 發送AJAX請求獲取activities資料
     fetch('ticket-get-activities-api.php')
