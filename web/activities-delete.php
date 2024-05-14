@@ -2,8 +2,8 @@
 require __DIR__ . '/admin-required.php';
 require __DIR__ . '/../config/pdo-connect.php';
 
-$id = isset($_GET['actid']) ? intval($_GET['actid']) : 0;
-if ($id < 1) {
+$actid = isset($_GET['actid']) ? intval($_GET['actid']) : 0;
+if ($actid < 1) {
     header('Location: activities-list.php');
     exit;
 }

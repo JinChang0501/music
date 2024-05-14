@@ -113,8 +113,7 @@ $pageName = 'activities-add';
 </div>
 
 <!-- Modal Start-->
-<div class="modal fade" id="staticBackdropA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-	aria-labelledby="staticBackdropLabelA" aria-hidden="true">
+<div class="modal fade" id="staticBackdropA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelA" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -168,16 +167,14 @@ $pageName = 'activities-add';
 			const fd = new FormData(document.form_activities); // 沒有外觀的表單物件
 
 			fetch('activities-add-api.php', {
-				method: 'POST',
-				body: fd, // Content-Type: multipart/form-data
-			}).then(r => r.json())
+					method: 'POST',
+					body: fd, // Content-Type: multipart/form-data
+				}).then(r => r.json())
 				.then(data => {
 					console.log(data);
 					if (data.success) {
 						myModalA.show();
-					} else {
-
-					}
+					} else {}
 				})
 				.catch(ex => console.log(ex))
 		}

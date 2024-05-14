@@ -4,7 +4,7 @@ require __DIR__ . '/../config/pdo-connect.php';
 $title = "修改活動列表";
 
 
-$id = isset($_GET['actid']) ? intval($_GET['actid']) : 0;
+$actid = isset($_GET['actid']) ? intval($_GET['actid']) : 0;
 if ($actid < 1) {
   header('Location: activities-list.php');
   exit;
@@ -37,15 +37,18 @@ if (empty($row)) {
         <div class="card-body">
           <h5 class="card-title">編輯資料</h5>
           <form name="form1" onsubmit="sendData(event)">
-            <input type="hidden" name="actid" value="<?= $row['actid'] ?>">
+            <input type="hidden" name="id" value="<?= $row['id'] ?>">
             <div class="mb-3">
               <label for="actid" class="form-label">編號</label>
               <input type="text" class="form-control" disabled value="<?= $row['actid'] ?>">
             </div>
             <div class="mb-3">
-              <label for="aclass" class="form-label">類別</label>
-              <input type="text" class="form-control" id="aclass" name="aclass" value="<?= $row['activity_class'] ?>">
-              <div class="form-text"></div>
+              <label for="activity_class" class="form-label">類別</label>
+              <select class="form-select" aria-label="Default select example" id="activity_class" name="activity_class">
+                <option selected>--</option>
+                <option value="1">演唱會</option>
+                <option value="2">音樂祭</option>
+              </select>
             </div>
 
             <div class="mb-3">
@@ -69,6 +72,12 @@ if (empty($row)) {
             <div class="mb-3">
               <label for="location" class="form-label">地點</label>
               <input type="text" class="form-control" id="location" name="location" value="<?= $row['location'] ?>">
+              <div class="form-text"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="address" class="form-label">地址</label>
+              <input type="text" class="form-control" id="address" name="address" value="<?= $row['address'] ?>">
               <div class="form-text"></div>
             </div>
 
@@ -110,7 +119,7 @@ if (empty($row)) {
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">修改成功</h1>
+        <h1 class="modal-title fs-5" id="staticBackdropLabelA">修改成功</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -133,7 +142,7 @@ if (empty($row)) {
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel2">資料沒有修改</h1>
+        <h1 class="modal-title fs-5" id="staticBackdropLabelB">資料沒有修改</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -152,41 +161,35 @@ if (empty($row)) {
 
 <?php include __DIR__ . '/part/scripts.php' ?>
 <script>
-  const nameField = document.form1.name;
-  const emailField = document.form1.email;
-
-  function validateEmail(email) {
-    const re =
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-  }
+  // const activity_class = document.form_activities.activity_class;
+  const activity_nameField = document.form_activities.activity_name;
 
   const sendData = e => {
-    e.preventDefault(); // 不要讓 form1 以傳統的方式送出
+    e.preventDefault(); // 不要讓 form_activities 以傳統的方式送出
 
-    nameField.style.border = '1px solid #CCCCCC';
-    nameField.nextElementSibling.innerText = '';
-    emailField.style.border = '1px solid #CCCCCC';
-    emailField.nextElementSibling.innerText = '';
+    // activity_class.style.border = '1px solid #CCCCCC';
+    // activity_class.nextElementSibling.innerText = '';
+    activity_nameField.style.border = '1px solid #CCCCCC';
+    activity_nameField.nextElementSibling.innerText = '';
+
     // TODO: 欄位資料檢查
-
     let isPass = true; // 表單有沒有通過檢查
-    // if (nameField.value.length < 2) {
-    //   isPass = false;
-    //   nameField.style.border = '1px solid red';
-    //   nameField.nextElementSibling.innerText = '請填寫正確的姓名';
 
-    // }
-    // if (!validateEmail(emailField.value)) {
-    //   isPass = false;
-    //   emailField.style.border = '1px solid red';
-    //   emailField.nextElementSibling.innerText = '請填寫正確的 Email';
+    // if ((activity_class.value < 1) || (activity_class.value > 2)) {
+    // 	isPass = false;
+    // 	activity_nameField.style.border = '1px solid red';
+    // 	activity_nameField.nextElementSibling.innerText = '請選擇類別';
     // }
 
+    if (activity_nameField.value.length < 2) {
+      isPass = false;
+      activity_nameField.style.border = '1px solid red';
+      activity_nameField.nextElementSibling.innerText = '請填寫正確的活動名稱';
+    }
 
     // 有通過檢查, 才要送表單
     if (isPass) {
-      const fd = new FormData(document.form1); // 沒有外觀的表單物件
+      const fd = new FormData(document.form_activities); // 沒有外觀的表單物件
 
       fetch('activities-edit-api.php', {
         method: 'POST',
@@ -195,16 +198,16 @@ if (empty($row)) {
         .then(data => {
           console.log(data);
           if (data.success) {
-            myModal.show();
+            myModalA.show();
           } else {
-            myModal2.show();
+            myModalB.show();
           }
         })
         .catch(ex => console.log(ex))
     }
   };
 
-  const myModal = new bootstrap.Modal('#staticBackdrop');
-  const myModal2 = new bootstrap.Modal('#staticBackdrop2');
+  const myModalA = new bootstrap.Modal('#staticBackdropA');
+  const myModalB = new bootstrap.Modal('#staticBackdropB');
 </script>
 <?php include __DIR__ . '/part/html-footer.php' ?>
