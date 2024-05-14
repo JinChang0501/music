@@ -11,7 +11,11 @@ if ($actid < 1) {
 }
 
 // $sql = "SELECT * FROM activities WHERE actid={$actid}";
-$sql = "SELECT * FROM activities JOIN artist ON artist_id = artist.id JOIN aclass ON activities.activity_class = aclass.id WHERE actid={$actid}";
+$sql = "SELECT * 
+FROM activities 
+JOIN artist ON artist_id = artist.id 
+JOIN aclass ON activities.activity_class = aclass.id 
+WHERE actid={$actid}";
 
 $row = $pdo->query($sql)->fetch();
 if (empty($row)) {
@@ -41,12 +45,15 @@ if (empty($row)) {
       <div class="card my-3">
         <div class="card-body">
           <h4 class="card-title fw-bold">編輯資料</h4>
-          <form name="form1" onsubmit="sendData(event)">
+          <form id="form_activities" name="form_activities" onsubmit="sendData(event)">
+
             <input type="hidden" name="actid" value="<?= $row['actid'] ?>">
+
             <div class="mb-3">
               <label for="actid" class="form-label">編號</label>
               <input type="text" class="form-control" disabled value="<?= $row['actid'] ?>">
             </div>
+
             <div class="mb-3">
               <label for="activity_class" class="form-label">類別</label>
               <select class="form-select" aria-label="Default select example" id="activity_class" name="activity_class">
@@ -107,9 +114,11 @@ if (empty($row)) {
             <div class="mb-3">
               <label for="artist_id" class="form-label">表演者</label>
               <select class="form-select" aria-label="Default select example" id="artist_id" name="artist_id">
-                <option value="<?= $row['artist_id'] ?>" selected><?= $row['art_name'] ?></option>
-                <option value="<?= $row['artist_id'] ?>"><?= $row['art_name'] ?></option>
+                <!-- <option value="<?= $row['artist_id'] ?>" selected><?= $row['art_name'] ?></option> -->
               </select>
+              <div class="invalid-feedback">
+                請選擇活動
+              </div>
             </div>
             <div class="mb-3">
               <label for="picture" class="form-label">圖片</label>
@@ -221,5 +230,70 @@ if (empty($row)) {
 
   const myModalA = new bootstrap.Modal('#staticBackdropA');
   const myModalB = new bootstrap.Modal('#staticBackdropB');
+
+  // 發送AJAX請求獲取activities資料
+  fetch('activities-get-artist-api.php')
+    .then(response => response.json())
+    .then(data => {
+      // 獲得art_name
+      const artistSelect = document.getElementById('artist_id');
+
+      // 清空下拉選單
+      artistSelect.innerHTML = '';
+      // 先添加預設的選項
+      const artistValue = "<?php echo $row['artist_id'] ?>";
+      const artistDefaultOption = document.createElement('option');
+      artistDefaultOption.value = artistValue;
+      artistDefaultOption.innerText = artistValue;
+      // 動態生成 ABCDE 選項
+      data.forEach(optionText => {
+        const option = document.createElement('option');
+        option.value = optionText;
+        option.textContent = optionText;
+        artistSelect.appendChild(option);
+      });
+      // 結束artist_id
+
+
+      // 獲取下拉選單元素
+      const activitiesSelect = document.getElementById('activities_id');
+      // 清空下拉選單
+      activitiesSelect.innerHTML = '';
+
+      // 先添加預設的選項
+      const actidOp = "<?php echo $row['actid'] ?>";
+      const acnameOp = "<?php echo $row['activity_name'] ?>";
+      const defaultOption = document.createElement('option');
+      defaultOption.value = actidOp;
+      defaultOption.innerText = acnameOp;
+      // defaultOption.value = ""; // 給定一個空的 value
+      activitiesSelect.appendChild(defaultOption);
+      // 將activities資料動態添加到下拉選單中
+      data.forEach(activities => {
+        const option = document.createElement('option');
+        option.value = activities.actid;
+        option.textContent = activities.activity_name;
+        activitiesSelect.appendChild(option);
+      });
+
+
+      // 為表單添加提交事件監聽器
+      const ticketForm = document.getElementById('ticketForm');
+      ticketForm.addEventListener('submit', sendData);
+
+      // 在選擇活動 select 欄位變化時執行的函數
+      const onActivitySelectChange = () => {
+        const selectedActivityId = activitiesSelect.value; // 取得選擇的活動ID
+        console.log(selectedActivityId);
+        // 找到選擇的活動的對象
+        const selectedActivity = data.find(activity => activity.actid === parseInt(selectedActivityId));
+        // 在這裡處理從後端獲取的單個活動資訊
+        console.log(selectedActivity);
+      };
+
+      // 監聽選擇活動 select 欄位的變化事件
+      activitiesSelect.addEventListener('change', onActivitySelectChange);
+    })
+    .catch(error => console.error('Error fetching activities:', error));
 </script>
 <?php include __DIR__ . '/part/html-footer.php' ?>
