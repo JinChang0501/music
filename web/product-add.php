@@ -51,8 +51,8 @@ $pageName = 'product-add';
               <div class="form-text"></div>
             </div>
                        
-            <button type="submit" class="btn btn-primary my-5 px-5" >新增</button>
-            <a href="product-list.php" class="btn  btn-info mx-5 px-3">取消</a>
+            <button type="submit" class="btn btn-primary my-5 px-5" data-bs-toggle="modal" data-bs-target="#staticBackdrop">新增</button>
+            <a href="#" class="btn  btn-info mx-5 px-3">取消</a>
           </form>
         </div>
       </div>
@@ -134,7 +134,7 @@ $pageName = 'product-add';
     }
   };
 
-  const successModal = new bootstrap.Modal('#staticBackdrop')
+  const staticBackdrop = new bootstrap.Modal('#staticBackdrop')
   
 </script>
 <?php include __DIR__ . '/part/html-footer.php' ?>
