@@ -54,7 +54,7 @@ if (!isset($pageName))
       </form>
 
       <div class="text-end">
-        <?php if (isset($_SESSION['admin'])): ?>
+        <?php if (isset($_SESSION['admin'])) : ?>
           <div class="d-flex">
             <div style="width: 120px; height: 38px" class="d-flex justify-content-center align-items-center">
               <a class="white nav-link">Dear&nbsp;&nbsp;<?= $_SESSION['admin']['first_name'] ?></a>
@@ -63,13 +63,15 @@ if (!isset($pageName))
               <a class="btn btn-primary" href="logout.php">登出</a>
             </div>
           </div>
-        <?php else: ?>
-          <a type="button" class="btn btn-outline-light me-2 <?= $pageName == 'login' ? 'active' : '' ?>"
-            href="login.php">Login</a>
-          <a type="button" class="btn btn-warning <?= $pageName == 'register' ? 'active' : '' ?>"
-            href="register.php">Sign-up</a>
+        <?php else : ?>
+          <a type="button" class="btn btn-outline-light me-2 <?= $pageName == 'login' ? 'active' : '' ?>" href="login.php">Login</a>
+          <a type="button" class="btn btn-warning <?= $pageName == 'register' ? 'active' : '' ?>" href="register.php">Sign-up</a>
         <?php endif ?>
       </div>
     </div>
   </div>
+
+
+  <!-- JQuery Jin using -->
+  <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 </header>
