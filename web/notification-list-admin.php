@@ -1,9 +1,9 @@
 <?php
 require __DIR__ . '/../config/pdo-connect.php';
-$title = '活動列表';
-$pageName = 'activities-list';
+$title = '通知列表';
+$pageName = 'notification-list';
 
-$perPage = 5;
+$perPage = 10;
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 if ($page < 1) {
@@ -11,7 +11,7 @@ if ($page < 1) {
   exit;
 }
 
-$t_sql = "SELECT COUNT(actid) FROM activities";
+$t_sql = "SELECT COUNT(notid) FROM notification";
 
 # 總筆數
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
@@ -30,7 +30,7 @@ if ($totalRows) {
 
   # 取得分頁資料
   $sql = sprintf(
-    "SELECT * FROM activities JOIN aclass ON activities.activity_class = aclass.id JOIN artist ON artist_id = artist.id ORDER BY activities.actid ASC LIMIT %s, %s",
+    "SELECT * FROM notification JOIN nclass ON notification.noti_class = nclass.id ORDER BY notification.notid ASC LIMIT %s, %s",
     ($page - 1) * $perPage,
     $perPage
   );
@@ -87,8 +87,6 @@ if ($totalRows) {
       </div>
       <!-- 按鈕群組 -->
       <div class="col-6 mb-3">
-        <!-- <input class="btn btn-primary" type="button" value="一鍵全選">
-        <input class="btn btn-secondary" type="button" value="一鍵取消"> -->
         <button class="btn btn-danger" type="submit" id="dltAllSelect">刪除所選</button>
       </div>
       <!-- 搜尋 -->
@@ -103,16 +101,10 @@ if ($totalRows) {
             <tr>
               <th scope="col"><input class="form-check-input" type="checkbox" value="" id="checkAll"> </th>
               <th scope="col">#</th>
+              <th scope="col">標題</th>
+              <th scope="col">內容</th>
+              <th scope="col">發送時間</th>
               <th scope="col">類別</th>
-              <th scope="col">活動名稱</th>
-              <th scope="col">日期</th>
-              <th scope="col">時間</th>
-              <th scope="col">地點</th>
-              <th scope="col">地址</th>
-              <th scope="col">活動內容</th>
-              <th scope="col">主辦單位</th>
-              <th scope="col">表演者</th>
-              <th scope="col">圖片</th>
               <th scope="col"><i class="fa-solid fa-trash"></i></th>
               <th scope="col"><i class="fa-solid fa-pen-to-square"></i></th>
             </tr>
@@ -121,25 +113,19 @@ if ($totalRows) {
             <?php foreach ($rows as $r): ?>
               <tr>
                 <td>
-                  <input class="checkboxes form-check-input" type="checkbox" value="<?= $r['actid'] ?>"
-                    id="flexCheckDefault<?= $r['actid'] ?>">
+                  <input class="checkboxes form-check-input" type="checkbox" value="<?= $r['notid'] ?>"
+                    id="flexCheckDefault<?= $r['notid'] ?>">
                 </td>
-                <td><?= $r['actid'] ?></td>
+                <td><?= $r['notid'] ?></td>
+                <td><?= $r['title'] ?></td>
+                <td><?= $r['content'] ?></td>
+                <td><?= $r['sent_time'] ?></td>
                 <td><?= $r['class'] ?></td>
-                <td><?= $r['activity_name'] ?></td>
-                <td><?= $r['a_date'] ?></td>
-                <td><?= $r['a_time'] ?></td>
-                <td><?= $r['location'] ?></td>
-                <td><?= $r['address'] ?></td>
-                <td><?= $r['descriptions'] ?></td>
-                <td><?= $r['organizer'] ?></td>
-                <td><?= $r['art_name'] ?></td>
-                <td><img src="<?= $r['picture'] ?>" class="image img-thumbnail" alt="activities_picture"></td>
-                <td><a href="javascript: deleteOne(<?= $r['actid'] ?>)">
-                    <button type="button" class="btn btn-danger"><i class="fa-solid fa-trash text-white"></i></a></td>
-                </button>
-                <td><a href="activities-edit.php?actid=<?= $r['actid'] ?>">
-                    <button type="button" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i></button></a>
+                <td>
+                  <a href="javascript: deleteOne(<?= $r['notid'] ?>)">
+                    <i class="fa-solid fa-trash"></i></a>
+                </td>
+                <td><a href="notification-edit.php?notid=<?= $r['notid'] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -162,7 +148,7 @@ if ($totalRows) {
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">保留</button>
         <!-- 這裡有問題 -->
         <button type="button" class="btn btn-danger"
-          herf="activities-delete.php?actid=<?php $r['actid'] ?>">確認刪除</button>
+          herf="notification-delete.php?notid=<?php $r['notid'] ?>">確認刪除</button>
       </div>
     </div>
   </div>
@@ -170,9 +156,9 @@ if ($totalRows) {
 </div>
 <?php include __DIR__ . '/part/scripts.php' ?>
 <script>
-  const deleteOne = (actid) => {
-    if (confirm(`確定要刪除${actid}的資料嗎?`)) {
-      location.href = `activities-delete.php?actid=${actid}`;
+  const deleteOne = (notid) => {
+    if (confirm(`確定要刪除${notid}的資料嗎?`)) {
+      location.href = `notification-delete.php?notid=${notid}`;
     }
   }
 
@@ -200,8 +186,8 @@ if ($totalRows) {
 
     for (let i = 0; i < checkboxes2.length; i++) {
       if (checkboxes2[i].checked) {
-        const actid = checkboxes2[i].value; // 獲取被勾選項目的 ID
-        selectedIds.push(actid); // 將 ID 加入到 selectedIds 陣列中
+        const notid = checkboxes2[i].value; // 獲取被勾選項目的 ID
+        selectedIds.push(notid); // 將 ID 加入到 selectedIds 陣列中
       }
     }
 
@@ -209,7 +195,7 @@ if ($totalRows) {
       if (confirm(`確定要刪除這 ${selectedIds.length} 筆資料嗎?`)) {
         // 執行刪除操作，這裡可以使用 AJAX 或者其他方式向後端發送刪除請求
         // 這裡假設你已經有了一個可以處理刪除的後端接口
-        location.href = `activities-delete-sel.php?actid=${selectedIds.join(',')}`;
+        location.href = `notification-delete-sel.php?notid=${selectedIds.join(',')}`;
       }
     } else {
       alert('請先選擇要刪除的資料');

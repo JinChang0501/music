@@ -1,9 +1,9 @@
 <?php
 require __DIR__ . '/../config/pdo-connect.php';
 $title = '活動列表(未登入)';
-$pageName = 'activities-list';
+$pageName = 'notification-list';
 
-$perPage = 5;
+$perPage = 10;
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 if ($page < 1) {
@@ -11,7 +11,7 @@ if ($page < 1) {
   exit;
 }
 
-$t_sql = "SELECT COUNT(actid) FROM activities";
+$t_sql = "SELECT COUNT(actid) FROM notification";
 
 # 總筆數
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
@@ -30,7 +30,7 @@ if ($totalRows) {
 
   # 取得分頁資料
   $sql = sprintf(
-    "SELECT * FROM activities JOIN aclass ON activities.activity_class = aclass.id JOIN artist ON artist_id = artist.id ORDER BY activities.actid ASC LIMIT %s, %s",
+    "SELECT * FROM notification JOIN nclass ON notification.noti_class = nclass.id ORDER BY notification.notid ASC LIMIT %s, %s",
     ($page - 1) * $perPage,
     $perPage
   );
@@ -89,32 +89,20 @@ if ($totalRows) {
         <thead>
           <tr>
             <th scope="col">#</th>
+            <th scope="col">標題</th>
+            <th scope="col">內容</th>
+            <th scope="col">發送時間</th>
             <th scope="col">類別</th>
-            <th scope="col">活動名稱</th>
-            <th scope="col">日期</th>
-            <th scope="col">時間</th>
-            <th scope="col">地點</th>
-            <th scope="col">地址</th>
-            <th scope="col">活動描述</th>
-            <th scope="col">主辦單位</th>
-            <th scope="col">表演者</th>
-            <th scope="col">圖片</th>
           </tr>
         </thead>
         <tbody>
           <?php foreach ($rows as $r): ?>
             <tr>
-              <td><?= $r['actid'] ?></td>
-              <td><?= $r['activity_class'] ?></td>
-              <td><?= $r['activity_name'] ?></td>
-              <td><?= $r['a_date'] ?></td>
-              <td><?= $r['a_time'] ?></td>
-              <td><?= $r['location'] ?></td>
-              <td><?= $r['address'] ?></td>
-              <td><?= $r['descriptions'] ?></td>
-              <td><?= $r['organizer'] ?></td>
-              <td><?= $r['art_name'] ?></td>
-              <td><?= $r['picture'] ?></td>
+              <td><?= $r['notid'] ?></td>
+              <td><?= $r['title'] ?></td>
+              <td><?= $r['content'] ?></td>
+              <td><?= $r['sent_time'] ?></td>
+              <td><?= $r['id'] ?></td>
             </tr>
           <?php endforeach; ?>
         </tbody>
