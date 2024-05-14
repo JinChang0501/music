@@ -63,37 +63,35 @@ include __DIR__ . "/part/navbar-head.php";
       <!-- 頁面選單 Start -->
       <nav aria-label="Page navigation example">
         <ul class="pagination">
-          <!-- arrow left start -->
-          <li class="page-item ">
-            <a class="page-link" href="#">
+          <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
+            <a class="page-link" href="?page=1">
               <i class="fa-solid fa-angles-left"></i>
             </a>
           </li>
-          <li class="page-item ">
-            <a class="page-link" href="#">
+          <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
+            <a class="page-link" href="?page=<?= max(1, $page - 1) ?>">
               <i class="fa-solid fa-angle-left"></i>
             </a>
           </li>
-          <!-- arrow left end -->
+
           <?php for ($i = $page - 5; $i <= $page + 5; $i++) :
             if ($i >= 1 and $i <= $totalPages) : ?>
-              <li class="page-item <?php $page == $i ? 'active' : '' ?>">
+              <li class="page-item <?= $page == $i ? 'active' : '' ?>">
                 <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
               </li>
           <?php endif;
           endfor; ?>
-          <!-- arrow right start -->
-          <li class="page-item">
-            <a class="page-link" href="#">
+          <li class="page-item <?= $page == $totalPages ? 'disabled' : '' ?>">
+            <a class="page-link" href="?page=<?= min($totalPages, $page + 1) ?>">
               <i class="fa-solid fa-angle-right"></i>
             </a>
           </li>
-          <li class="page-item">
-            <a class="page-link" href="#">
+
+          <li class="page-item <?= $page == $totalPages ? 'disabled' : '' ?>">
+            <a class="page-link" href="?page=<?= $totalPages ?>">
               <i class="fa-solid fa-angles-right"></i>
             </a>
           </li>
-          <!-- arrow right end -->
         </ul>
       </nav>
       <!-- 頁面選單 End -->
@@ -108,7 +106,7 @@ include __DIR__ . "/part/navbar-head.php";
       <!-- 按鈕列 End -->
       <!--  -->
       <div style="overflow-x: auto;">
-        <table class="table table-bordered table-striped" data-toggle="table">
+        <table class="table table-bordered table-striped">
           <thead>
             <tr>
               <th scope="col" class="text-center">
