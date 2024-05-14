@@ -67,7 +67,7 @@ include __DIR__ . "/part/navbar-head.php";
       <?php include __DIR__ . "/part/left-bar.php"; ?>
     </div>
 
-    <div class="col-10">
+    <div class="col-10" style="overflow-x: auto;">
       <nav aria-label="Page navigation example">
         <ul class="pagination">
           <!-- arrow left start -->

@@ -188,7 +188,7 @@ $pageName = 'members-add';
       <div class="modal-footer">
 
         <button type="button" class="btn btn-primary" onclick="location.href='members-list.php'">到列表頁</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續新增</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="keepAdd">繼續新增</button>
       </div>
     </div>
   </div>
@@ -197,21 +197,14 @@ $pageName = 'members-add';
 
 <?php include __DIR__ . "/part/scripts.php"; ?>
 <script>
-  const emailValue = document.getElementById('email').value;
-  console.log(emailValue);
+  const keepAdd = document.getElementById('keepAdd');
+  const formControls = document.querySelectorAll('.form-control');
 
-
-
-
-
-
-  email.addEventListener('keydown', function() {})
-
-
-
-
-
-
+  keepAdd.addEventListener('click', function() {
+    formControls.forEach(function(control) {
+      control.value = ''; // 清空表單控件的值
+    });
+  });
 
   const first_nameField = document.form1.first_name;
   const last_nameField = document.form1.last_name;

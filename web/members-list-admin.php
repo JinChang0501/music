@@ -59,7 +59,7 @@ include __DIR__ . "/part/navbar-head.php";
       <?php include __DIR__ . "/part/left-bar.php"; ?>
     </div>
 
-    <div class="col-10">
+    <div class="col-10" style="overflow-x: auto;">
       <!-- 頁面選單 Start -->
       <nav aria-label="Page navigation example">
         <ul class="pagination">
@@ -105,15 +105,14 @@ include __DIR__ . "/part/navbar-head.php";
       </div>
       <!-- 按鈕列 End -->
       <!--  -->
-      <table class="table table-bordered table-striped">
+      <table class="table table-bordered table-striped" data-toggle="table">
         <thead>
           <tr>
             <th scope="col" class="text-center">
-              <input class="form-check-input" type="checkbox" value="" id="checkall">
+              <input class="form-check-input text-center" type="checkbox" value="" id="checkall">
             </th>
             <!-- <th scope="col" class="text-center">選擇</th> -->
             <th class="text-center"><i class="fa-solid fa-trash text-center"></i></th>
-
             <th scope="col" class="text-center">#</th>
             <th scope="col" class="text-center">First_name</th>
             <th scope="col" class="text-center">Last_name</th>
@@ -131,20 +130,24 @@ include __DIR__ . "/part/navbar-head.php";
         <tbody>
           <?php foreach ($rows as $r) : ?>
             <tr>
-              <td scope="col" style="text-align: center;">
-                <input class="checkboxes form-check-input" type="checkbox" value="<?= $r['id'] ?>" id="flexCheckDefault<?= $r['id'] ?>">
+              <td scope="col">
+                <div>
+                  <input class="checkboxes form-check-input" type="checkbox" value="<?= $r['id'] ?>" id="flexCheckDefault<?= $r['id'] ?>">
+                </div>
               </td>
+
+
               <td class="text-center"><a href="javascript: deleteOne(<?= $r['id'] ?>)"><i class="fa-solid fa-trash text-danger"></i></a></td>
               <td class="text-center"><?= $r['id'] ?></td>
-              <td class="text-center"><?= $r['first_name'] ?></td>
-              <td class="text-center"><?= $r['last_name'] ?></td>
-              <td class="text-center"><?= $r['email'] ?></td>
-              <td class="text-center"><?= $r['passwords'] ?></td>
-              <td class="text-center"><?= $r['gender'] ?></td>
-              <td class="text-center"><?= $r['phone_number'] ?></td>
-              <td class="text-center"><?= $r['birthday'] ?></td>
-              <td><?= (!empty($r['address'])) ? htmlentities($r['address']) : '未填' ?></td>
-              <td class="text-center"><?= $r['created_at'] ?></td>
+              <td class="text-center text-nowrap"><?= $r['first_name'] ?></td>
+              <td class="text-center text-nowrap"><?= $r['last_name'] ?></td>
+              <td class="text-center text-nowrap"><?= $r['email'] ?></td>
+              <td class="text-center text-nowrap"><?= $r['passwords'] ?></td>
+              <td class="text-center text-nowrap"><?= $r['gender'] ?></td>
+              <td class="text-center text-nowrap"><?= $r['phone_number'] ?></td>
+              <td class="text-center text-nowrap"><?= $r['birthday'] ?></td>
+              <td class="text-center text-nowrap"><?= (!empty($r['address'])) ? htmlentities($r['address']) : '未填' ?></td>
+              <td class="text-center text-nowrap"><?= $r['created_at'] ?></td>
               <td class="text-center"><a href="members-edit.php?id=<?= $r['id'] ?>"><i class="fa-solid fa-pen-to-square text-warning"></i></a></td>
             </tr>
           <?php endforeach; ?>

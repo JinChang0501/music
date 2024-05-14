@@ -37,7 +37,7 @@ if (empty($row)) {
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-2">
+    <div class="col-2 p-0">
       <?php include __DIR__ . "/part/left-bar.php"; ?>
     </div>
     <div class="col-10">
@@ -51,6 +51,12 @@ if (empty($row)) {
 
 
             <div class="row g-3">
+
+              <div class="mb-3">
+                <label for="id" class="form-label">編號</label>
+                <input type="text" class="form-control" id="id" name="id" value="<?= $row['id'] ?>" disabled>
+              </div>
+
               <div class="col-sm-6">
                 <label for="first_name" class="form-label">First name</label>
                 <input type="text" class="form-control" id="first_name" name="first_name" value="<?= $row['first_name'] ?>" required>
@@ -89,7 +95,7 @@ if (empty($row)) {
               <!-- Passwords End -->
 
               <!-- Gender Start -->
-              <div class="mb-3">
+              <div class="col-6">
                 <label for="gender" class="form-label">Gender</label><br>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" type="radio" id="male" name="gender" value="Male" <?= $row['gender'] === 'Male' ? 'checked' : '' ?> required>

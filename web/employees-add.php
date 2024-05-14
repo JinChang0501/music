@@ -68,8 +68,8 @@ $pageName = 'employees-add';
                 <label for="gender" class="form-label">Gender</label><br>
 
                 <div class="col-12 form-control">
-                  <input type="radio" name="gender" value="male" required>男 - Male
-                  <input type="radio" name="gender" value="female" class="ms-3" required>女 - Female
+                  <input type="radio" name="gender" value="Male" required>男 - Male
+                  <input type="radio" name="gender" value="Female" class="ms-3" required>女 - Female
                   <div class="invalid-feedback">
                     Gender required.
                   </div>
@@ -161,7 +161,7 @@ $pageName = 'employees-add';
       <div class="modal-footer">
 
         <button type="button" class="btn btn-primary" onclick="location.href='employees-list.php'">到列表頁</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續新增</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="keepAdd">繼續新增</button>
       </div>
     </div>
   </div>
@@ -170,6 +170,22 @@ $pageName = 'employees-add';
 
 <?php include __DIR__ . "/part/scripts.php"; ?>
 <script>
+  const keepAdd = document.getElementById('keepAdd');
+  const formControls = document.querySelectorAll('form-control');
+
+  keepAdd.addEventListener('click', function() {
+    formControls.forEach(function(control) {
+      control.value = ''; // 清空表單控件的值
+    });
+  });
+  // gender (modal 按下繼續新增清除gender checked)
+  const genderRadios = document.querySelectorAll("input[type=radio][name=gender]");
+
+  genderRadios.forEach(function(radio) {
+    radio.checked = false; // 将单选按钮的选中状态设为未选中
+  });
+
+
   const first_nameField = document.form1.first_name;
   const last_nameField = document.form1.last_name;
   const emailField = document.form1.email;
