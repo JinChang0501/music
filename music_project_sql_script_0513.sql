@@ -3,6 +3,27 @@
 -- Host: localhost    Database: music_project
 -- ------------------------------------------------------
 -- Server version	8.0.36
+-- drop database music_project;
+create database music_project;
+use music_project;
+show warnings;
+SELECT 
+	actid,
+    activities.picture,
+    activities.activity_name,
+    artist.art_name,
+    activities.location,
+    activities.descriptions,
+    activities.a_date,
+    activities.a_time,
+    aclass.class,
+    activities.organizer
+FROM 
+    activities
+JOIN 
+    artist ON activities.artist_id = artist.id
+JOIN 
+    aclass ON activities.activity_class = aclass.id;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -58,7 +79,7 @@ CREATE TABLE `activities` (
   `organizer` varchar(100) NOT NULL,
   `artist_id` int DEFAULT NULL,
   `picture` varchar(300) DEFAULT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`actid`),
   KEY `activity_class` (`activity_class`),
   KEY `artist_id` (`artist_id`),
   CONSTRAINT `activities_ibfk_1` FOREIGN KEY (`activity_class`) REFERENCES `aclass` (`id`),
@@ -119,7 +140,7 @@ CREATE TABLE `banner` (
   `class` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `activities_id` (`activities_id`),
-  CONSTRAINT `banner_ibfk_1` FOREIGN KEY (`activities_id`) REFERENCES `activities` (`id`)
+  CONSTRAINT `banner_ibfk_1` FOREIGN KEY (`activities_id`) REFERENCES `activities` (`actid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -350,7 +371,7 @@ CREATE TABLE `products` (
   `activitie_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `activitie_id` (`activitie_id`),
-  CONSTRAINT `products_ibfk_1` FOREIGN KEY (`activitie_id`) REFERENCES `activities` (`id`)
+  CONSTRAINT `products_ibfk_1` FOREIGN KEY (`activitie_id`) REFERENCES `activities` (`actid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -372,15 +393,15 @@ DROP TABLE IF EXISTS `ticket`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ticket` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `tid` int NOT NULL AUTO_INCREMENT,
   `activities_id` int NOT NULL,
   `ticket_area` varchar(50) DEFAULT NULL,
   `counts` int NOT NULL,
   `price` int NOT NULL,
   `created_at` datetime NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`tid`),
   KEY `activities_id` (`activities_id`),
-  CONSTRAINT `ticket_ibfk_1` FOREIGN KEY (`activities_id`) REFERENCES `activities` (`id`)
+  CONSTRAINT `ticket_ibfk_1` FOREIGN KEY (`activities_id`) REFERENCES `activities` (`actid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -414,7 +435,7 @@ CREATE TABLE `ticket_order` (
   KEY `user_id` (`user_id`) USING BTREE,
   CONSTRAINT `ticket_order_ibfk_1` FOREIGN KEY (`ticket_status`) REFERENCES `ticket_status` (`id`),
   CONSTRAINT `ticket_order_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `members` (`id`),
-  CONSTRAINT `ticket_order_ibfk_3` FOREIGN KEY (`ticket_id`) REFERENCES `ticket` (`id`)
+  CONSTRAINT `ticket_order_ibfk_3` FOREIGN KEY (`ticket_id`) REFERENCES `ticket` (`tid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
