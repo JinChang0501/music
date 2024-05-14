@@ -178,17 +178,28 @@ $pageName = 'ticket-add'; ?>
             // 清空下拉選單
             areaSelect.innerHTML = '';
 
-            // 定義要包含的選項
-            const allowedOptions = ['A', 'B', 'C', 'D', 'E'];
+            // 先添加預設的選項
+            const defaultOption = document.createElement('option');
+            defaultOption.value = ""; // 給定一個空的 value
+            defaultOption.textContent = "--- 請選擇區域 ---";
+            areaSelect.appendChild(defaultOption);
 
-            // 將區域資料動態添加到下拉選單中
-            allowedOptions.forEach(optionValue => {
-                const option = document.createElement('option');
-                option.value = optionValue;
-                option.textContent = optionValue;
-                areaSelect.appendChild(option);
+            // 將區域資料動態添加到下拉選單中，僅新增前五筆資料
+            let count = 0;
+            data.forEach(ticket => {
+                if (count < 5) {
+                    const option = document.createElement('option');
+                    option.value = ticket.ticket_area;
+                    option.textContent = ticket.ticket_area;
+                    areaSelect.appendChild(option);
+                    count++;
+                }
             });
-
+            // 添加事件監聽器
+            areaSelect.addEventListener('click', function () {
+                // 將第一個選項取消禁用
+                defaultOption.disabled = true;
+            });
             // 添加事件監聽器
             areaSelect.addEventListener('change', () => {
                 const selectedArea = areaSelect.value;

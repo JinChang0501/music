@@ -5,55 +5,31 @@ require __DIR__ . '/../config/pdo-connect.php';
 header('Content-Type: application/json');
 
 $output = [
-    'success' => false, # 有沒有新增成功
+    'success' => false,
     'bodyData' => $_POST,
 ];
 
-// TODO: 欄位資料檢查
-if (!isset($_POST['sid'])) {
-    echo json_encode($output);
-    exit; # 結束 php 程式
+// Check if all required fields are present
+if (
+    isset($_POST['activities_id']) && !empty($_POST['activities_id']) &&
+    isset($_POST['ticket_area']) && !empty($_POST['ticket_area']) &&
+    isset($_POST['counts']) && !empty($_POST['counts']) &&
+    isset($_POST['price']) && !empty($_POST['price']) &&
+    isset($_POST['tid']) && !empty($_POST['tid'])
+) {
+    $sql = "UPDATE `ticket` SET 
+        `activities_id`=?,
+        `ticket_area`=?,
+        `counts`=?,
+        `price`=?,
+        `editTime`=NOW()
+    WHERE tid=?";
+
+    $stmt = $pdo->prepare($sql);
+
+    if ($stmt->execute([$_POST['activities_id'], $_POST['ticket_area'], $_POST['counts'], $_POST['price'], $_POST['tid']])) {
+        $output['success'] = true;
+    }
 }
-
-# preg_match(): regexp 比對用 
-
-# mb_strlen(): 算字串的長度
-
-# filter_var('bob@example.com', FILTER_VALIDATE_EMAIL): 檢查 email 格式
-
-
-
-
-$birthday = strtotime($_POST['birthday']);
-if ($birthday === false) {
-    $birthday = null;
-} else {
-    $birthday = date('Y-m-d', $birthday);
-}
-
-
-
-$sql = "UPDATE `address_book` SET 
-    `name`=?,
-    `email`=?,
-    `mobile`=?,
-    `birthday`=?,
-    `address`=?
-WHERE sid=?";
-
-$stmt = $pdo->prepare($sql);
-$stmt->execute([
-    $_POST['name'],
-    $_POST['email'],
-    $_POST['mobile'],
-    $birthday,
-    $_POST['address'],
-    $_POST['sid'],
-]);
-
-
-$output['success'] = !!$stmt->rowCount(); # 修改了幾筆
-
 
 echo json_encode($output);
-

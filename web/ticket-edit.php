@@ -48,10 +48,19 @@ if (empty($row)) {
 
             <form id="ticketForm" name="ticketForm" class="needs-validation shadow-lg add" novalidate>
 
-                <input type="hidden" name="sid" value="<?= $row['tid'] ?>">
-
+                <input type="hidden" name="tid" value="<?= $row['tid'] ?>">
 
                 <h1 class="text-center mb-5 fw-bold">編輯購票</h1>
+
+                <div class="row mb-4 justify-content-evenly">
+                    <div class="col-2 form-label">
+                        <label for="tid" class="form-label fs-5 fw-bold">編號</label>
+                    </div>
+                    <div class="col-8">
+                        <input id="tid" type="text" class="form-control rounded-3 border-4" disabled
+                            value="<?= $row['tid'] ?>">
+                    </div>
+                </div>
 
                 <div class="row mb-4 justify-content-evenly">
                     <div class="col-2 form-label">
@@ -104,8 +113,6 @@ if (empty($row)) {
                         </div>
                     </div>
                 </div>
-
-                <input type="text" name="editTime" value="<?= $row['created_at'] ?>">
 
 
                 <!-- <div class="row mb-4 justify-content-evenly">
@@ -160,12 +167,12 @@ if (empty($row)) {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">新增失敗</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">編輯失敗</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="alert alert-success" role="alert">
-                    資料新增失敗
+                <div class="alert alert-danger" role="alert">
+                    資料編輯失敗
                 </div>
             </div>
             <div class="modal-footer">
@@ -183,12 +190,12 @@ if (empty($row)) {
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">新增資料相同請重新輸入</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">編輯資料相同請重新輸入</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="alert alert-warning" role="alert">
-                    新增資料相同請重新輸入
+                    編輯資料相同請重新輸入
                 </div>
             </div>
             <div class="modal-footer">
@@ -203,42 +210,43 @@ if (empty($row)) {
 <?php include __DIR__ . "/part/scripts.php"; ?>
 
 <script>
-    const myModal = new bootstrap.Modal('#staticBackdrop')
-    const myModal2 = new bootstrap.Modal('#staticBackdrop2')
-    const myModal3 = new bootstrap.Modal('#staticBackdrop3')
-    const sendData = e => {
-        e.preventDefault(); // 不要讓 form1 以傳統的方式送出
+    const myModal = new bootstrap.Modal('#staticBackdrop');
+    const myModal2 = new bootstrap.Modal('#staticBackdrop2');
+    const myModal3 = new bootstrap.Modal('#staticBackdrop3');
+    const ticketForm = document.getElementById('ticketForm');
 
-        let isPass = true;  // 表單有沒有通過檢查
+    const sendData = e => {
+        e.preventDefault();
+
+        let isPass = true;
 
         const activities_id = document.getElementById('activities_id').value;
         const ticket_area = document.getElementById('ticket_area').value;
         const counts = document.getElementById('counts').value;
         const price = document.getElementById('price').value;
 
-        // 檢查每個欄位是否有值
         if (!activities_id.trim() || !ticket_area.trim() || !counts.trim() || !price.trim()) {
             isPass = false;
         }
 
-        // 如果欄位的值與 ticket-list 傳入的值相同，則不送出表單
         const ticketValuesMatch = activities_id === "<?= $row['activities_id'] ?>" &&
             ticket_area === "<?= $row['ticket_area'] ?>" &&
             counts === "<?= $row['counts'] ?>" &&
             price === "<?= $row['price'] ?>";
 
         if (ticketValuesMatch) {
-            isPass = false; // 不通過檢查
+            isPass = false;
             myModal3.show();
         }
 
-        // 有通過檢查, 才要送表單
         if (isPass) {
-            const fd = new FormData(); // 創建 FormData 物件
+            const fd = new FormData();
             fd.append('activities_id', activities_id);
             fd.append('ticket_area', ticket_area);
             fd.append('counts', counts);
             fd.append('price', price);
+            // edit 這邊要加欄位
+            fd.append('tid', document.querySelector('input[name="tid"]').value);
 
             fetch('ticket-edit-api.php', {
                 method: 'POST',
@@ -248,16 +256,15 @@ if (empty($row)) {
                 .then(data => {
                     console.log(data);
                     if (data.success) {
-                        // 顯示成功提示
                         myModal.show();
                     } else {
-                        // 處理錯誤
                         myModal2.show();
                     }
                 })
                 .catch(error => console.error('Error:', error));
         }
     };
+
 
     // 獲取AJAX請求獲取ticket_area資料
     fetch('ticket-allData.php')
@@ -276,15 +283,28 @@ if (empty($row)) {
             defaultOption.innerText = areaOp;
             areaSelect.appendChild(defaultOption);
 
-            // 定義要包含的選項，排除 ticket_area
-            const allowedOptions = ['A', 'B', 'C', 'D', 'E'].filter(option => option !== areaOp);
+            // 用於追蹤已添加值的數量
+            let count = 0;
+            // 用於檢查是否已經保留了第一筆傳入的值
+            let firstValueReserved = false;
 
-            // 將區域資料動態添加到下拉選單中
-            allowedOptions.forEach(optionValue => {
-                const option = document.createElement('option');
-                option.value = optionValue;
-                option.textContent = optionValue;
-                areaSelect.appendChild(option);
+            // 將區域資料動態添加到下拉選單中，保留第一筆傳入的值，並確保不重複
+            data.forEach(ticket => {
+                if (!firstValueReserved && ticket.ticket_area === parseInt(areaOp)) {
+                    // 保留第一筆傳入的值
+                    const option = document.createElement('option');
+                    option.value = ticket.ticket_area;
+                    option.textContent = ticket.ticket_area;
+                    areaSelect.appendChild(option);
+                    firstValueReserved = true; // 設置標記為 true，表示已經保留了第一筆值
+                } else if (count < 5 && ticket.ticket_area !== parseInt(areaOp) && !areaSelect.querySelector(`option[value="${ticket.ticket_area}"]`)) {
+                    // 確保不重複，且不是第一筆傳入的值
+                    const option = document.createElement('option');
+                    option.value = ticket.ticket_area;
+                    option.textContent = ticket.ticket_area;
+                    areaSelect.appendChild(option);
+                    count++;
+                }
             });
 
             // 添加事件監聽器
@@ -294,7 +314,6 @@ if (empty($row)) {
             });
 
             // 為表單添加提交事件監聽器
-            const ticketForm = document.getElementById('ticketForm');
             ticketForm.addEventListener('submit', sendData);
         })
 
@@ -327,7 +346,6 @@ if (empty($row)) {
             });
 
             // 為表單添加提交事件監聽器
-            const ticketForm = document.getElementById('ticketForm');
             ticketForm.addEventListener('submit', sendData);
 
             // 在選擇活動 select 欄位變化時執行的函數
@@ -343,7 +361,6 @@ if (empty($row)) {
             // 監聽選擇活動 select 欄位的變化事件
             activitiesSelect.addEventListener('change', onActivitySelectChange);
         })
-
         .catch(error => console.error('Error fetching activities:', error));
 
 </script>

@@ -21,44 +21,7 @@ if (
     exit; // 結束 PHP 程式
 }
 
-# preg_match(): regexp 比對用 
-
-# mb_strlen(): 算字串的長度
-
-# filter_var('bob@example.com', FILTER_VALIDATE_EMAIL): 檢查 email 格式
-
-
-
-/*
-// 錯誤的作法, 會有 SQL injection 問題
-$sql = sprintf("INSERT INTO `address_book`(
-`name`, `email`, `mobile`, `birthday`, `address`, `created_at`) VALUES (
-    '%s',
-    '%s',
-    '%s',
-    '%s',
-    '%s', NOW() )",
-$_POST['name'],
-$_POST['email'],
-$_POST['mobile'],
-$_POST['birthday'],
-$_POST['address']
-);
-
-$stmt = $pdo->query($sql);
-*/
-
-
-// $birthday = strtotime($_POST['date']);
-// if ($birthday === false) {
-//     $birthday = null;
-// } else {
-//     $birthday = date('Y-m-d', $birthday);
-// }
-
-
-
-$sql = "INSERT INTO `ticket`(`activities_id`, `ticket_area`, `counts`, `price`, `created_at`) VALUES (?, ?, ?, ?, NOW())";
+$sql = "INSERT INTO `ticket`(`activities_id`, `ticket_area`, `counts`, `price`, `created_at`, `editTime`) VALUES (?, ?, ?, ?, NOW(), NOW())";
 
 $stmt = $pdo->prepare($sql);
 if (!$stmt) {

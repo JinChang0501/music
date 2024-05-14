@@ -41,7 +41,7 @@ if ($totalRows) {
     JOIN 
         aclass ON activities.activity_class = aclass.id
     JOIN 
-        artist ON activities.artist_id = artist.id ORDER BY ticket.tid ASC LIMIT %s, %s",
+        artist ON activities.artist_id = artist.id ORDER BY ticket.tid DESC LIMIT %s, %s",
         ($page - 1) * $perPage,
         $perPage
     );
@@ -197,7 +197,7 @@ echo json_encode([
                                 <td><?= $r['ticket_area'] ?></td>
                                 <td><?= $r['organizer'] ?></td>
                                 <td><?= $r['created_at'] ?></td>
-                                <td></td>
+                                <td><?= $r['editTime'] ?></td>
                                 <td>
                                     <a class="btn btn-warning" href="ticket-edit.php?tid=<?= $r['tid'] ?>">
                                         <i class="bi bi-pencil-square"></i>
