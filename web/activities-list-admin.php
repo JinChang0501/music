@@ -64,12 +64,12 @@ if ($totalRows) {
                   <i class="fa-solid fa-angle-left"></i>
                 </a>
               </li>
-              <?php for ($i = $page - 5; $i <= $page + 5; $i++):
-                if ($i >= 1 and $i <= $totalPages): ?>
+              <?php for ($i = $page - 5; $i <= $page + 5; $i++) :
+                if ($i >= 1 and $i <= $totalPages) : ?>
                   <li class="page-item <?= $i == $page ? 'active' : '' ?>">
                     <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
                   </li>
-                <?php endif;
+              <?php endif;
               endfor; ?>
               <li class="page-item ">
                 <a class="page-link" href="?page=<?= $page + 1 ?>">
@@ -87,9 +87,8 @@ if ($totalRows) {
       </div>
       <!-- 按鈕群組 -->
       <div class="col-6 mb-3">
-        <!-- <input class="btn btn-primary" type="button" value="一鍵全選">
-        <input class="btn btn-secondary" type="button" value="一鍵取消"> -->
         <button class="btn btn-danger" type="submit" id="dltAllSelect">刪除所選</button>
+        <a href="activities-add.php"><button class="btn btn-primary" type="button">新增活動</button></a>
       </div>
       <!-- 搜尋 -->
       <div class="col-6 mb-3">
@@ -118,11 +117,10 @@ if ($totalRows) {
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($rows as $r): ?>
+            <?php foreach ($rows as $r) : ?>
               <tr>
                 <td>
-                  <input class="checkboxes form-check-input" type="checkbox" value="<?= $r['actid'] ?>"
-                    id="flexCheckDefault<?= $r['actid'] ?>">
+                  <input class="checkboxes form-check-input" type="checkbox" value="<?= $r['actid'] ?>" id="flexCheckDefault<?= $r['actid'] ?>">
                 </td>
                 <td><?= $r['actid'] ?></td>
                 <td><?= $r['class'] ?></td>
@@ -161,8 +159,7 @@ if ($totalRows) {
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">保留</button>
         <!-- 這裡有問題 -->
-        <button type="button" class="btn btn-danger"
-          herf="activities-delete.php?actid=<?php $r['actid'] ?>">確認刪除</button>
+        <button type="button" class="btn btn-danger" herf="activities-delete.php?actid=<?php $r['actid'] ?>">確認刪除</button>
       </div>
     </div>
   </div>
@@ -179,7 +176,7 @@ if ($totalRows) {
   const checkAll = document.getElementById("checkAll");
   const checkboxes = document.getElementsByClassName("checkboxes");
 
-  checkAll.addEventListener('change', function () {
+  checkAll.addEventListener('change', function() {
     if (checkAll.checked === true) {
       for (let i = 0; i < checkboxes.length; i++) {
         checkboxes[i].checked = true;
@@ -195,7 +192,7 @@ if ($totalRows) {
   const dltAllSelect = document.getElementById("dltAllSelect");
   const checkboxes2 = document.querySelectorAll(".checkboxes");
 
-  dltAllSelect.addEventListener('click', function () {
+  dltAllSelect.addEventListener('click', function() {
     let selectedIds = []; // 儲存被勾選項目的 ID
 
     for (let i = 0; i < checkboxes2.length; i++) {

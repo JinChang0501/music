@@ -1,8 +1,9 @@
 <?php
 require __DIR__ . '/admin-required.php';
 require __DIR__ . '/../config/pdo-connect.php';
-$title = "修改活動列表";
 
+$title = "修改活動列表";
+$pageName = 'activities-edit';
 
 $actid = isset($_GET['actid']) ? intval($_GET['actid']) : 0;
 if ($actid < 1) {
@@ -95,8 +96,7 @@ if (empty($row)) {
 
             <div class="mb-3">
               <label for="descriptions" class="form-label">活動內容</label>
-              <textarea class="form-control" id="descriptions" name="descriptions" cols="30"
-                rows="3"><?= $row['descriptions'] ?></textarea>
+              <textarea class="form-control" id="descriptions" name="descriptions" cols="30" rows="3"><?= $row['descriptions'] ?></textarea>
               <div class="form-text"></div>
             </div>
 
@@ -107,17 +107,10 @@ if (empty($row)) {
             </div>
 
             <div class="mb-3">
-              <label for="artist" class="form-label">表演者</label>
-              <input type="text" class="form-control" id="artist" name="artist" value="<?= $row['artist_id'] ?>">
-              <div class="form-text"></div>
-            </div>
-            <div class="mb-3">
               <label for="artist_id" class="form-label">表演者</label>
-              <select class="form-select" aria-label="Default select example" id="artist_id" name="artist_id">
-                <!-- <option value="<?= $row['artist_id'] ?>" selected><?= $row['art_name'] ?></option> -->
+              <select class="form-select" id="artist_id" name="artist_id">
               </select>
-              <div class="invalid-feedback">
-                請選擇活動
+              <div class="form-text">
               </div>
             </div>
             <div class="mb-3">
@@ -135,8 +128,7 @@ if (empty($row)) {
   </div>
 </div>
 <!-- ModalA -->
-<div class="modal fade" id="staticBackdropA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-labelledby="staticBackdropLabelA" aria-hidden="true">
+<div class="modal fade" id="staticBackdropA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelA" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -158,8 +150,7 @@ if (empty($row)) {
 </div>
 
 <!-- ModalB -->
-<div class="modal fade" id="staticBackdropB" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-labelledby="staticBackdropLabelB" aria-hidden="true">
+<div class="modal fade" id="staticBackdropB" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelB" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -213,9 +204,9 @@ if (empty($row)) {
       const fd = new FormData(document.form_activities); // 沒有外觀的表單物件
 
       fetch('activities-edit-api.php', {
-        method: 'POST',
-        body: fd, // Content-Type: multipart/form-data
-      }).then(r => r.json())
+          method: 'POST',
+          body: fd, // Content-Type: multipart/form-data
+        }).then(r => r.json())
         .then(data => {
           console.log(data);
           if (data.success) {
@@ -235,65 +226,45 @@ if (empty($row)) {
   fetch('activities-get-artist-api.php')
     .then(response => response.json())
     .then(data => {
-      // 獲得art_name
-      const artistSelect = document.getElementById('artist_id');
-
-      // 清空下拉選單
-      artistSelect.innerHTML = '';
-      // 先添加預設的選項
-      const artistValue = "<?php echo $row['artist_id'] ?>";
-      const artistDefaultOption = document.createElement('option');
-      artistDefaultOption.value = artistValue;
-      artistDefaultOption.innerText = artistValue;
-      // 動態生成 ABCDE 選項
-      data.forEach(optionText => {
-        const option = document.createElement('option');
-        option.value = optionText;
-        option.textContent = optionText;
-        artistSelect.appendChild(option);
-      });
-      // 結束artist_id
-
 
       // 獲取下拉選單元素
-      const activitiesSelect = document.getElementById('activities_id');
+      const artistSelect = document.getElementById('artist_id');
       // 清空下拉選單
-      activitiesSelect.innerHTML = '';
+      artistSelect.innerHTML = '';
 
       // 先添加預設的選項
-      const actidOp = "<?php echo $row['actid'] ?>";
-      const acnameOp = "<?php echo $row['activity_name'] ?>";
+      const idOp = "<?php echo $row['id'] ?>";
+      const nameOp = "<?php echo $row['art_name'] ?>";
       const defaultOption = document.createElement('option');
-      defaultOption.value = actidOp;
-      defaultOption.innerText = acnameOp;
+      defaultOption.value = idOp;
+      defaultOption.innerText = nameOp;
       // defaultOption.value = ""; // 給定一個空的 value
-      activitiesSelect.appendChild(defaultOption);
-      // 將activities資料動態添加到下拉選單中
-      data.forEach(activities => {
-        const option = document.createElement('option');
-        option.value = activities.actid;
-        option.textContent = activities.activity_name;
-        activitiesSelect.appendChild(option);
+      artistSelect.appendChild(defaultOption);
+      // 將artist資料動態添加到下拉選單中
+      data.forEach(artist => {
+        const optionA = document.createElement('option');
+        optionA.value = artist.id;
+        optionA.textContent = artist.art_name;
+        artistSelect.appendChild(optionA);
       });
 
-
       // 為表單添加提交事件監聽器
-      const ticketForm = document.getElementById('ticketForm');
-      ticketForm.addEventListener('submit', sendData);
+      const activitiesForm = document.getElementById('form_activities');
+      activitiesForm.addEventListener('submit', sendData);
 
       // 在選擇活動 select 欄位變化時執行的函數
-      const onActivitySelectChange = () => {
-        const selectedActivityId = activitiesSelect.value; // 取得選擇的活動ID
-        console.log(selectedActivityId);
+      const onArtistSelectChange = () => {
+        const selectedArtistId = artistSelect.value; // 取得選擇的活動ID
+        console.log(selectedArtistId);
         // 找到選擇的活動的對象
-        const selectedActivity = data.find(activity => activity.actid === parseInt(selectedActivityId));
+        const selectedArtist = data.find(artist => artist.id === parseInt(selectedArtistId));
         // 在這裡處理從後端獲取的單個活動資訊
-        console.log(selectedActivity);
+        console.log(selectedArtist);
       };
 
       // 監聽選擇活動 select 欄位的變化事件
-      activitiesSelect.addEventListener('change', onActivitySelectChange);
+      artistSelect.addEventListener('change', onArtistSelectChange);
     })
-    .catch(error => console.error('Error fetching activities:', error));
+    .catch(error => console.error('Error fetching artist:', error));
 </script>
 <?php include __DIR__ . '/part/html-footer.php' ?>

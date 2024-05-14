@@ -37,24 +37,24 @@ $rows = $pdo->query($sql)->fetchAll();
 			<div class="card my-3">
 				<div class="card-body">
 					<h4 class="card-title fw-bold">新增活動資料</h4>
-					<form name="form_activities" onsubmit="sendData(event)">
+					<form name="form_activities" onsubmit="sendData(event)" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
 						<div class="mb-3">
 							<label for="activity_class" class="form-label">類別</label>
 							<select class="form-select" aria-label="Default select example" id="activity_class" name="activity_class">
-								<option selected>--</option>
+								<option selected>-- 請選擇類別 --</option>
 								<option value="1">concert</option>
 								<option value="2">music festival</option>
 							</select>
 						</div>
 						<div class="mb-3">
 							<label for="activity_name" class="form-label">活動名稱</label>
-							<input type="text" class="form-control" id="activity_name" name="activity_name">
+							<input type="text" class="form-control" id="activity_name" name="activity_name" value="<?php echo htmlspecialchars($field1); ?>">
 							<div class="form-text"></div>
 						</div>
 
 						<div class="mb-3">
 							<label for="a_date" class="form-label">日期</label>
-							<input type="date" class="form-control" id="a_date" name="a_date">
+							<input type="date" class="form-control" id="a_date" name="a_date" value="<?php echo htmlspecialchars($field2); ?>">
 							<div class="form-text"></div>
 						</div>
 
@@ -88,12 +88,12 @@ $rows = $pdo->query($sql)->fetchAll();
 							<div class="form-text"></div>
 						</div>
 
-						<!-- 藝人多選 -->
+						<!-- 藝人 -->
 						<div class="mb-3">
 							<label for="artist_id" class="form-label">表演者</label>
 							<select class="form-select" aria-label="Default select example" id="artist_id" name="artist_id">
-								<option selected>--</option>
-								<?php foreach ($rows as $r): ?>
+								<option selected>-- 請選擇表演者 --</option>
+								<?php foreach ($rows as $r) : ?>
 									<option value="<?= $r['id'] ?>"><?= $r['art_name'] ?></option>
 								<?php endforeach; ?>
 							</select>
@@ -114,8 +114,7 @@ $rows = $pdo->query($sql)->fetchAll();
 </div>
 
 <!-- Modal Start-->
-<div class="modal fade" id="staticBackdropA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-	aria-labelledby="staticBackdropLabelA" aria-hidden="true">
+<div class="modal fade" id="staticBackdropA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelA" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -169,14 +168,14 @@ $rows = $pdo->query($sql)->fetchAll();
 			const fd = new FormData(document.form_activities); // 沒有外觀的表單物件
 
 			fetch('activities-add-api.php', {
-				method: 'POST',
-				body: fd, // Content-Type: multipart/form-data
-			}).then(r => r.json())
+					method: 'POST',
+					body: fd, // Content-Type: multipart/form-data
+				}).then(r => r.json())
 				.then(data => {
 					console.log(data);
 					if (data.success) {
 						myModalA.show();
-					} else { }
+					} else {}
 				})
 				.catch(ex => console.log(ex))
 		}
