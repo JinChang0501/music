@@ -157,12 +157,12 @@ if (!isset($pageName))
 
           <!-- 6 -->
           <div class="accordion-item">
-            <h2 class="accordion-header" id="heading5">
-              <button class="accordion-button collapsed fs-5 fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+            <h2 class="accordion-header" id="heading6">
+              <button class="accordion-button collapsed fs-5 fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
                 藝人資料管理
               </button>
             </h2>
-            <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="heading5" data-bs-parent="#accordionExample">
+            <div id="collapse6" class="accordion-collapse collapse" aria-labelledby="heading6" data-bs-parent="#accordionExample">
               <div class="accordion-body p-0"> <!-- p-0 把li上下左右的空間清掉不要動-->
                 <li class="li-hover"><a class="dropdown-item py-3 border" href="artist-add.php">新增藝人資料</a></li>
                 <li class="li-hover"><a class="dropdown-item py-3 border" href="artist-edit.php">編輯藝人資料</a></li>
