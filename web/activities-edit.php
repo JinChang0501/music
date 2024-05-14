@@ -10,7 +10,8 @@ if ($actid < 1) {
   exit;
 }
 
-$sql = "SELECT * FROM activities WHERE actid={$actid}";
+// $sql = "SELECT * FROM activities WHERE actid={$actid}";
+$sql = "SELECT * FROM activities JOIN artist ON artist_id = artist.id JOIN aclass ON activities.activity_class = aclass.id WHERE actid={$actid}";
 
 $row = $pdo->query($sql)->fetch();
 if (empty($row)) {
@@ -30,14 +31,18 @@ if (empty($row)) {
     font-weight: 800;
   }
 </style>
-<div class="container">
-  <div class="row d-flex justify-content-center my-5">
-    <div class="col-6">
-      <div class="card">
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-2 p-0">
+      <?php include __DIR__ . "/part/left-bar.php"; ?>
+    </div>
+    <div class="col-8  mt-3 mx-auto">
+      <div class="card my-3">
         <div class="card-body">
-          <h5 class="card-title">編輯資料</h5>
+          <h4 class="card-title fw-bold">編輯資料</h4>
           <form name="form1" onsubmit="sendData(event)">
-            <input type="hidden" name="id" value="<?= $row['id'] ?>">
+            <input type="hidden" name="actid" value="<?= $row['actid'] ?>">
             <div class="mb-3">
               <label for="actid" class="form-label">編號</label>
               <input type="text" class="form-control" disabled value="<?= $row['actid'] ?>">
@@ -45,9 +50,9 @@ if (empty($row)) {
             <div class="mb-3">
               <label for="activity_class" class="form-label">類別</label>
               <select class="form-select" aria-label="Default select example" id="activity_class" name="activity_class">
-                <option selected>--</option>
-                <option value="1">演唱會</option>
-                <option value="2">音樂祭</option>
+                <option value="<?= $row['activity_class'] ?>" selected><?= $row['class'] ?></option>
+                <option value="1">concert</option>
+                <option value="2">music festival</option>
               </select>
             </div>
 
@@ -99,7 +104,13 @@ if (empty($row)) {
               <input type="text" class="form-control" id="artist" name="artist" value="<?= $row['artist_id'] ?>">
               <div class="form-text"></div>
             </div>
-
+            <div class="mb-3">
+              <label for="artist_id" class="form-label">表演者</label>
+              <select class="form-select" aria-label="Default select example" id="artist_id" name="artist_id">
+                <option value="<?= $row['artist_id'] ?>" selected><?= $row['art_name'] ?></option>
+                <option value="<?= $row['artist_id'] ?>"><?= $row['art_name'] ?></option>
+              </select>
+            </div>
             <div class="mb-3">
               <label for="picture" class="form-label">圖片</label>
               <input type="file" class="form-control" id="picture" name="picture" value="<?= $row['picture'] ?>">
@@ -110,12 +121,13 @@ if (empty($row)) {
           </form>
         </div>
       </div>
+
     </div>
   </div>
 </div>
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<!-- ModalA -->
+<div class="modal fade" id="staticBackdropA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabelA" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -136,9 +148,9 @@ if (empty($row)) {
   </div>
 </div>
 
-<!-- Modal2 -->
-<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<!-- ModalB -->
+<div class="modal fade" id="staticBackdropB" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabelB" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
