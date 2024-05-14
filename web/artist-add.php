@@ -92,7 +92,7 @@ $pageName = 'add_artist';
       </div>
       <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary" onclick="location.href='members-list.php'">到列表頁</button>
+        <button type="button" class="btn btn-primary" onclick="location.href='artist-list.php'">到列表頁</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續新增</button>
       </div>
     </div>
@@ -102,8 +102,7 @@ $pageName = 'add_artist';
 
 <?php include __DIR__ . "/part/scripts.php"; ?>
 <script>
-  const first_nameField = document.form1.first_name;
-  const last_nameField = document.form1.last_name;
+  
   const emailField = document.form1.email;
 
   function validateEmail(email) {
@@ -116,28 +115,13 @@ $pageName = 'add_artist';
   const sendData = e => {
     e.preventDefault(); // 不要讓 form1 以傳統的方式送出
 
-    first_nameField.style.border = '1px solid #CCCCCC';
-    first_nameField.nextElementSibling.innerText = '';
-    last_nameField.style.border = '1px solid #CCCCCC';
-    last_nameField.nextElementSibling.innerText = '';
+    
     emailField.style.border = '1px solid #CCCCCC';
     emailField.nextElementSibling.innerText = '';
 
     // TODO: 欄位資料檢查
     let isPass = true; // 表單有沒有通過檢查
-    if (first_nameField.value.length < 2) {
-      isPass = false;
-      first_nameField.style.border = '1px solid red';
-      first_nameField.nextElementSibling.innerText = '請填寫正確的姓名';
-    }
-
-    if (last_nameField.value.length < 0) {
-      isPass = false;
-      last_nameField.style.border = '1px solid red';
-      last_nameField.nextElementSibling.innerText = '請填寫正確的姓名';
-    }
-
-    if (!validateEmail(emailField.value)) {
+        if (!validateEmail(emailField.value)) {
       isPass = false;
       emailField.style.border = '1px solid red';
       emailField.nextElementSibling.innerText = '請填寫正確的 Email';
@@ -145,7 +129,7 @@ $pageName = 'add_artist';
     // 有通過檢查, 才要送表單
     if (isPass) {
       const fd = new FormData(document.form1); // 沒有外觀的表單物件
-      fetch('members-add-api.php', {
+      fetch('artist-add-api.php', {
           method: 'POST',
           body: fd, // Content-Type: multipart/form-data
         }).then(r => r.json())

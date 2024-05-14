@@ -164,10 +164,10 @@ if (!isset($pageName))
             </h2>
             <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="heading5" data-bs-parent="#accordionExample">
               <div class="accordion-body p-0"> <!-- p-0 把li上下左右的空間清掉不要動-->
-                <li class="li-hover"><a class="dropdown-item py-3 border  " href="#">增加會員資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">刪除會員資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">編輯會員資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">查詢會員資料</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border" href="artist-add.php">新增藝人資料</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border" href="artist-edit.php">編輯藝人資料</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border" href="artist-list.php">查詢藝人資料</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">音樂上下架管理</a></li>
               </div>
             </div>
           </div>
