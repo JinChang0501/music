@@ -38,8 +38,18 @@ if ($page > $totalPages) {
 
 
 
+// $sql = sprintf(
+//   "SELECT * FROM `employees` order by id desc LIMIT %s,%s",
+//   ($page - 1) * $per_page,
+//   $per_page
+// );
+
+$sort = isset($_GET['sort']) ? $_GET['sort'] : 'id';
+$order = isset($_GET['order']) ? $_GET['order'] : 'asc';
+$order = $order === 'desc' ? 'DESC' : 'ASC';
+
 $sql = sprintf(
-  "SELECT * FROM `employees` order by id desc LIMIT %s,%s",
+  "SELECT * FROM `employees` ORDER BY $sort $order LIMIT %s,%s",
   ($page - 1) * $per_page,
   $per_page
 );
@@ -183,14 +193,18 @@ include __DIR__ . "/part/navbar-head.php";
               </th>
               <!-- <th><i class="fa-solid fa-trash text-center"></i></th> -->
 
-              <th scope="col" class="text-center text-nowrap" data-sortable="true">#</th>
-              <th scope="col" class="text-center text-nowrap">First name <a href="sort_first_name.php"><i class="bi bi-sort-alpha-down"></i></a></th>
-              <th scope="col" class="text-center text-nowrap">Last name</th>
-              <th scope="col" class="text-center text-nowrap">Email</th>
-              <th scope="col" class="text-center text-nowrap">Passwords</th>
-              <th scope="col" class="text-center text-nowrap">Gender</th>
-              <th scope="col" class="text-center text-nowrap">Phone number</th>
-              <th scope="col" class="text-center">Created_at</th>
+              <th scope="col" class="text-center text-nowrap">
+                #
+                <a href="?sort=id&order=desc&page=<?= $page ?>"><i class="fa-solid fa-sort-down"></i></a>
+                <a href="?sort=id&order=asc&page=<?= $page ?>"><i class="fa-solid fa-sort-up"></i></a>
+              </th>
+              <th scope="col" class="text-center text-nowrap" data-sortable="true" data-column="first_name">First name</th>
+              <th scope="col" class="text-center text-nowrap" data-sortable="true" data-column="last_name">Last name</th>
+              <th scope="col" class="text-center text-nowrap" data-sortable="true" data-column="email">Email</th>
+              <th scope="col" class="text-center text-nowrap" data-sortable="true" data-column="passwords">Passwords</th>
+              <th scope="col" class="text-center text-nowrap" data-sortable="true" data-column="gender">Gender</th>
+              <th scope="col" class="text-center text-nowrap" data-sortable="true" data-column="phone_number">Phone number</th>
+              <th scope="col" class="text-center" data-sortable="true" data-column="created_at">Created_at</th>
               <th><i class="fa-solid fa-pen-to-square"></i></th>
             </tr>
           </thead>

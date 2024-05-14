@@ -168,6 +168,7 @@ include __DIR__ . "/part/navbar-head.php";
               <!-- <th><i class="fa-solid fa-trash text-center"></i></th> -->
 
               <th scope="col" class="text-center text-nowrap">#</th>
+
               <th scope="col" class="text-center text-nowrap">First name</th>
               <th scope="col" class="text-center text-nowrap">Last name</th>
               <th scope="col" class="text-center text-nowrap">Email</th>
