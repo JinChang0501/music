@@ -9,7 +9,7 @@ $output = [
 ];
 
 // TODO: 欄位資料檢查
-if (!isset($_POST['id'])) {
+if (!isset($_POST['actid'])) {
   echo json_encode($output);
   exit; # 結束 php 程式
 }
@@ -31,7 +31,7 @@ $sql = "UPDATE `activities` SET
 `organizer`=?,
 `artist_id`=?,
 `picture`=?
-WHERE sid=?";
+WHERE actid=?";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
@@ -45,7 +45,7 @@ $stmt->execute([
   $_POST['organizer'],
   $_POST['artist_id'],
   $_POST['picture'],
-  $_POST['sid'],
+  $_POST['actid'],
 ]);
 
 

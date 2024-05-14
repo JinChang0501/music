@@ -4,13 +4,13 @@ require __DIR__ . '/../config/pdo-connect.php';
 $title = "修改活動列表";
 
 
-$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-if ($id < 1) {
+$id = isset($_GET['actid']) ? intval($_GET['actid']) : 0;
+if ($actid < 1) {
   header('Location: activities-list.php');
   exit;
 }
 
-$sql = "SELECT * FROM activities WHERE id={$id}";
+$sql = "SELECT * FROM activities WHERE actid={$actid}";
 
 $row = $pdo->query($sql)->fetch();
 if (empty($row)) {
@@ -37,10 +37,10 @@ if (empty($row)) {
         <div class="card-body">
           <h5 class="card-title">編輯資料</h5>
           <form name="form1" onsubmit="sendData(event)">
-            <input type="hidden" name="id" value="<?= $row['id'] ?>">
+            <input type="hidden" name="actid" value="<?= $row['actid'] ?>">
             <div class="mb-3">
-              <label for="id" class="form-label">編號</label>
-              <input type="text" class="form-control" disabled value="<?= $row['id'] ?>">
+              <label for="actid" class="form-label">編號</label>
+              <input type="text" class="form-control" disabled value="<?= $row['actid'] ?>">
             </div>
             <div class="mb-3">
               <label for="aclass" class="form-label">類別</label>
@@ -74,7 +74,8 @@ if (empty($row)) {
 
             <div class="mb-3">
               <label for="descriptions" class="form-label">活動內容</label>
-              <textarea class="form-control" id="descriptions" name="descriptions" cols="30" rows="3"><?= $row['descriptions'] ?></textarea>
+              <textarea class="form-control" id="descriptions" name="descriptions" cols="30"
+                rows="3"><?= $row['descriptions'] ?></textarea>
               <div class="form-text"></div>
             </div>
 
@@ -104,7 +105,8 @@ if (empty($row)) {
   </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -126,7 +128,8 @@ if (empty($row)) {
 </div>
 
 <!-- Modal2 -->
-<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -186,9 +189,9 @@ if (empty($row)) {
       const fd = new FormData(document.form1); // 沒有外觀的表單物件
 
       fetch('activities-edit-api.php', {
-          method: 'POST',
-          body: fd, // Content-Type: multipart/form-data
-        }).then(r => r.json())
+        method: 'POST',
+        body: fd, // Content-Type: multipart/form-data
+      }).then(r => r.json())
         .then(data => {
           console.log(data);
           if (data.success) {

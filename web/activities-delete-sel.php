@@ -2,14 +2,14 @@
 require __DIR__ . "/admin-required.php";
 require __DIR__ . '/../config/pdo-connect.php';
 
-$ids = isset($_GET['ids']) ? $_GET['ids'] : '';
+$ids = isset($_GET['actid']) ? $_GET['actid'] : '';
 $idsArray = explode(',', $ids); // 將逗號分隔的 ID 字串轉換成陣列
 
-foreach ($idsArray as $id) {
-  $id = intval($id);
+foreach ($idsArray as $actid) {
+  $actid = intval($actid);
 
-  if ($id > 0) {
-    $sql = "DELETE FROM `activities` WHERE id=$id";
+  if ($actid > 0) {
+    $sql = "DELETE FROM `activities` WHERE actid=$actid";
     $pdo->query($sql);
   }
 }

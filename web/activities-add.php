@@ -84,7 +84,20 @@ $pageName = 'activities-add';
 							<input type="text" class="form-control" id="artist_id" name="artist_id">
 							<div class="form-text"></div>
 						</div>
-
+						<!-- 藝人多選 -->
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+							<label class="form-check-label" for="flexCheckDefault">
+								Default checkbox
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+							<label class="form-check-label" for="flexCheckChecked">
+								Checked checkbox
+							</label>
+						</div>
+						<!-- 藝人多選 -->
 						<div class="mb-3">
 							<label for="picture" class="form-label">圖片</label>
 							<input type="text" class="form-control" id="picture" name="picture">
