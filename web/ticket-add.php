@@ -20,8 +20,7 @@ $pageName = 'ticket-add'; ?>
         <div class="col-2 p-0"><?php include __DIR__ . "/part/left-bar.php"; ?></div>
         <div class="col-7 mx-auto">
 
-            <form id="ticketForm" name="ticketForm" class="needs-validation shadow-lg add" novalidate
-                >
+            <form id="ticketForm" name="ticketForm" class="needs-validation shadow-lg add" novalidate>
 
                 <h1 class="text-center mb-5 fw-bold">新增購票</h1>
 
@@ -44,14 +43,8 @@ $pageName = 'ticket-add'; ?>
                         <label for="ticket_area" class="form-label fs-5 fw-bold">選擇區域</label>
                     </div>
                     <div class="col-8">
-                        <select name="ticket_area" class="form-select rounded-3 border-4" id="ticket_area" required>
-                            <option selected disabled>--- &nbsp;選擇區域&nbsp;---</option>
-                            <option  value="A">A</option>
-                            <option  value="B">B</option>
-                            <option  value="C">C</option>
-                            <option  value="D">D</option>
-                            <option  value="E">E</option>
-                        </select>
+                        <select name="ticket_area" class="form-select rounded-3 border-4" id="ticket_area"
+                            required></select>
                         <div class="invalid-feedback">
                             請選擇區域
                         </div>
@@ -175,6 +168,33 @@ $pageName = 'ticket-add'; ?>
         }
     };
 
+    // ticket_area
+
+    const areaSelect = document.getElementById('ticket_area');
+
+    // 清空下拉選單
+    areaSelect.innerHTML = '';
+    // 先添加預設的選項
+    const areaDefaultOption = document.createElement('option');
+    areaDefaultOption.value = ""; // 給定一個空的 value
+    areaDefaultOption.textContent = "--- 請選擇區域 ---";
+    areaSelect.appendChild(areaDefaultOption);
+    // 動態生成 ABCDE 選項
+    const options = ['A', 'B', 'C', 'D', 'E'];
+    options.forEach(optionText => {
+        const option = document.createElement('option');
+        option.value = optionText;
+        option.textContent = optionText;
+        areaSelect.appendChild(option);
+    });
+    // 添加事件監聽器
+    areaSelect.addEventListener('click', function () {
+        // 將第一個選項取消禁用
+        areaDefaultOption.disabled = true;
+    });
+
+    // ticket_area
+
 
     // 發送AJAX請求獲取activities資料
     fetch('ticket-get-activities-api.php')
@@ -182,6 +202,7 @@ $pageName = 'ticket-add'; ?>
         .then(data => {
             // 獲取下拉選單元素
             const activitiesSelect = document.getElementById('activities_id');
+
             // 清空下拉選單
             activitiesSelect.innerHTML = '';
             // 先添加預設的選項
@@ -189,11 +210,6 @@ $pageName = 'ticket-add'; ?>
             defaultOption.value = ""; // 給定一個空的 value
             defaultOption.textContent = "--- 請選擇活動 ---";
             activitiesSelect.appendChild(defaultOption);
-            // 添加事件監聽器
-            activitiesSelect.addEventListener('click', function () {
-                // 將第一個選項取消禁用
-                defaultOption.disabled = true;
-            });
             // 將activities資料動態添加到下拉選單中
             data.forEach(activities => {
                 const option = document.createElement('option');
@@ -201,7 +217,11 @@ $pageName = 'ticket-add'; ?>
                 option.textContent = activities.activity_name;
                 activitiesSelect.appendChild(option);
             });
-
+            // 添加事件監聽器
+            activitiesSelect.addEventListener('click', function () {
+                // 將第一個選項取消禁用
+                defaultOption.disabled = true;
+            });
             // 為表單添加提交事件監聽器
             const ticketForm = document.getElementById('ticketForm');
             ticketForm.addEventListener('submit', sendData);

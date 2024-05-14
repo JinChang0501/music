@@ -46,8 +46,10 @@ if (empty($row)) {
         <div class="col-2 p-0"><?php include __DIR__ . "/part/left-bar.php"; ?></div>
         <div class="col-7 mx-auto">
 
-            <form id="ticketForm" name="ticketForm" class="needs-validation shadow-lg add" novalidate
-                >
+            <form id="ticketForm" name="ticketForm" class="needs-validation shadow-lg add" novalidate>
+
+                <input type="hidden" name="sid" value="<?= $row['tid'] ?>">
+
 
                 <h1 class="text-center mb-5 fw-bold">新增購票</h1>
 
@@ -57,7 +59,6 @@ if (empty($row)) {
                     </div>
                     <div class="col-8">
                         <select name="activities_id" class="form-select rounded-3 border-4" id="activities_id" required>
-
                         </select>
                         <div class="invalid-feedback">
                             請選擇活動
@@ -71,12 +72,6 @@ if (empty($row)) {
                     </div>
                     <div class="col-8">
                         <select name="ticket_area" class="form-select rounded-3 border-4" id="ticket_area" required>
-                            <option selected disabled>--- &nbsp;選擇區域&nbsp;---</option>
-                            <option  value="A">A</option>
-                            <option  value="B">B</option>
-                            <option  value="C">C</option>
-                            <option  value="D">D</option>
-                            <option  value="E">E</option>
                         </select>
                         <div class="invalid-feedback">
                             請選擇區域
@@ -90,7 +85,7 @@ if (empty($row)) {
                     </div>
                     <div class="col-8">
                         <input type="text" id="counts" name="counts" class="form-control rounded-3 border-4" required
-                            placeholder="請輸入票數">
+                            placeholder="請輸入票數" value="<?= $row['counts'] ?>">
                         <div class="invalid-feedback">
                             請輸入票數
                         </div>
@@ -103,7 +98,7 @@ if (empty($row)) {
                     </div>
                     <div class="col-8">
                         <input type="text" id="price" name="price" class="form-control rounded-3 border-4" required
-                            placeholder="請輸入票價">
+                            placeholder="請輸入票價" value="<?= $row['price'] ?>">
                         <div class="invalid-feedback">
                             請輸入票價
                         </div>
@@ -133,18 +128,41 @@ if (empty($row)) {
     </div>
 </div>
 
-<!-- Modal success -->
+<!-- Modal edit-success -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">新增成功</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">修改成功</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="alert alert-success" role="alert">
-                    資料新增成功
+                    資料修改成功
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" onclick="location.href='ticket-list.php'">到列表頁</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續新增</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal edit-fail -->
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">新增失敗</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success" role="alert">
+                    資料新增失敗
                 </div>
             </div>
             <div class="modal-footer">
@@ -160,6 +178,7 @@ if (empty($row)) {
 
 <script>
     const myModal = new bootstrap.Modal('#staticBackdrop')
+    const myModal2 = new bootstrap.Modal('#staticBackdrop2')
     const sendData = e => {
         e.preventDefault(); // 不要讓 form1 以傳統的方式送出
 
@@ -195,6 +214,7 @@ if (empty($row)) {
                         myModal.show();
                     } else {
                         // 處理錯誤
+                        myModal2.show();
                     }
                 })
                 .catch(error => console.error('Error:', error));
@@ -202,24 +222,54 @@ if (empty($row)) {
     };
 
 
+
     // 發送AJAX請求獲取activities資料
     fetch('ticket-get-activities-api.php')
         .then(response => response.json())
         .then(data => {
+
+
+            // ticket_area
+
+            const areaSelect = document.getElementById('ticket_area');
+
+            // 清空下拉選單
+            areaSelect.innerHTML = '';
+            // 先添加預設的選項
+            const areaValue = "<?php echo $row['ticket_area'] ?>";
+            const areaDefaultOption = document.createElement('option');
+            areaDefaultOption.value = areaValue;
+            areaDefaultOption.innerText = areaValue;
+            // 動態生成 ABCDE 選項
+            data.forEach(optionText => {
+                const option = document.createElement('option');
+                option.value = optionText;
+                option.textContent = optionText;
+                areaSelect.appendChild(option);
+            });
+
+            // ticket_area
+
+
+
+
+
+
+
+
             // 獲取下拉選單元素
             const activitiesSelect = document.getElementById('activities_id');
             // 清空下拉選單
             activitiesSelect.innerHTML = '';
+
             // 先添加預設的選項
+            const actidOp = "<?php echo $row['actid'] ?>";
+            const acnameOp = "<?php echo $row['activity_name'] ?>";
             const defaultOption = document.createElement('option');
-            defaultOption.value = ""; // 給定一個空的 value
-            defaultOption.textContent = "--- 請選擇活動 ---";
+            defaultOption.value = actidOp;
+            defaultOption.innerText = acnameOp;
+            // defaultOption.value = ""; // 給定一個空的 value
             activitiesSelect.appendChild(defaultOption);
-            // 添加事件監聽器
-            activitiesSelect.addEventListener('click', function () {
-                // 將第一個選項取消禁用
-                defaultOption.disabled = true;
-            });
             // 將activities資料動態添加到下拉選單中
             data.forEach(activities => {
                 const option = document.createElement('option');
