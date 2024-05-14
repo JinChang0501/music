@@ -23,8 +23,8 @@ $pageName = 'add_artist';
 <div class="container-fluid">
   <div class="row">
     <div class="col-2 p-0">
-    <?php include __DIR__ . "/part/left-bar.php"; ?></div>
-    <div class="col-6 mx-auto">
+      <?php include __DIR__ . "/part/left-bar.php"; ?></div>
+    <div class="col-6  mx-auto">
       <div class="card mt-3">
         <div class="card-body">
           <h5 class="card-title">新增藝人資料</h5>

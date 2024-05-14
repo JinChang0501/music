@@ -37,20 +37,17 @@ $sql = sprintf(
   $per_page
 );
 
-$rows = $pdo->query($sql)->fetchAll();
+$rows = $pdo->query($sql)->fetchAll();?>
 
-
-include __DIR__ . "/part/html-header.php";
-include __DIR__ . "/part/navbar-head.php";
-?>
+<?php include __DIR__ . '/part/html-header.php' ?>
+<?php include __DIR__ . '/part/navbar-head.php' ?>
 
 <div class="container-fluid">
   <div class="row m-0">
     <div class="col-2 p-0">
       <?php include __DIR__ . "/part/left-bar.php"; ?>
     </div>
-<div class="container">
-  <div class="row">
+
     <div class="col-10">    
     <nav aria-label="Page navigation example">
              <ul class="pagination">
@@ -84,14 +81,12 @@ include __DIR__ . "/part/navbar-head.php";
                         </li>
                     </ul>
                 </nav>
-    </div>
-  </div>
- </div>
+
  <!-- 表單 -->
-  <div class="row">
-    <div class="col">
+  <!-- <div class="row"> -->
+    <!-- <div class="col"> -->
       <form name="form1" onsubmit="sendMultiDel(event)">
-      <table class="table table-bordered table-striped text-truncate" data-toggle="table" >
+      <table class="table table-bordered table-striped" data-toggle="table" >
         <thead>
           <tr>
             <th><button type="submit" class="btn btn-danger">刪除所選</button></th>
@@ -132,8 +127,7 @@ include __DIR__ . "/part/navbar-head.php";
         </tbody>
       </table>
       </form>
-    </div>
-  </div>
+
 </div>
 <?php include __DIR__ . '/part/scripts.php' ?>
 <script>

@@ -40,14 +40,14 @@ if (empty($row)) {
   <div class="row">s
     <div class="col-2 p-0">
     <?php include __DIR__ . "/part/left-bar.php"; ?></div>
-    <div class="col-6">
+    <div class="col-6 mx-auto ">
       <div class="card mt-3"> 
           <h5 class="card-title">編輯藝人資料</h5>
           <form name="form1" onsubmit="sendData(event)">
             <input type="hidden" name="sid" value="<?= $r['sid'] ?>">
             <div class="mb-3">
-              <label for="artist_name" class="form-label">藝名</label>
-              <input type="text" class="form-control" id="artist_name" name="artist_name" value="<?= htmlentities($r['artist_name']) ?>">
+              <label for="art_name" class="form-label">藝名</label>
+              <input type="text" class="form-control" id="art_name" name="art_name" value="<?= htmlentities($r['art_name']) ?>">
               <div class="form-text"></div>
             </div>
             <div class="mb-3">
@@ -76,8 +76,8 @@ if (empty($row)) {
               <div class="form-text"></div>
             </div>
             <div class="mb-3 text-truncate">
-              <label for="artist_picture" class="form-label">藝人頭貼</label>
-              <input type="date" class="form-control" id="artist_picture" name="artist_picture" value="<?= $r['artist_picture'] ?>">
+              <label for="art_picture" class="form-label">藝人頭貼</label>
+              <input type="text" class="form-control" id="art_picture" name="art_picture" value="<?= $r['art_picture'] ?>">
               <div class="form-text"></div>
             </div>
             <button type="submit" class="btn btn-primary">修改</button>
@@ -146,7 +146,7 @@ if (empty($row)) {
     phone_number: phone_numberEL,
   } = document.form1;
 
-  const fields = [nameEl, emailEl, phone_number];
+  const fields = [nameEl, emailEl, phone_numberEL];
 
   function validateEmail(email) {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
