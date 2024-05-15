@@ -110,7 +110,7 @@ if (!isset($pageName))
                 購票資料管理
               </button>
             </h2>
-            <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="heading3" data-bs-parent="#accordionExample">
+            <div id="collapse3" class="accordion-collapse collapse <?= $pageName = 'ticket-list || ticket-add || ticket-edit || ticket-order-list' ? 'show' : '' ?>" aria-labelledby="heading3" data-bs-parent="#accordionExample">
               <div class="accordion-body p-0"> <!-- p-0 把li上下左右的空間清掉不要動-->
                 <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'ticket-order-list' ? 'bg-color' : '' ?>" href="ticket-order-list.php" href="#">購票訂單</a></li>
                 <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'ticket-list' ? 'bg-color' : '' ?>" href="ticket-list.php">上架購票清單</a></li>

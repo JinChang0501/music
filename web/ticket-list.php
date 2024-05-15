@@ -14,8 +14,8 @@ if ($page < 1) {
 }
 
 $sort = isset($_GET['sort']) ? $_GET['sort'] : 'tid';
-$order = isset($_GET['order']) ? $_GET['order'] : 'asc';
-$order = $order === 'desc' ? 'DESC' : 'ASC';
+$order = isset($_GET['order']) ? $_GET['order'] : 'desc';
+$order = $order === 'desc' ? 'desc' : 'asc';
 
 $t_sql = "SELECT COUNT(tid) FROM ticket;";
 
@@ -45,7 +45,7 @@ if ($totalRows) {
     JOIN 
         aclass ON activities.activity_class = aclass.id
     JOIN 
-        artist ON activities.artist_id = artist.id ORDER BY $sort $order LIMIT %s, %s",
+        artist ON activities.artist_id = artist.id ORDER BY $sort {$order} LIMIT %s, %s",
         ($page - 1) * $perPage,
         $perPage
     );
@@ -60,6 +60,7 @@ echo json_encode([
 'rows' => $rows,
 ]);
 */
+
 ?>
 
 <?php include __DIR__ . "/part/html-header.php"; ?>
@@ -94,8 +95,9 @@ echo json_encode([
         letter-spacing: 2px;
     }
 
-    .bg-color {
-        background-color: tomato;
+    #Modal .modal-body .filter .filterBtn.modelStyle {
+        border-radius: 20px;
+        background-color: teal;
     }
 </style>
 
@@ -128,9 +130,9 @@ echo json_encode([
 
             <div class="col-12 mb-3 d-flex justify-content-end">
                 <div class="d-flex mb-3">
-                    <input type="number" class="form-control border-5" name="number" placeholder="最小價格">
+                    <input type="number" class="form-control border-5" name="min_price" min="0" placeholder="最小價格">
                     <span class="mx-4 d-flex align-items-center fw-bold">一</span>
-                    <input type="number" class="form-control border-5 me-4" name="number" placeholder="最大價格">
+                    <input type="number" class="form-control border-5 me-4" name="max_price" min="0" placeholder="最大價格">
                     <input type="submit" class="btn btn-secondary fw-bold" value="搜尋價格範圍">
                 </div>
             </div>
@@ -239,7 +241,7 @@ echo json_encode([
                 </table>
             </div>
 
-            <div class="col-12">
+            <div class="col-12 d-flex justify-content-center">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
                         <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
@@ -253,7 +255,7 @@ echo json_encode([
                             </a>
                         </li>
 
-                        <?php for ($i = $page - 5; $i <= $page + 5; $i++):
+                        <?php for ($i = $page - 2; $i <= $page + 2; $i++):
                             if ($i >= 1 and $i <= $totalPages): ?>
                                 <li class="page-item <?= $page == $i ? 'active' : '' ?>">
                                     <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
@@ -312,20 +314,32 @@ echo json_encode([
                         </thead>
                         <tbody class="filter">
                             <tr>
-                                <td><a class="model-a" href="?sort=tid&order=desc&page=<?= $page ?>">由大到小</a></td>
-                                <td><a class="model-a" href="?sort=tid&order=desc&page=<?= $page ?>">由多到少</a></td>
-                                <td><a class="model-a" href="?sort=tid&order=desc&page=<?= $page ?>">由高到低</a></td>
-                                <td><a class="model-a" href="?sort=tid&order=desc&page=<?= $page ?>">最近活動時間</a></td>
-                                <td><a class="model-a" href="?sort=tid&order=desc&page=<?= $page ?>">最新建立時間</a></td>
-                                <td><a class="model-a" href="?sort=tid&order=desc&page=<?= $page ?>">最新修改時間</a></td>
+                                <td class="filterBtn"><a class="model-a"
+                                        href="?sort=tid&order=desc&page=<?= $page ?>">由大到小</a></td>
+                                <td class="filterBtn"><a class="model-a"
+                                        href="?sort=counts&order=desc&page=<?= $page ?>">由多到少</a></td>
+                                <td class="filterBtn"><a class="model-a"
+                                        href="?sort=price&order=desc&page=<?= $page ?>">由高到低</a></td>
+                                <td class="filterBtn"><a class="model-a"
+                                        href="?sort=a_date&a_time&order=desc&page=<?= $page ?>">最遠活動時間</a></td>
+                                <td class="filterBtn"><a class="model-a"
+                                        href="?sort=created_at&order=desc&page=<?= $page ?>">最新建立時間</a></td>
+                                <td class="filterBtn"><a class="model-a"
+                                        href="?sort=editTime&order=desc&page=<?= $page ?>">最新修改時間</a></td>
                             </tr>
                             <tr>
-                                <td><a class="model-a" href="?sort=tid&order=asc&page=<?= $page ?>">由小到大</a></th>
-                                <td><a class="model-a" href="?sort=tid&order=asc&page=<?= $page ?>">由少到多</a></td>
-                                <td><a class="model-a" href="?sort=tid&order=asc&page=<?= $page ?>">由低到高</a></td>
-                                <td><a class="model-a" href="?sort=tid&order=asc&page=<?= $page ?>">最遠活動時間</a></td>
-                                <td><a class="model-a" href="?sort=tid&order=asc&page=<?= $page ?>">最舊建立時間</a></td>
-                                <td><a class="model-a" href="?sort=tid&order=asc&page=<?= $page ?>">最舊修改時間</a></td>
+                                <td class="filterBtn"><a class="model-a"
+                                        href="?sort=tid&order=asc&page=<?= $page ?>">由小到大</a></th>
+                                <td class="filterBtn"><a class="model-a"
+                                        href="?sort=counts&order=asc&page=<?= $page ?>">由少到多</a></td>
+                                <td class="filterBtn"><a class="model-a"
+                                        href="?sort=price&order=asc&page=<?= $page ?>">由低到高</a></td>
+                                <td class="filterBtn"><a class="model-a"
+                                        href="?sort=a_date&a_time&order=asc&page=<?= $page ?>">最近活動時間</a></td>
+                                <td class="filterBtn"><a class="model-a"
+                                        href="?sort=created_at&order=asc&page=<?= $page ?>">最舊建立時間</a></td>
+                                <td class="filterBtn"><a class="model-a"
+                                        href="?sort=editTime&order=asc&page=<?= $page ?>">最舊修改時間</a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -563,20 +577,66 @@ echo json_encode([
 
     // 刪除所選Script
 
+    // filter 背景顏色變化
+
     // 獲取所有帶有類名 "model-a" 的元素
-    const filter = document.querySelector('.filter');
-    const links = filter.querySelectorAll('.model-a');
+
+    // const filter = document.querySelector('.filter');
+    const links = document.querySelectorAll('#Modal .modal-body .filter .filterBtn');
+
+    const activeLink = localStorage.getItem('activeLink');
+
+    if (activeLink) {
+        for (let i = 0; i < links.length; i++) {
+            if (links[i].textContent === activeLink) {
+                links[i].classList.add('modelStyle');
+                break;
+            }
+        }
+    }
+
+    // 點擊連結時設置LocalStorage並更新樣式
     for (let i = 0; i < links.length; i++) {
         links[i].addEventListener('click', function () {
             // 先清除所有連結的背景色
             for (let j = 0; j < links.length; j++) {
-                links[j].style.backgroundColor = '';
+                links[j].classList.remove('modelStyle');
             }
             // 然後設定被點擊的連結的背景色
-            this.style.backgroundColor = 'tomato';
+            this.classList.add('modelStyle');
+
+            // 將被點擊的連結的內容保存到LocalStorage中
+            localStorage.setItem('activeLink', this.textContent);
         });
     }
 
+    // filter 背景顏色變化
+
+    // 價格範圍限制最小最大價格
+
+    // 找到最小價格輸入框和最大價格輸入框
+    const minPriceInput = document.querySelector('input[name="min_price"]');
+    const maxPriceInput = document.querySelector('input[name="max_price"]');
+
+    // 當最小價格輸入框內容發生變化時觸發
+    minPriceInput.addEventListener('input', function () {
+        // 更新最大價格輸入框的最小值為最小價格輸入框的值
+        maxPriceInput.min = this.value;
+        // 如果最大價格輸入框的值小於最小價格輸入框的值，則將其設置為最小價格輸入框的值
+        if (parseInt(maxPriceInput.value) < parseInt(this.value)) {
+            maxPriceInput.value = this.value;
+        }
+    });
+
+    // 當最大價格輸入框內容發生變化時觸發
+    maxPriceInput.addEventListener('input', function () {
+        // 如果最大價格輸入框的值小於最小價格輸入框的值，則將其設置為最小價格輸入框的值
+        if (parseInt(this.value) < parseInt(minPriceInput.value)) {
+            this.value = minPriceInput.value;
+        }
+    });
+
+    // 價格範圍限制最小最大價格
 
 
 </script>
