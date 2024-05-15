@@ -93,7 +93,7 @@ if (empty($row)) {
                         <label for="counts" class="form-label fs-5 fw-bold">區域票數</label>
                     </div>
                     <div class="col-8">
-                        <input type="text" id="counts" name="counts" class="form-control rounded-3 border-4" required
+                        <input type="number" min="1" id="counts" name="counts" class="form-control rounded-3 border-4" required
                             placeholder="請輸入票數" value="<?= $row['counts'] ?>">
                         <div class="invalid-feedback">
                             請輸入票數
@@ -106,7 +106,7 @@ if (empty($row)) {
                         <label for="price" class="form-label fs-5 fw-bold">區域票價</label>
                     </div>
                     <div class="col-8">
-                        <input type="text" id="price" name="price" class="form-control rounded-3 border-4" required
+                        <input type="number" min="1" id="price" name="price" class="form-control rounded-3 border-4" required
                             placeholder="請輸入票價" value="<?= $row['price'] ?>">
                         <div class="invalid-feedback">
                             請輸入票價
