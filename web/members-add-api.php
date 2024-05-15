@@ -20,7 +20,8 @@ if (
     !isset($_POST['gender']) ||
     !isset($_POST['phone_number']) ||
     !isset($_POST['birthday']) ||
-    !isset($_POST['address'])
+    !isset($_POST['address']) ||
+    !isset($_POST['photo'])
 ) {
     echo json_encode($output);
     exit; // 結束 PHP 程式
@@ -45,35 +46,30 @@ if (!isset($_FILES['photo']) || $_FILES['photo']['error'] !== UPLOAD_ERR_OK) {
     exit;
 }
 
-// 獲取上傳的照片的二進位數據
-$photoData = file_get_contents($_FILES['photo']['tmp_name']);
-
 // 插入新的成員資料到資料庫
-$sql = "INSERT INTO `members`(`first_name`, `last_name`, `email`, `passwords`, `gender`, `phone_number`, `birthday`, `address`, `photo`, `created_at`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
-$stmt = $pdo->prepare($sql);
-$stmt->bindParam(1, $_POST['first_name']);
-$stmt->bindParam(2, $_POST['last_name']);
-$stmt->bindParam(3, $_POST['email']);
-$stmt->bindParam(4, $_POST['passwords']);
-$stmt->bindParam(5, $_POST['gender']);
-$stmt->bindParam(6, $_POST['phone_number']);
-$stmt->bindParam(7, $_POST['birthday']);
-$stmt->bindParam(8, $_POST['address']);
-$stmt->bindParam(9, $photoData, PDO::PARAM_LOB);
-$stmt->execute();
+$sql = "INSERT INTO `members`(`first_name`, `last_name`, `email`, `passwords`, `gender`, `phone_number`, `birthday`, `address`, `photo`, `created_at`) VALUES (
+    ?, 
+    ?, 
+    ?, 
+    ?, 
+    ?, 
+    ?, 
+    ?, 
+    ?, 
+    ?, NOW())";
 
-// $stmt = $pdo->prepare($sql);
-// $stmt->execute([
-//     $_POST['first_name'],
-//     $_POST['last_name'],
-//     $_POST['email'],
-//     $_POST['passwords'],
-//     $_POST['gender'],
-//     $_POST['phone_number'],
-//     $_POST['birthday'],
-//     $_POST['address'],
-//     $_POST['photo']
-// ]);
+$stmt = $pdo->prepare($sql);
+$stmt->execute([
+    $_POST['first_name'],
+    $_POST['last_name'],
+    $_POST['email'],
+    $_POST['passwords'],
+    $_POST['gender'],
+    $_POST['phone_number'],
+    $_POST['birthday'],
+    $_POST['address'],
+    $_POST['photo']
+]);
 
 
 $output['success'] = !!$stmt->rowCount(); # 新增了幾筆

@@ -138,8 +138,8 @@ $pageName = 'members-add';
 
 
               <div class="col-12">
-                <label for="photo">Photo:</label>
-                <input type="file" id="photo" name="photo" accept="image/*"><br>
+                <label for="photo" class="form-label">Photo:</label>
+                <input type="file" id="photo" name="photo" accept="image/*" class="form-control"><br>
               </div>
 
 
