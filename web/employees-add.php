@@ -19,6 +19,10 @@ $pageName = 'employees-add';
     color: red;
     font-weight: 800;
   }
+
+  .bi-x-circle-fill {
+    color: red;
+  }
 </style>
 <div class="container-fluid">
   <div class="row">
@@ -29,6 +33,22 @@ $pageName = 'employees-add';
       <div class="row">
         <div class="col-8 mx-auto border rounded-3 my-3 bg-white shadow">
           <h4 class="my-3">新增員工</h4>
+
+          <!-- 錯誤提示訊息 -->
+          <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content border border-danger border-2 ">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="errorModalLabel"><i class="bi bi-x-circle-fill"></i><span class="ms-3">錯誤提示</span></h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p id="errorModalMessage"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <form name="form1" onsubmit="sendData(event)" class="needs-validation" novalidate>
             <div class="row g-3">
               <div class="col-sm-6">
@@ -64,7 +84,7 @@ $pageName = 'employees-add';
                 </div>
               </div>
 
-              <div class="col-6">
+              <!-- <div class="col-6">
                 <label for="gender" class="form-label">Gender</label><br>
 
                 <div class="col-12 form-control">
@@ -74,7 +94,22 @@ $pageName = 'employees-add';
                     Gender required.
                   </div>
                 </div>
+              </div> -->
+
+              <div class="col-6">
+                <label for="gender" class="form-label">Gender</label><br>
+                <select class="form-select" id="gender" name="gender" required>
+                  <option value="" selected disabled>Select gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+                <div class="invalid-feedback">
+                  Gender required.
+                </div>
               </div>
+
+
+
 
               <div class="col-6">
                 <label for="phone_number" class="form-label">Phone Number</label>
@@ -171,18 +206,19 @@ $pageName = 'employees-add';
 <?php include __DIR__ . "/part/scripts.php"; ?>
 <script>
   const keepAdd = document.getElementById('keepAdd');
-  const formControls = document.querySelectorAll('form-control');
+  const formControls = document.querySelectorAll('.form-control');
 
   keepAdd.addEventListener('click', function() {
     formControls.forEach(function(control) {
       control.value = ''; // 清空表單控件的值
     });
   });
+
   // gender (modal 按下繼續新增清除gender checked)
   const genderRadios = document.querySelectorAll("input[type=radio][name=gender]");
 
   genderRadios.forEach(function(radio) {
-    radio.checked = false; // 将单选按钮的选中状态设为未选中
+    radio.checked = false; // 將單選按鈕的選取狀態設為未選
   });
 
 
@@ -200,26 +236,26 @@ $pageName = 'employees-add';
   const sendData = e => {
     e.preventDefault(); // 不要讓 form1 以傳統的方式送出
 
-    first_nameField.style.border = '1px solid #CCCCCC';
-    first_nameField.nextElementSibling.innerText = '';
-    last_nameField.style.border = '1px solid #CCCCCC';
-    last_nameField.nextElementSibling.innerText = '';
+    // first_nameField.style.border = '1px solid #CCCCCC';
+    // first_nameField.nextElementSibling.innerText = '';
+    // last_nameField.style.border = '1px solid #CCCCCC';
+    // last_nameField.nextElementSibling.innerText = '';
     emailField.style.border = '1px solid #CCCCCC';
     emailField.nextElementSibling.innerText = '';
 
     // TODO: 欄位資料檢查
     let isPass = true; // 表單有沒有通過檢查
-    if (first_nameField.value.length < 0) {
-      isPass = false;
-      first_nameField.style.border = '1px solid red';
-      first_nameField.nextElementSibling.innerText = '請填寫正確的姓名';
-    }
+    // if (first_nameField.value.length < 0) {
+    //   isPass = false;
+    //   first_nameField.style.border = '1px solid red';
+    //   first_nameField.nextElementSibling.innerText = '請填寫正確的姓名';
+    // }
 
-    if (last_nameField.value.length < 0) {
-      isPass = false;
-      last_nameField.style.border = '1px solid red';
-      last_nameField.nextElementSibling.innerText = '請填寫正確的姓名';
-    }
+    // if (last_nameField.value.length < 0) {
+    //   isPass = false;
+    //   last_nameField.style.border = '1px solid red';
+    //   last_nameField.nextElementSibling.innerText = '請填寫正確的姓名';
+    // }
 
     if (!validateEmail(emailField.value)) {
       isPass = false;
@@ -227,21 +263,45 @@ $pageName = 'employees-add';
       emailField.nextElementSibling.innerText = '請填寫正確的 Email';
     }
     // 有通過檢查, 才要送表單
+    // if (isPass) {
+    //   const fd = new FormData(document.form1); // 沒有外觀的表單物件
+    //   fetch('employees-add-api.php', {
+    //       method: 'POST',
+    //       body: fd, // Content-Type: multipart/form-data
+    //     }).then(r => r.json())
+    //     .then(data => {
+    //       console.log(data);
+    //       if (data.success) {
+    //         myModal.show();
+    //       } else {
+
+    //       }
+    //     })
+    //     .catch(ex => console.log(ex))
+    // }
+    //信箱驗證
     if (isPass) {
-      const fd = new FormData(document.form1); // 沒有外觀的表單物件
+      const fd = new FormData(document.form1); // 創建 FormData 对象
       fetch('employees-add-api.php', {
           method: 'POST',
-          body: fd, // Content-Type: multipart/form-data
-        }).then(r => r.json())
+          body: fd, // 表单数据
+        })
+        .then(response => response.json())
         .then(data => {
           console.log(data);
           if (data.success) {
             myModal.show();
           } else {
-
+            // 处理后端返回的错误消息
+            if (data.message) {
+              // 使用 Bootstrap 的模态框显示错误消息
+              const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+              document.getElementById('errorModalMessage').innerText = data.message;
+              errorModal.show();
+            }
           }
         })
-        .catch(ex => console.log(ex))
+        .catch(ex => console.log(ex));
     }
   };
   const myModal = new bootstrap.Modal('#staticBackdrop')

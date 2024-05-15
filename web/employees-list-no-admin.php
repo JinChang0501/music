@@ -37,12 +37,23 @@ if ($page > $totalPages) {
 // SELECT * FROM `address_book` ORDER BY id DESC LIMIT 60, 20
 
 
+$sort = isset($_GET['sort']) ? $_GET['sort'] : 'id';
+$order = isset($_GET['order']) ? $_GET['order'] : 'asc';
+$order = $order === 'desc' ? 'DESC' : 'ASC';
 
 $sql = sprintf(
-  "SELECT * FROM employees order by id DESC LIMIT %s,%s",
+  "SELECT * FROM `employees` ORDER BY $sort $order LIMIT %s,%s",
   ($page - 1) * $per_page,
   $per_page
 );
+
+
+
+// $sql = sprintf(
+//   "SELECT * FROM employees order by id DESC LIMIT %s,%s",
+//   ($page - 1) * $per_page,
+//   $per_page
+// );
 
 $rows = $pdo->query($sql)->fetchAll();
 
@@ -106,11 +117,21 @@ include __DIR__ . "/part/navbar-head.php";
       <table class="table table-bordered table-striped">
         <thead>
           <tr>
-            <th scope="col" class="text-center">#</th>
-            <th scope="col" class="text-center">First name</th>
-            <th scope="col" class="text-center">Last name</th>
+            <th scope="col" class="text-center">#
+              <a href="?sort=id&order=desc&page=<?= $page ?>"><i class="fa-solid fa-sort-down"></i></a>
+              <a href="?sort=id&order=asc&page=<?= $page ?>"><i class="fa-solid fa-sort-up"></i></a>
+            </th>
+            <th scope="col" class="text-center">First name
+              <a href="?sort=first_name&order=desc&page=<?= $page ?>"><i class="fa-solid fa-sort-down"></i></a>
+              <a href="?sort=first_name&order=asc&page=<?= $page ?>"><i class="fa-solid fa-sort-up"></i></a>
+            </th>
+            <th scope="col" class="text-center">Last name
+              <a href="?sort=last_name&order=desc&page=<?= $page ?>"><i class="fa-solid fa-sort-down"></i></a>
+              <a href="?sort=last_name&order=asc&page=<?= $page ?>"><i class="fa-solid fa-sort-up"></i></a>
+            </th>
             <th scope="col" class="text-center">Email</th>
-            <th scope="col" class="text-center">Gender</th>
+            <th scope="col" class="text-center">Gender
+            </th>
             <th scope="col" class="text-center">Phone number</th>
 
           </tr>
