@@ -5,13 +5,13 @@ require __DIR__ . '/../config/pdo-connect.php';
 $title = '修改商品';
 $pageName = 'product-edit';
 
-$sid = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if ($id < 1) {
   header('Location: product-list.php');
   exit;
 }
 
-$sql = "Select * FROM `products` WHERE id=$id";
+$sql = "SELECT * FROM `products` WHERE id={$id}";
 $row = $pdo->query($sql)->fetch();
 
 if (empty($row)) {
@@ -39,8 +39,8 @@ if (empty($row)) {
     <div class="col-6">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title text-primary fs-3 fw-bold mb-5 text-center">修改商品</h5>
-          <form name="form1" onsubmit="sendData(event)">
+          <h5 class="card-title text-primary fs-3 fw-bold mb-5 text-center">編輯商品</h5>
+          <form name="form2" onsubmit="sendData(event)">
             <input type="hidden" name="id" value="<?= $row['id'] ?>">
             <div class="mb-3">
              <label for="id" class="form-label">編號</label>
@@ -48,26 +48,26 @@ if (empty($row)) {
             </div>
             <div class="mb-4">
               <label for="product_name" class="form-label fw-bold">商品名稱</label>
-              <input type="text" class="form-control" id="product_name" name="product_name" required>
+              <input type="text" class="form-control" id="product_name" name="product_name" value="<?= $row['product_name'] ?>" required>
               <div class="form-text"></div>
             </div>
             <div class="mb-4">
               <label for="picture" class="form-label fw-bold">商品圖片</label>
-              <input class="form-control" type="file" id="picture" multiple required>
+              <input class="form-control" type="file" id="picture" value="<?= $row['picture'] ?>" multiple required>
             </div>
             <div class="mb-4">
               <label for="price" class="form-label fw-bold">定價</label>
-              <input type="text" class="form-control" id="price" name="price" required>
+              <input type="text" class="form-control" id="price" name="price" value="<?= $row['price'] ?>" required>
               <div class="form-text"></div>
             </div>
             <div class="mb-4">
               <label for="purchase_quantity" class="form-label fw-bold">進貨數量</label>
-              <input type="text" class="form-control" id="purchase_quantity" name="purchase_quantity" maxlength="6" required>
+              <input type="text" class="form-control" id="purchase_quantity" name="purchase_quantity" maxlength="6" value="<?= $row['purchase_quantity'] ?>" required>
               <div class="form-text"></div>
             </div>
             <div class="mb-4">
               <label for="activitie_id" class="form-label fw-bold">活動名稱</label>
-              <input type="text" class="form-control" id="activitie_id" name="activitie_id">
+              <input type="text" class="form-control" id="activitie_id" name="activitie_id" value="<?= $row['activitie_id'] ?>" >
               <div class="form-text"></div>
             </div>
             
@@ -127,8 +127,8 @@ if (empty($row)) {
 
 <?php include __DIR__ . '/part/scripts.php' ?>
 <script>
-  const nameField = document.form1.product_name;
-  const quantityField = document.form1.purchase_quantity;
+  const nameField = document.form2.product_name;
+  const quantityField = document.form2.purchase_quantity;
   
   const sendData = e => {
     e.preventDefault(); // 不要讓表單以傳統的方式送出
@@ -156,7 +156,7 @@ if (empty($row)) {
     
     // 有通過檢查才發送表單
     if (isPass) {
-      const fd = new FormData(document.form1); // 沒有外觀的表單物件
+      const fd = new FormData(document.form2); // 沒有外觀的表單物件
 
       fetch(`product-edit-api.php`, {
         method: 'POST',

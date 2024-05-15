@@ -3,7 +3,7 @@ require __DIR__ . '/../config/pdo-connect.php';
 $title = '商品列表';
 $pageName = 'list';
 
-$perPage = 20; # 每頁有幾筆
+$perPage = 10; # 每頁有幾筆
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
@@ -42,6 +42,12 @@ if ($totalRows) {
     </div>
     <div  class="col-10">
       <h5 class="card-title text-primary fs-3 fw-bold mb-5 text-center">商品列表</h5>
+      <div class="col-12 mb-3 d-flex justify-content-end">
+        <div class="input-group mb-3 w-50">
+          <input type="search" class="textSearch form-control border-5" name="search" placeholder="請輸入要搜尋的商品名稱...">
+          <input type="submit" class="search btn btn-info fw-bold" value="搜尋">
+        </div>
+      </div>
       <nav aria-label="Page navigation example">
         <ul class="pagination">
           <li class="page-item">
@@ -96,13 +102,16 @@ if ($totalRows) {
             <?php foreach ($rows as $r) : ?>
               <tr>
               <td class="text-center">
-                <a href="product-edit.php?id=<?= $r['id'] ?>" class="btn btn-success"> 
+              <a href="product-edit.php?id=<?= $r['id'] ?>" class="btn btn-success">
                   <i class="fa-solid fa-file-pen"></i>編輯
                 </a>
               </td>
               <td><?= $r['id'] ?></td>
               <td><?= $r['product_name'] ?></td>
-              <td><?= $r['picture'] ?></td>
+              <td>
+              <img src="../img/<?= $r['picture'] ?>" style="width:100px;" alt="">
+                
+              </td>
               <td><?= $r['price'] ?></td>
               <td><?= $r['purchase_quantity'] ?></td>
               <td><?= $r['activitie_id'] ?></td>

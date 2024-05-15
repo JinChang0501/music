@@ -12,7 +12,7 @@ $output = [
 
 // TODO: 欄位資料檢查
 // 檢查是否有接收到必要的欄位資料
-if (!isset($_POST['product_name']) || !isset($_POST['picture']) || !isset($_POST['price']) || !isset($_POST['purchase_quantity']) || !isset($_POST['activitie_id'])) {
+if (!isset($_POST['product_name'])) {
     echo json_encode($output);
     exit; // 結束 PHP 程式
 }
@@ -22,7 +22,7 @@ $sql = "INSERT INTO `products`(`product_name`, `picture`, `price`, `purchase_qua
     ?,
     ?,
     ?,
-    ?, )";
+    ?)";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
