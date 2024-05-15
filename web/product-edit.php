@@ -11,7 +11,7 @@ if ($id < 1) {
   exit;
 }
 
-$sql = "Select * FROM products WHERE sid=$id";
+$sql = "Select * FROM `products` WHERE id=$id";
 $row = $pdo->query($sql)->fetch();
 
 if (empty($row)) {
@@ -102,6 +102,27 @@ if (empty($row)) {
 		</div>
 	</div>
 </div>
+
+<div class="modal fade" id="failureModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">資料沒有修改</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger" role="alert" id="failureInfo">
+          資料沒有修改
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="location.href='product-list.php'">到列表頁</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
 <!-- Modal End-->
 
 <?php include __DIR__ . '/part/scripts.php' ?>
@@ -144,9 +165,10 @@ if (empty($row)) {
       .then(data => {
         console.log(data);
         if (data.success) {
-          staticBackdrop.show();
+          successModal.show();
         } else {
-         
+          document.querySelector('#failureInfo').innerHTML = data.error;
+          failureModal.show();
         }
 
       })
@@ -154,8 +176,9 @@ if (empty($row)) {
     }
   };
 
-  const staticBackdrop = new bootstrap.Modal('#staticBackdrop')
-  
+  const successModal = new bootstrap.Modal('#staticBackdrop')
+  const failureModal = new bootstrap.Modal('#failureModal')
+
 </script>
 
 <?php include __DIR__ . '/part/html-footer.php' ?>

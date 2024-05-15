@@ -74,14 +74,12 @@ if ($totalRows) {
           </li>
         </ul>
       </nav>
-      <form name="form1" onsubmit="sendMultiDel(event)">
+      <div class="col">
         <table class="table table-bordered table-striped">
           <thead>
             <tr>
               <th scope="col" class="text-center">
-                <button type="submit" class="btn btn-success" disabled>
-                  <i class="fa-solid fa-file-pen"></i>編輯
-                </button>
+                <i class="fa-solid fa-file-pen"></i>編輯
               </th>
               <th scope="col" class="text-center">編號</th>
               <th scope="col" class="text-center">商品名稱</th>
@@ -90,9 +88,7 @@ if ($totalRows) {
               <th scope="col" class="text-center">進貨數量</th>
               <th scope="col" class="text-center">活動名稱</th>
               <th scope="col" class="text-center">
-                <button type="submit" class="btn btn-danger" disabled>
                   <i class="fa-solid fa-trash"></i>刪除
-                </button>
               </th>
             </tr>
           </thead>
@@ -100,7 +96,7 @@ if ($totalRows) {
             <?php foreach ($rows as $r) : ?>
               <tr>
               <td class="text-center">
-                <a href="product-edit.php?id=<?= $r['id'] ?>" type="submit" class="btn btn-success">
+                <a href="product-edit.php?id=<?= $r['id'] ?>" class="btn btn-success"> 
                   <i class="fa-solid fa-file-pen"></i>編輯
                 </a>
               </td>
@@ -111,7 +107,7 @@ if ($totalRows) {
               <td><?= $r['purchase_quantity'] ?></td>
               <td><?= $r['activitie_id'] ?></td>
               <td>
-                <a href="javascript: delete_one(<?= $r['id'] ?>)">
+                <a href="javascript: delete_one(<?= $r['id'] ?>)"  class="btn btn-danger">
                   <i class="fa-solid fa-trash"></i>刪除 
                 </a>
               </td>
@@ -119,13 +115,11 @@ if ($totalRows) {
             <?php endforeach; ?>
           </tbody>
         </table>
-      </form>
-    </div>
-    
-  
-    
+      </div>
   </div>
-</div>
+  </div>
+
+</div>      
 <?php include __DIR__ . '/part/scripts.php' ?>
 <script>
   const delete_one = (id) =>{
