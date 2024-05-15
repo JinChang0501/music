@@ -41,7 +41,7 @@ $rows = $pdo->query($sql)->fetchAll();
 						<div class="mb-3">
 							<label for="activity_class" class="form-label">類別</label>
 							<select class="form-select" aria-label="Default select example" id="activity_class" name="activity_class">
-								<option selected>--</option>
+								<option selected>-- 請選擇類別 --</option>
 								<option value="1">concert</option>
 								<option value="2">music festival</option>
 							</select>
@@ -88,11 +88,11 @@ $rows = $pdo->query($sql)->fetchAll();
 							<div class="form-text"></div>
 						</div>
 
-						<!-- 藝人多選 -->
+						<!-- 藝人 -->
 						<div class="mb-3">
 							<label for="artist_id" class="form-label">表演者</label>
 							<select class="form-select" aria-label="Default select example" id="artist_id" name="artist_id">
-								<option selected>--</option>
+								<option selected>-- 請選擇表演者 --</option>
 								<?php foreach ($rows as $r): ?>
 									<option value="<?= $r['id'] ?>"><?= $r['art_name'] ?></option>
 								<?php endforeach; ?>
@@ -101,8 +101,21 @@ $rows = $pdo->query($sql)->fetchAll();
 
 						<div class="mb-3">
 							<label for="picture" class="form-label">圖片</label>
-							<input type="text" class="form-control" id="picture" name="picture">
+							<input type="file" class="form-control" id="picture" name="picture">
 							<div class="form-text"></div>
+						</div>
+
+						<div class="mb-3">
+							<form name="dataForm" action="">
+								<input type="hidden" name="img_file" id="img_file" />
+								<img src="" alt="" id="myimg" width="300" />
+								<button type="button" onclick="avatar.click()">選擇檔案</button>
+								<!-- <input type="submit" /> -->
+							</form>
+
+							<form name="uploadForm" hidden>
+								<input type="file" name="avatar" accept="image/*" />
+							</form>
 						</div>
 
 						<button type="submit" class="btn btn-primary">新增</button>
@@ -138,25 +151,38 @@ $rows = $pdo->query($sql)->fetchAll();
 
 <?php include __DIR__ . "/part/scripts.php"; ?>
 <script>
+
+	const avatar = document.uploadForm.avatar;
+	avatar.onchange = (event) => {
+		const fd2 = new FormData(document.uploadForm);
+
+		fetch("activities-upload-api.php", {
+			method: "POST",
+			body: fd2,
+		})
+			.then((r) => r.json())
+			.then((result) => {
+				if (result.success) {
+					// result.filename
+					img_file.value = result.filename;
+					myimg.src = `../activities-img/${result.filename}`;
+				}
+
+			})
+			.catch((ex) => console.log(ex));
+	};
+
 	// const activity_class = document.form_activities.activity_class;
 	const activity_nameField = document.form_activities.activity_name;
 
 	const sendData = e => {
 		e.preventDefault(); // 不要讓 form_activities 以傳統的方式送出
 
-		// activity_class.style.border = '1px solid #CCCCCC';
-		// activity_class.nextElementSibling.innerText = '';
 		activity_nameField.style.border = '1px solid #CCCCCC';
 		activity_nameField.nextElementSibling.innerText = '';
 
 		// TODO: 欄位資料檢查
 		let isPass = true; // 表單有沒有通過檢查
-
-		// if ((activity_class.value < 1) || (activity_class.value > 2)) {
-		// 	isPass = false;
-		// 	activity_nameField.style.border = '1px solid red';
-		// 	activity_nameField.nextElementSibling.innerText = '請選擇類別';
-		// }
 
 		if (activity_nameField.value.length < 2) {
 			isPass = false;
