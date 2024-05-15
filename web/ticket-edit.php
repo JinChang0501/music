@@ -114,20 +114,6 @@ if (empty($row)) {
                     </div>
                 </div>
 
-
-                <!-- <div class="row mb-4 justify-content-evenly">
-                    <div class="col-2 form-label">
-                        <label for="date" class="form-label fs-5 fw-bold">上架時間</label>
-                    </div>
-                    <div class="col-8">
-                        <input type="datetime-local" id="date" name="date" class="form-control rounded-3 border-4"
-                            required>
-                        <div class="invalid-feedback">
-                            請選擇上架時間
-                        </div>
-                    </div>
-                </div> -->
-
                 <div class="text-start ms-5">
                     <button type="submit" class="btn btn-primary fs-5 fw-bold">送出</button>
                 </div>

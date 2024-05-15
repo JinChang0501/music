@@ -90,7 +90,7 @@ if (!isset($pageName))
           <!-- 2 -->
           <div class="accordion-item">
             <h2 class="accordion-header" id="heading2">
-              <button class="accordion-button collapsed fs-5 fw-bold <?= $pageName == 'employees-add' || $pageName == 'employees-list' ? 'bglightblue' : 'bg-white' ?> " type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+              <button class="accordion-button collapsed fs-5 fw-bold <?= $pageName == 'employees-add' || $pageName == 'employees-list' ? '' : 'bg-white' ?> " type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
                 員工資料管理
               </button>
             </h2>
@@ -106,16 +106,16 @@ if (!isset($pageName))
           <!-- 3 -->
           <div class="accordion-item">
             <h2 class="accordion-header" id="heading3">
-              <button class="accordion-button collapsed fs-5 fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+              <button class="accordion-button collapsed fs-5 fw-bold <?= $pageName == 'ticket-order-list' || $pageName == 'ticket-list' || $pageName == 'ticket-add' || $pageName == 'ticket-edit' ? '' : 'bg-white' ?>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
                 購票資料管理
               </button>
             </h2>
-            <div id="collapse3" class="accordion-collapse collapse <?= $pageName = 'ticket-list || ticket-add || ticket-edit || ticket-order-list' ? 'show' : '' ?>" aria-labelledby="heading3" data-bs-parent="#accordionExample">
+            <div id="collapse3" class="accordion-collapse collapse <?= $pageName == 'ticket-order-list' || $pageName == 'ticket-list' || $pageName == 'ticket-add' || $pageName == 'ticket-edit' ? 'show' : '' ?>" aria-labelledby="heading3" data-bs-parent="#accordionExample">
               <div class="accordion-body p-0"> <!-- p-0 把li上下左右的空間清掉不要動-->
-                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'ticket-order-list' ? 'bg-color' : '' ?>" href="ticket-order-list.php" href="#">購票訂單</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'ticket-list' ? 'bg-color' : '' ?>" href="ticket-list.php">上架購票清單</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'ticket-add' ? 'bg-color' : '' ?>" href="ticket-add.php">新增購票</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'ticket-edit' ? 'bg-color' : '' ?>" href="ticket-edit.php" href="#">編輯購票</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'ticket-order-list' ? 'active' : '' ?>" href="ticket-order-list.php" href="#">購票訂單</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'ticket-list' ? 'active' : '' ?>" href="ticket-list.php">上架購票清單</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'ticket-add' ? 'active' : '' ?>" href="ticket-add.php">新增購票</a></li>
+                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'ticket-edit' ? 'active' : '' ?>" href="ticket-edit.php" href="#">編輯購票</a></li>
               </div>
             </div>
           </div>
