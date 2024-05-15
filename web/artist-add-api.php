@@ -25,7 +25,8 @@ if ($de_date === false) {
 }
 
 
-$sql = "INSERT INTO `artist_register`(`art_name`, `email`, `password`, `ManagementCompany`, `phone_number`, `debutDate`, `art_picture`) VALUES (
+$sql = "INSERT INTO artist_register
+(`art_name`, `email`, `password`, `ManagementCompany`, `phone_number`, `debutDate`, `art_picture`) VALUES (
     ?,
     ?,
     ?,
@@ -37,7 +38,7 @@ $sql = "INSERT INTO `artist_register`(`art_name`, `email`, `password`, `Manageme
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
     $_POST['art_name'],
-    $_POST['email'],
+    $email,
     $_POST['password'],
     $_POST['ManagementCompany'],
     $_POST['phone_number'],
@@ -46,7 +47,7 @@ $stmt->execute([
 ]);
 
 
-$output['success'] = !!$stmt->rowCount(); # 新增了幾筆
+$output['success'] = boolval($stmt->rowCount()); # 新增了幾筆
 $output['newId'] = $pdo->lastInsertId(); # 取得最近的新增資料的primary key
 
-echo json_encode($output);
+echo json_encode($output, JSON_UNESCAPED_UNICODE);

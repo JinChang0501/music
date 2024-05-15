@@ -2,14 +2,14 @@
 if (!isset($_SESSION)) {
   session_start();
 }
+require __DIR__ . '/../config/pdo-connect.php';
 
 
 $title = '藝人列表';
 $pageName = 'artist-list';
 
-require __DIR__ . '/../config/pdo-connect.php';
 
-$per_page = 3; #每頁有幾筆
+$per_page = 4; #每頁有幾筆
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
@@ -139,17 +139,43 @@ $rows = $pdo->query($sql)->fetchAll();?>
     }
   }
 
-  function sendMultiDel(event){
-    event.preventDefault();
+  const checkAll = document.getElementById("checkAll");
+  const checkboxes = document.getElementsByClassName("checkboxes");
 
-    const fd = new FormData(document.form1);
+  checkAll.addEventListener('change', function() {
+    if (checkAll.checked === true) {
+      for (let i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = true;
+      }
+    } else {
+      for (let i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = false;
+      }
+    }
+  });
 
-    fetch('artist-delete.php', {
-      method: 'POST',
-      body: fd
-    }).then(r=>r.json()).then(result=>{
+  // 刪除所選Script
+  const dltAllSelect = document.getElementById("dltAllSelect");
+  const checkboxes2 = document.querySelectorAll(".checkboxes");
 
-    }).catch(ex=>console.log(ex));
-  }
+  dltAllSelect.addEventListener('click', function() {
+    let selectedIds = []; // 儲存被勾選項目的 ID
+
+    for (let i = 0; i < checkboxes2.length; i++) {
+      if (checkboxes2[i].checked) {
+        const actid = checkboxes2[i].value; // 獲取被勾選項目的 ID
+        selectedIds.push(actid); // 將 ID 加入到 selectedIds 陣列中
+      }
+    }
+
+    if (selectedIds.length > 0) {
+      if (confirm(`確定要刪除這 ${selectedIds.length} 筆資料嗎?`)) {
+     
+        location.href = `artist-delete.php?actid=${selectedIds.join(',')}`;
+      }
+    } else {
+      alert('請先選擇要刪除的資料');
+    }
+  });
 </script>
 <?php include __DIR__ . "/part/html-footer.php" ?>
