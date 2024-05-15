@@ -64,12 +64,12 @@ if ($totalRows) {
                   <i class="fa-solid fa-angle-left"></i>
                 </a>
               </li>
-              <?php for ($i = $page - 5; $i <= $page + 5; $i++):
-                if ($i >= 1 and $i <= $totalPages): ?>
+              <?php for ($i = $page - 5; $i <= $page + 5; $i++) :
+                if ($i >= 1 and $i <= $totalPages) : ?>
                   <li class="page-item <?= $i == $page ? 'active' : '' ?>">
                     <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
                   </li>
-                <?php endif;
+              <?php endif;
               endfor; ?>
               <li class="page-item">
                 <a class="page-link" href="?page=<?= $page + 1 ?>">
@@ -87,7 +87,7 @@ if ($totalRows) {
       </div>
       <table class="table table-bordered table-striped">
         <thead>
-          <tr>
+          <tr class="text-nowrap">
             <th scope="col">#</th>
             <th scope="col">類別</th>
             <th scope="col">活動名稱</th>
@@ -102,7 +102,7 @@ if ($totalRows) {
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($rows as $r): ?>
+          <?php foreach ($rows as $r) : ?>
             <tr>
               <td><?= $r['actid'] ?></td>
               <td><?= $r['activity_class'] ?></td>
@@ -111,10 +111,10 @@ if ($totalRows) {
               <td><?= $r['a_time'] ?></td>
               <td><?= $r['location'] ?></td>
               <td><?= $r['address'] ?></td>
-              <td><?= $r['descriptions'] ?></td>
+              <td class="d-inline-block" style="width: 300px;"><?= $r['descriptions'] ?></td>
               <td><?= $r['organizer'] ?></td>
               <td><?= $r['art_name'] ?></td>
-              <td><?= $r['picture'] ?></td>
+              <td><img src="../img/activities-img/<?= $r['picture'] ?>" alt="activities_picture" class="image img-thumbnail"></td>
             </tr>
           <?php endforeach; ?>
         </tbody>

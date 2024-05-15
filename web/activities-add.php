@@ -93,7 +93,7 @@ $rows = $pdo->query($sql)->fetchAll();
 							<label for="artist_id" class="form-label">表演者</label>
 							<select class="form-select" aria-label="Default select example" id="artist_id" name="artist_id">
 								<option selected>-- 請選擇表演者 --</option>
-								<?php foreach ($rows as $r): ?>
+								<?php foreach ($rows as $r) : ?>
 									<option value="<?= $r['id'] ?>"><?= $r['art_name'] ?></option>
 								<?php endforeach; ?>
 							</select>
@@ -114,8 +114,7 @@ $rows = $pdo->query($sql)->fetchAll();
 </div>
 
 <!-- Modal Start-->
-<div class="modal fade" id="staticBackdropA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-	aria-labelledby="staticBackdropLabelA" aria-hidden="true">
+<div class="modal fade" id="staticBackdropA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelA" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -129,7 +128,7 @@ $rows = $pdo->query($sql)->fetchAll();
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary" onclick="location.href='activities-list.php'">到列表頁</button>
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續新增</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="keepAdd">繼續新增</button>
 			</div>
 		</div>
 	</div>
@@ -138,26 +137,14 @@ $rows = $pdo->query($sql)->fetchAll();
 
 <?php include __DIR__ . "/part/scripts.php"; ?>
 <script>
+	const keepAdd = document.getElementById('keepAdd');
+	const formControls = document.querySelectorAll('.form-control')
 
-	// const avatar = document.uploadForm.avatar;
-	// avatar.onchange = (event) => {
-	// 	const fd2 = new FormData(document.uploadForm);
-
-	// 	fetch("activities-upload-api.php", {
-	// 		method: "POST",
-	// 		body: fd2,
-	// 	})
-	// 		.then((r) => r.json())
-	// 		.then((result) => {
-	// 			if (result.success) {
-	// 				// result.filename
-	// 				img_file.value = result.filename;
-	// 				myimg.src = `../activities-img/${result.filename}`;
-	// 			}
-
-	// 		})
-	// 		.catch((ex) => console.log(ex));
-	// };
+	keepAdd.addEventListener('click', function() {
+		formControls.forEach(function(control) {
+			control.value = ''; // 清空表單控件的值
+		});
+	});
 
 	// const activity_class = document.form_activities.activity_class;
 	const activity_nameField = document.form_activities.activity_name;
@@ -182,14 +169,14 @@ $rows = $pdo->query($sql)->fetchAll();
 			const fd = new FormData(document.form_activities); // 沒有外觀的表單物件
 
 			fetch('activities-add-api.php', {
-				method: 'POST',
-				body: fd, // Content-Type: multipart/form-data
-			}).then(r => r.json())
+					method: 'POST',
+					body: fd, // Content-Type: multipart/form-data
+				}).then(r => r.json())
 				.then(data => {
 					console.log(data);
 					if (data.success) {
 						myModalA.show();
-					} else { }
+					} else {}
 				})
 				.catch(ex => console.log(ex))
 		}

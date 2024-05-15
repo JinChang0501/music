@@ -77,4 +77,3 @@ $stmt->execute([
 $output['success'] = !!$stmt->rowCount(); # 修改了幾筆
 
 echo json_encode($output);
-?>
