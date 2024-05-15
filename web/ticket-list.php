@@ -113,16 +113,14 @@ echo json_encode([
             <div class="col-12 mb-3 d-flex justify-content-end">
 
                 <div class="input-group mb-3 w-50">
-                    <button class="btn btn-secondary dropdown-toggle fw-bold" type="button" id="dropdownMenuButton2"
-                        data-bs-toggle="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle fw-bold" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown">
                         請選擇要查詢的項目
                     </button>
                     <ul class="dropdown-menu dropdown-menu-dark">
                         <li><a class="dropdown-item active" href="#">活動名稱</a></li>
                         <li><a class="dropdown-item" href="#">活動描述</a></li>
                     </ul>
-                    <input type="search" class="textSearch form-control border-5" name="search"
-                        placeholder="請輸入要搜尋的內容...">
+                    <input type="search" class="textSearch form-control border-5" name="search" placeholder="請輸入要搜尋的內容...">
                     <input type="submit" class="search btn btn-secondary fw-bold" value="搜尋">
                 </div>
 
@@ -172,14 +170,12 @@ echo json_encode([
                 </div>
 
                 <div data-bs-toggle="modal" data-bs-target="#Modal">
-                    <a class="btn btn-secondary fw-bold" href="javascript:;">篩選器&nbsp;&nbsp;<i
-                            class="bi bi-filter"></i></a>
+                    <a class="btn btn-secondary fw-bold" href="javascript:;">篩選器&nbsp;&nbsp;<i class="bi bi-filter"></i></a>
                 </div>
             </div>
 
-            <div class="col-12 mb-4">
-                <table
-                    class="table table-hover table-striped table-bordered caption-top text-center align-middle fw-bold">
+            <div class="col-12 mb-4" style="overflow-x: auto;">
+                <table class="table table-hover table-striped table-bordered caption-top text-center align-middle fw-bold text-nowrap">
                     <thead class="table-light">
                         <tr class="align-middle">
                             <th scope="col">全選<br><input type="checkbox" class="cb_all"></th>
@@ -202,12 +198,11 @@ echo json_encode([
                         </tr>
                     </thead>
                     <tbody class="tb">
-                        <?php foreach ($rows as $r): ?>
+                        <?php foreach ($rows as $r) : ?>
                             <tr>
                                 <td>
                                     <div>
-                                        <input class="checkboxes form-check-input mx-auto text-center d-flex "
-                                            type="checkbox" value="<?= $r['tid'] ?>" id="flexCheckDefault<?= $r['tid'] ?>">
+                                        <input class="checkboxes form-check-input mx-auto text-center d-flex " type="checkbox" value="<?= $r['tid'] ?>" id="flexCheckDefault<?= $r['tid'] ?>">
                                     </div>
                                 </td>
                                 <td><a class="btn btn-danger" href="javascript: deleteOne(<?= $r['tid'] ?>)">
@@ -255,12 +250,13 @@ echo json_encode([
                             </a>
                         </li>
 
-                        <?php for ($i = $page - 2; $i <= $page + 2; $i++):
-                            if ($i >= 1 and $i <= $totalPages): ?>
+                        <?php for ($i = $page - 2; $i <= $page + 2; $i++) :
+                            if ($i >= 1 and $i <= $totalPages) : ?>
                                 <li class="page-item <?= $page == $i ? 'active' : '' ?>">
                                     <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
                                 </li>
-                            <?php endif; endfor; ?>
+                        <?php endif;
+                        endfor; ?>
                         <li class="page-item <?= $page == $totalPages ? 'disabled' : '' ?>">
                             <a class="page-link" href="?page=<?= min($totalPages, $page + 1) ?>">
                                 <i class="fa-solid fa-angle-right"></i>
@@ -289,8 +285,7 @@ echo json_encode([
         <div class="modal-content bg-dark position-relative">
 
             <div class="position-absolute top-0 end-0">
-                <button type="button" class="btn-close bg-white fs-4" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
+                <button type="button" class="btn-close bg-white fs-4" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="d-flex justify-content-center my-4 mb-3">
@@ -314,32 +309,20 @@ echo json_encode([
                         </thead>
                         <tbody class="filter">
                             <tr>
-                                <td class="filterBtn"><a class="model-a"
-                                        href="?sort=tid&order=desc&page=<?= $page ?>">由大到小</a></td>
-                                <td class="filterBtn"><a class="model-a"
-                                        href="?sort=counts&order=desc&page=<?= $page ?>">由多到少</a></td>
-                                <td class="filterBtn"><a class="model-a"
-                                        href="?sort=price&order=desc&page=<?= $page ?>">由高到低</a></td>
-                                <td class="filterBtn"><a class="model-a"
-                                        href="?sort=a_date&a_time&order=desc&page=<?= $page ?>">最遠活動時間</a></td>
-                                <td class="filterBtn"><a class="model-a"
-                                        href="?sort=created_at&order=desc&page=<?= $page ?>">最新建立時間</a></td>
-                                <td class="filterBtn"><a class="model-a"
-                                        href="?sort=editTime&order=desc&page=<?= $page ?>">最新修改時間</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?sort=tid&order=desc&page=<?= $page ?>">由大到小</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?sort=counts&order=desc&page=<?= $page ?>">由多到少</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?sort=price&order=desc&page=<?= $page ?>">由高到低</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?sort=a_date&a_time&order=desc&page=<?= $page ?>">最遠活動時間</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?sort=created_at&order=desc&page=<?= $page ?>">最新建立時間</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?sort=editTime&order=desc&page=<?= $page ?>">最新修改時間</a></td>
                             </tr>
                             <tr>
-                                <td class="filterBtn"><a class="model-a"
-                                        href="?sort=tid&order=asc&page=<?= $page ?>">由小到大</a></th>
-                                <td class="filterBtn"><a class="model-a"
-                                        href="?sort=counts&order=asc&page=<?= $page ?>">由少到多</a></td>
-                                <td class="filterBtn"><a class="model-a"
-                                        href="?sort=price&order=asc&page=<?= $page ?>">由低到高</a></td>
-                                <td class="filterBtn"><a class="model-a"
-                                        href="?sort=a_date&a_time&order=asc&page=<?= $page ?>">最近活動時間</a></td>
-                                <td class="filterBtn"><a class="model-a"
-                                        href="?sort=created_at&order=asc&page=<?= $page ?>">最舊建立時間</a></td>
-                                <td class="filterBtn"><a class="model-a"
-                                        href="?sort=editTime&order=asc&page=<?= $page ?>">最舊修改時間</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?sort=tid&order=asc&page=<?= $page ?>">由小到大</a></th>
+                                <td class="filterBtn"><a class="model-a" href="?sort=counts&order=asc&page=<?= $page ?>">由少到多</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?sort=price&order=asc&page=<?= $page ?>">由低到高</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?sort=a_date&a_time&order=asc&page=<?= $page ?>">最近活動時間</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?sort=created_at&order=asc&page=<?= $page ?>">最舊建立時間</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?sort=editTime&order=asc&page=<?= $page ?>">最舊修改時間</a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -356,8 +339,7 @@ echo json_encode([
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content bg-dark position-relative">
             <div class="position-absolute top-0 end-0">
-                <button type="button" class="btn-close bg-white fs-4" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
+                <button type="button" class="btn-close bg-white fs-4" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="d-flex justify-content-center my-4 mb-3">
                 <div>
@@ -378,7 +360,7 @@ echo json_encode([
     const searchInput = document.querySelector('.textSearch');
     const searchButton = document.querySelector('.search');
 
-    searchButton.addEventListener('click', function () {
+    searchButton.addEventListener('click', function() {
         const searchText = searchInput.value;
         // 使用 AJAX 向後端發送請求
         fetch(`ticket-search-api.php?keyword=${searchText}`)
@@ -398,7 +380,7 @@ echo json_encode([
 
     const reload = document.querySelector('.reload');
 
-    reload.addEventListener('click', function () {
+    reload.addEventListener('click', function() {
         // 在 JavaScript 中重新整理頁面
         location.reload();
     });
@@ -409,7 +391,7 @@ echo json_encode([
 
     const musicFestival = document.querySelector('.musicFestival');
 
-    musicFestival.addEventListener('click', function () {
+    musicFestival.addEventListener('click', function() {
         // 發送 AJAX 請求到後端
         fetch('ticket-musicFestival-api.php')
             .then(response => response.json())
@@ -463,7 +445,7 @@ echo json_encode([
 
     const concert = document.querySelector('.concert');
 
-    concert.addEventListener('click', function () {
+    concert.addEventListener('click', function() {
         // 發送 AJAX 請求到後端
         fetch('ticket-concert-api.php')
             .then(response => response.json())
@@ -528,14 +510,14 @@ echo json_encode([
     let cb_all = document.querySelector('.cb_all');
     let tbs = document.querySelector('.tb').querySelectorAll('input');
 
-    cb_all.addEventListener('click', function () {
+    cb_all.addEventListener('click', function() {
         for (let i = 0; i < tbs.length; i++) {
             tbs[i].checked = this.checked;
         }
     });
 
     for (let i = 0; i < tbs.length; i++) {
-        tbs[i].onclick = function () {
+        tbs[i].onclick = function() {
             let flag = true;
             for (let i = 0; i < tbs.length; i++) {
                 if (!tbs[i].checked) {
@@ -554,7 +536,7 @@ echo json_encode([
     const dltAllSelect = document.getElementById("dltAllSelect");
     const checkboxes2 = document.querySelectorAll(".checkboxes");
 
-    dltAllSelect.addEventListener('click', function () {
+    dltAllSelect.addEventListener('click', function() {
         let selectedIds = []; // 儲存被勾選項目的 ID
 
         for (let i = 0; i < checkboxes2.length; i++) {
@@ -597,7 +579,7 @@ echo json_encode([
 
     // 點擊連結時設置LocalStorage並更新樣式
     for (let i = 0; i < links.length; i++) {
-        links[i].addEventListener('click', function () {
+        links[i].addEventListener('click', function() {
             // 先清除所有連結的背景色
             for (let j = 0; j < links.length; j++) {
                 links[j].classList.remove('modelStyle');
@@ -619,7 +601,7 @@ echo json_encode([
     const maxPriceInput = document.querySelector('input[name="max_price"]');
 
     // 當最小價格輸入框內容發生變化時觸發
-    minPriceInput.addEventListener('input', function () {
+    minPriceInput.addEventListener('input', function() {
         // 更新最大價格輸入框的最小值為最小價格輸入框的值
         maxPriceInput.min = this.value;
         // 如果最大價格輸入框的值小於最小價格輸入框的值，則將其設置為最小價格輸入框的值
@@ -629,7 +611,7 @@ echo json_encode([
     });
 
     // 當最大價格輸入框內容發生變化時觸發
-    maxPriceInput.addEventListener('input', function () {
+    maxPriceInput.addEventListener('input', function() {
         // 如果最大價格輸入框的值小於最小價格輸入框的值，則將其設置為最小價格輸入框的值
         if (parseInt(this.value) < parseInt(minPriceInput.value)) {
             this.value = minPriceInput.value;
@@ -637,7 +619,5 @@ echo json_encode([
     });
 
     // 價格範圍限制最小最大價格
-
-
 </script>
 <?php include __DIR__ . "/part/html-footer.php"; ?>
