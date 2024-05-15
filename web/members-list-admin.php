@@ -39,8 +39,8 @@ if ($page > $totalPages) {
 
 
 $sort = isset($_GET['sort']) ? $_GET['sort'] : 'id';
-$order = isset($_GET['order']) ? $_GET['order'] : 'asc';
-$order = $order === 'desc' ? 'DESC' : 'ASC';
+$order = isset($_GET['order']) ? $_GET['order'] : 'desc';
+$order = $order === 'asc' ? 'asc' : 'desc';
 
 $sql = sprintf(
   "SELECT * FROM `members` ORDER BY $sort $order LIMIT %s,%s",
@@ -66,7 +66,7 @@ include __DIR__ . "/part/navbar-head.php";
     <div class="col-10">
       <!-- 頁面選單 Start -->
       <nav aria-label="Page navigation example">
-        <ul class="pagination">
+        <ul class="pagination mt-3 d-flex justify-content-center">
           <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
             <a class="page-link" href="?page=1">
               <i class="fa-solid fa-angles-left"></i>
@@ -100,10 +100,14 @@ include __DIR__ . "/part/navbar-head.php";
       </nav>
       <!-- 頁面選單 End -->
       <!-- 按鈕列 Start -->
-      <div class="row d-flex justify-content-between">
+      <div class="row d-flex">
         <!-- <div class="col-2 mb-4"><button class="bg-warning rounded-2" id="checkall">一鍵全選</button></div> -->
-        <div class="col-2 my-auto"><button class="bg-warning rounded-2" id="dltAllSelect">刪除所選</button></div>
-        <form class="col-12 col-lg-auto mb-lg-0">
+        <div class="col-2 my-auto">
+          <a href="members-add.php" class="bg-success rounded-2 border border-1 border-black p-1 text-decoration-none text-black">新增會員</a>
+          <button class="bg-warning rounded-2" id="dltAllSelect">刪除所選</button>
+        </div>
+
+        <form class="col-12 col-lg-auto mb-lg-0 ms-auto">
           <input type="search" class="form-control form-control-dark my-3" placeholder="Search..." aria-label="Search">
         </form>
       </div>
@@ -143,6 +147,9 @@ include __DIR__ . "/part/navbar-head.php";
                 <a href="?sort=birthday&order=asc&page=<?= $page ?>"><i class="fa-solid fa-sort-up"></i></a>
               </th>
               <th scope="col" class="text-center text-nowrap">Address</th>
+              <th scope="col" class="text-center text-nowrap">Photo</th>
+
+
               <th scope="col" class="text-center text-nowrap">Created_at
                 <a href="?sort=created_at&order=desc&page=<?= $page ?>"><i class="fa-solid fa-sort-down"></i></a>
                 <a href="?sort=created_at&order=asc&page=<?= $page ?>"><i class="fa-solid fa-sort-up"></i></a>
@@ -171,6 +178,7 @@ include __DIR__ . "/part/navbar-head.php";
                 <td class="text-center text-nowrap"><?= $r['phone_number'] ?></td>
                 <td class="text-center text-nowrap"><?= $r['birthday'] ?></td>
                 <td class="text-center text-nowrap"><?= (!empty($r['address'])) ? htmlentities($r['address']) : '未填' ?></td>
+                <td class="text-center text-nowrap"><img src="../img/members-img/<?= $r['photo'] ?>" alt="" style="width: 100px;"></td>
                 <td class="text-center text-nowrap"><?= $r['created_at'] ?></td>
                 <td class="text-center"><a href="members-edit.php?id=<?= $r['id'] ?>"><i class="fa-solid fa-pen-to-square text-warning"></i></a></td>
               </tr>

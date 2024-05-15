@@ -45,8 +45,8 @@ if ($page > $totalPages) {
 // );
 
 $sort = isset($_GET['sort']) ? $_GET['sort'] : 'id';
-$order = isset($_GET['order']) ? $_GET['order'] : 'asc';
-$order = $order === 'desc' ? 'DESC' : 'ASC';
+$order = isset($_GET['order']) ? $_GET['order'] : 'desc';
+$order = $order === 'asc' ? 'asc' : 'desc';
 
 $sql = sprintf(
   "SELECT * FROM `employees` ORDER BY $sort $order LIMIT %s,%s",
@@ -139,7 +139,7 @@ include __DIR__ . "/part/navbar-head.php";
     <div class="col-10">
       <!-- 頁面選單 Start -->
       <nav aria-label="Page navigation example">
-        <ul class="pagination">
+        <ul class="pagination mt-3 d-flex justify-content-center">
           <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
             <a class="page-link" href="?page=1">
               <i class="fa-solid fa-angles-left"></i>
@@ -173,11 +173,15 @@ include __DIR__ . "/part/navbar-head.php";
       </nav>
       <!-- 頁面選單 End -->
       <!-- 按鈕列 Start -->
-      <div class="row d-flex justify-content-between">
+      <div class="row d-flex">
         <!-- <div class="col-2 mb-4"><button class="bg-warning rounded-2" id="checkall">一鍵全選</button></div> -->
-        <div class="col-2 my-auto"><button class="bg-warning rounded-2" id="dltAllSelect">刪除所選</button></div>
-        <form class="col-12 col-lg-auto mb-lg-0">
-          <input type="search" class="form-control form-control-dark my-3" placeholder="Search..." aria-label="Search" id="searching">
+        <div class="col-2 my-auto">
+          <a href="employees-add.php" class="bg-success rounded-2 border border-1 border-black p-1 text-decoration-none text-black">新增會員</a>
+          <button class="bg-warning rounded-2" id="dltAllSelect">刪除所選</button>
+        </div>
+
+        <form class="col-12 col-lg-auto mb-lg-0 ms-auto">
+          <input type="search" class="form-control form-control-dark my-3" placeholder="Search..." aria-label="Search">
         </form>
       </div>
       <!--  -->
