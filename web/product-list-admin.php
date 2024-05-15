@@ -109,7 +109,7 @@ if ($totalRows) {
               <td><?= $r['id'] ?></td>
               <td><?= $r['product_name'] ?></td>
               <td>
-              <img src="../img/<?= $r['picture'] ?>" style="width:100px;" alt="">
+              <img src="../img/products-img/<?= $r['picture'] ?>" style="width:100px;" alt="">
                 
               </td>
               <td><?= $r['price'] ?></td>
