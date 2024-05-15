@@ -13,6 +13,10 @@ if ($page < 1) {
     exit; # 結束這支程式
 }
 
+$sort = isset($_GET['sort']) ? $_GET['sort'] : 'tid';
+$order = isset($_GET['order']) ? $_GET['order'] : 'asc';
+$order = $order === 'desc' ? 'DESC' : 'ASC';
+
 $t_sql = "SELECT COUNT(tid) FROM ticket;";
 
 # 總筆數
@@ -41,7 +45,7 @@ if ($totalRows) {
     JOIN 
         aclass ON activities.activity_class = aclass.id
     JOIN 
-        artist ON activities.artist_id = artist.id ORDER BY ticket.tid DESC LIMIT %s, %s",
+        artist ON activities.artist_id = artist.id ORDER BY $sort $order LIMIT %s, %s",
         ($page - 1) * $perPage,
         $perPage
     );
@@ -73,6 +77,25 @@ echo json_encode([
 
     .model-a:hover {
         color: white;
+    }
+
+    .tb .description {
+        max-width: 400px;
+        /* 设置最大宽度为400px */
+        overflow: hidden;
+        /* 当文字溢出时隐藏 */
+        text-overflow: ellipsis;
+        /* 当文字溢出时以省略号显示 */
+        white-space: nowrap;
+        /* 禁止文字换行 */
+    }
+
+    .spacing {
+        letter-spacing: 2px;
+    }
+
+    .bg-color {
+        background-color: tomato;
     }
 </style>
 
@@ -140,10 +163,10 @@ echo json_encode([
             <div class="d-flex justify-content-between col-12 mb-4">
                 <div>
                     <a class="btn btn-secondary fw-bold" href="ticket-add.php">新增購票</a>
-                    <a class="btn btn-secondary fw-bold" href="ticket-add.php">刪除所選</a>
-                    <a class="musicFestival btn btn-secondary fw-bold" href="javascript:;">music festival</a>
-                    <a class="concert btn lightgraytn btn-secondary fw-bold" href="javascript:;">concert</a>
-                    <a class="reload btn btn-secondary fw-bold" href="javascript:;">顯示全部</a>
+                    <a id="dltAllSelect" class="btn btn-secondary fw-bold">刪除所選</a>
+                    <a class="musicFestival btn btn-secondary fw-bold">music festival</a>
+                    <a class="concert btn lightgraytn btn-secondary fw-bold">concert</a>
+                    <a class="reload btn btn-secondary fw-bold">顯示全部</a>
                 </div>
 
                 <div data-bs-toggle="modal" data-bs-target="#Modal">
@@ -179,7 +202,12 @@ echo json_encode([
                     <tbody class="tb">
                         <?php foreach ($rows as $r): ?>
                             <tr>
-                                <td><input type="checkbox"></td>
+                                <td>
+                                    <div>
+                                        <input class="checkboxes form-check-input mx-auto text-center d-flex "
+                                            type="checkbox" value="<?= $r['tid'] ?>" id="flexCheckDefault<?= $r['tid'] ?>">
+                                    </div>
+                                </td>
                                 <td><a class="btn btn-danger" href="javascript: deleteOne(<?= $r['tid'] ?>)">
                                         <i class="bi bi-trash3"></i>
                                     </a></td>
@@ -189,7 +217,9 @@ echo json_encode([
                                 <td><?= $r['activity_name'] ?></td>
                                 <td><?= $r['art_name'] ?></td>
                                 <td><?= $r['location'] ?></td>
-                                <td><?= $r['descriptions'] ?></td>
+                                <td class="description" data-bs-toggle="modal" data-bs-target="#description">
+                                    <?= $r['descriptions'] ?>
+                                </td>
                                 <td><?= $r['a_date'] . '<br><br>' . $r['a_time'] ?></td>
                                 <td><?= $r['counts'] ?></td>
                                 <td><?= $r['price'] ?></td>
@@ -253,7 +283,7 @@ echo json_encode([
 <!-- model -->
 
 <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="Modal" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content bg-dark position-relative">
 
             <div class="position-absolute top-0 end-0">
@@ -263,11 +293,11 @@ echo json_encode([
 
             <div class="d-flex justify-content-center my-4 mb-3">
                 <div>
-                    <h4 class="fw-bold text-white">搜尋篩選器</h4>
+                    <h4 class="fw-bold text-white fs-3">搜尋篩選器</h4>
                 </div>
             </div>
 
-            <div class="modal-body">
+            <div class="modal-body fs-3 fw-bold text-white p-5 lh-lg spacing">
                 <div class="container-fluid">
                     <table class="table table-borderless table-dark">
                         <thead>
@@ -280,26 +310,48 @@ echo json_encode([
                                 <th>修改時間</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="filter">
                             <tr>
-                                <td><a class="model-a" href="">由大到小</a></th>
-                                <td><a class="model-a" href="">由多到少</a></td>
-                                <td><a class="model-a" href="">由高到低</a></td>
-                                <td><a class="model-a" href="">最近活動時間</a></td>
-                                <td><a class="model-a" href="">最新建立時間</a></td>
-                                <td><a class="model-a" href="">最新修改時間</a></td>
+                                <td><a class="model-a" href="?sort=tid&order=desc&page=<?= $page ?>">由大到小</a></td>
+                                <td><a class="model-a" href="?sort=tid&order=desc&page=<?= $page ?>">由多到少</a></td>
+                                <td><a class="model-a" href="?sort=tid&order=desc&page=<?= $page ?>">由高到低</a></td>
+                                <td><a class="model-a" href="?sort=tid&order=desc&page=<?= $page ?>">最近活動時間</a></td>
+                                <td><a class="model-a" href="?sort=tid&order=desc&page=<?= $page ?>">最新建立時間</a></td>
+                                <td><a class="model-a" href="?sort=tid&order=desc&page=<?= $page ?>">最新修改時間</a></td>
                             </tr>
                             <tr>
-                                <td><a class="model-a" href="">由小到大</a></th>
-                                <td><a class="model-a" href="">由少到多</a></td>
-                                <td><a class="model-a" href="">由低到高</a></td>
-                                <td><a class="model-a" href="">最遠活動時間</a></td>
-                                <td><a class="model-a" href="">最舊建立時間</a></td>
-                                <td><a class="model-a" href="">最舊修改時間</a></td>
+                                <td><a class="model-a" href="?sort=tid&order=asc&page=<?= $page ?>">由小到大</a></th>
+                                <td><a class="model-a" href="?sort=tid&order=asc&page=<?= $page ?>">由少到多</a></td>
+                                <td><a class="model-a" href="?sort=tid&order=asc&page=<?= $page ?>">由低到高</a></td>
+                                <td><a class="model-a" href="?sort=tid&order=asc&page=<?= $page ?>">最遠活動時間</a></td>
+                                <td><a class="model-a" href="?sort=tid&order=asc&page=<?= $page ?>">最舊建立時間</a></td>
+                                <td><a class="model-a" href="?sort=tid&order=asc&page=<?= $page ?>">最舊修改時間</a></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- description -->
+
+<!-- Modal -->
+<div class="modal fade " id="description" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content bg-dark position-relative">
+            <div class="position-absolute top-0 end-0">
+                <button type="button" class="btn-close bg-white fs-4" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="d-flex justify-content-center my-4 mb-3">
+                <div>
+                    <h4 class="fw-bold text-white fs-2">搜尋篩選器</h4>
+                </div>
+            </div>
+            <div class="modal-body fs-2 fw-bold text-white p-5 lh-lg spacing">
+                <?= $r['descriptions'] ?>
             </div>
         </div>
     </div>
@@ -482,6 +534,50 @@ echo json_encode([
     }
 
     // 全選反選
+
+    // 刪除所選Script
+
+    const dltAllSelect = document.getElementById("dltAllSelect");
+    const checkboxes2 = document.querySelectorAll(".checkboxes");
+
+    dltAllSelect.addEventListener('click', function () {
+        let selectedIds = []; // 儲存被勾選項目的 ID
+
+        for (let i = 0; i < checkboxes2.length; i++) {
+            if (checkboxes2[i].checked) {
+                const id = checkboxes2[i].value; // 獲取被勾選項目的 ID
+                selectedIds.push(id); // 將 ID 加入到 selectedIds 陣列中
+            }
+        }
+
+        if (selectedIds.length > 0) {
+            if (confirm(`確定要刪除這 ${selectedIds.length} 筆資料嗎?`)) {
+                // 執行刪除操作，這裡可以使用 AJAX 或者其他方式向後端發送刪除請求
+                // 這裡假設你已經有了一個可以處理刪除的後端接口
+                location.href = `ticket-delete-more.php?tids=${selectedIds.join(',')}`;
+            }
+        } else {
+            alert('請先選擇要刪除的資料');
+        }
+    });
+
+    // 刪除所選Script
+
+    // 獲取所有帶有類名 "model-a" 的元素
+    const filter = document.querySelector('.filter');
+    const links = filter.querySelectorAll('.model-a');
+    for (let i = 0; i < links.length; i++) {
+        links[i].addEventListener('click', function () {
+            // 先清除所有連結的背景色
+            for (let j = 0; j < links.length; j++) {
+                links[j].style.backgroundColor = '';
+            }
+            // 然後設定被點擊的連結的背景色
+            this.style.backgroundColor = 'tomato';
+        });
+    }
+
+
 
 </script>
 <?php include __DIR__ . "/part/html-footer.php"; ?>
