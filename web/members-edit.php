@@ -282,12 +282,13 @@ if (empty($row)) {
 
   const sendData = e => {
     e.preventDefault(); // 不要讓 form1 以傳統的方式送出
-    first_nameField.style.border = '1px solid #CCCCCC';
-    first_nameField.nextElementSibling.innerText = '';
-    last_nameField.style.border = '1px solid #CCCCCC';
-    last_nameField.nextElementSibling.innerText = '';
-    emailField.style.border = '1px solid #CCCCCC';
-    emailField.nextElementSibling.innerText = '';
+
+    // first_nameField.style.border = '1px solid #CCCCCC';
+    // first_nameField.nextElementSibling.innerText = '';
+    // last_nameField.style.border = '1px solid #CCCCCC';
+    // last_nameField.nextElementSibling.innerText = '';
+    // emailField.style.border = '1px solid #CCCCCC';
+    // emailField.nextElementSibling.innerText = '';
     // TODO: 欄位資料檢查
 
     let isPass = true; // 表單有沒有通過檢查

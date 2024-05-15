@@ -37,12 +37,33 @@ if ($page > $totalPages) {
 // SELECT * FROM `address_book` ORDER BY id DESC LIMIT 60, 20
 
 
+$sort = isset($_GET['sort']) ? $_GET['sort'] : 'id';
+$order = isset($_GET['order']) ? $_GET['order'] : 'asc';
+$order = $order === 'desc' ? 'DESC' : 'ASC';
 
 $sql = sprintf(
-  "SELECT * FROM members order by id desc LIMIT %s,%s",
+  "SELECT * FROM `members` ORDER BY $sort $order LIMIT %s,%s",
   ($page - 1) * $per_page,
   $per_page
 );
+
+
+// $gender = isset($_GET['gender']) ? $_GET['gender'] : '"male" or gender = "female"';
+
+// $sql = sprintf(
+//   "SELECT * FROM `members` where gender = '$gender' LIMIT %s,%s",
+//   ($page - 1) * $per_page,
+//   $per_page
+// );
+
+
+
+
+// $sql = sprintf(
+//   "SELECT * FROM members order by id desc LIMIT %s,%s",
+//   ($page - 1) * $per_page,
+//   $per_page
+// );
 
 $rows = $pdo->query($sql)->fetchAll();
 
@@ -70,37 +91,35 @@ include __DIR__ . "/part/navbar-head.php";
     <div class="col-10" style="overflow-x: auto;">
       <nav aria-label="Page navigation example">
         <ul class="pagination">
-          <!-- arrow left start -->
-          <li class="page-item ">
-            <a class="page-link" href="#">
+          <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
+            <a class="page-link" href="?page=1">
               <i class="fa-solid fa-angles-left"></i>
             </a>
           </li>
-          <li class="page-item ">
-            <a class="page-link" href="#">
+          <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
+            <a class="page-link" href="?page=<?= max(1, $page - 1) ?>">
               <i class="fa-solid fa-angle-left"></i>
             </a>
           </li>
-          <!-- arrow left end -->
+
           <?php for ($i = $page - 5; $i <= $page + 5; $i++) :
             if ($i >= 1 and $i <= $totalPages) : ?>
-              <li class="page-item <?php $page == $i ? 'active' : '' ?>">
+              <li class="page-item <?= $page == $i ? 'active' : '' ?>">
                 <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
               </li>
           <?php endif;
           endfor; ?>
-          <!-- arrow right start -->
-          <li class="page-item">
-            <a class="page-link" href="#">
+          <li class="page-item <?= $page == $totalPages ? 'disabled' : '' ?>">
+            <a class="page-link" href="?page=<?= min($totalPages, $page + 1) ?>">
               <i class="fa-solid fa-angle-right"></i>
             </a>
           </li>
-          <li class="page-item">
-            <a class="page-link" href="#">
+
+          <li class="page-item <?= $page == $totalPages ? 'disabled' : '' ?>">
+            <a class="page-link" href="?page=<?= $totalPages ?>">
               <i class="fa-solid fa-angles-right"></i>
             </a>
           </li>
-          <!-- arrow right end -->
         </ul>
       </nav>
 
@@ -111,11 +130,24 @@ include __DIR__ . "/part/navbar-head.php";
             <!-- <th scope="col" style="text-align: center;">
               <input class="form-check-input" type="checkbox" id="checkall"> 全選
             </th> -->
-            <th scope="col" class="text-center">#</th>
-            <th scope="col" class="text-center">First_name</th>
-            <th scope="col" class="text-center">Last_name</th>
+            <th scope="col" class="text-center">#
+              <a href="?sort=id&order=desc&page=<?= $page ?>"><i class="fa-solid fa-sort-down"></i></a>
+              <a href="?sort=id&order=desc&page=<?= $page ?>"><i class="fa-solid fa-sort-up"></i></a>
+            </th>
+
+            <th scope="col" class="text-center">First_name
+              <a href="?sort=first_name&order=desc&page=<?= $page ?>"><i class="fa-solid fa-sort-down"></i></a>
+              <a href="?sort=first_name&order=asc&page=<?= $page ?>"><i class="fa-solid fa-sort-up"></i></a>
+            </th>
+            <th scope="col" class="text-center">Last_name
+              <a href="?sort=last_name&order=desc&page=<?= $page ?>"><i class="fa-solid fa-sort-down"></i></a>
+              <a href="?sort=last_name&order=asc&page=<?= $page ?>"><i class="fa-solid fa-sort-up"></i></a>
+            </th>
             <th scope="col" class="text-center">Email</th>
-            <th scope="col" class="text-center">Gender</th>
+            <th scope="col" class="text-center">Gender
+              <a href="?sort=gender&order=desc&page=<?= $page ?>"><i class="fa-solid fa-sort-down"></i></a>
+              <a href="?sort=gender&order=asc&page=<?= $page ?>"><i class="fa-solid fa-sort-up"></i></a>
+            </th>
             <th scope="col" class="text-center">Phone_Number</th>
             <th scope="col" class="text-center text-nowrap">Address</th>
           </tr>
@@ -143,6 +175,26 @@ include __DIR__ . "/part/navbar-head.php";
 
 <?php include __DIR__ . "/part/scripts.php" ?>
 <script>
+  $(document).ready(function() {
+    $('.sortable').click(function(e) {
+      e.preventDefault(); // 阻止默认行为，不进行页面跳转
+
+      var sortType = $(this).attr('data-sort');
+      var orderType = sortType === 'asc' ? 'desc' : 'asc';
+      var page = $(this).attr('data-page');
+
+      // 更新data-sort属性
+      $(this).attr('data-sort', orderType);
+
+      // 更新href属性
+      $(this).find('a').eq(0).attr('href', `?sort=id&order=${orderType}&page=${page}`);
+      $(this).find('a').eq(1).attr('href', `?sort=id&order=${sortType}&page=${page}`);
+    });
+  });
+
+
+
+
   const deleteOne = (id) => {
     if (confirm(`確定要刪除${id}的資料嗎?`)) {
       location.href = `delete.php?id=${id}`;
