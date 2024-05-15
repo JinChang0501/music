@@ -52,6 +52,10 @@ if (!isset($pageName))
     font-size: 1.3em;
     font-weight: 900;
   }
+
+  .bglightblue {
+    background-color: #cfe2ff;
+  }
 </style>
 
 
@@ -65,19 +69,20 @@ if (!isset($pageName))
         <div class="accordion" id="accordionExample">
           <div class="accordion-item">
             <h2 class="accordion-header" id="heading1">
-              <button class="accordion-button fs-5 fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+              <button class="accordion-button fs-5 fw-bold <?= $pageName == 'members-add' || $pageName == 'members-list' ? '' : 'bg-white' ?> " type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
                 會員資料管理
               </button>
             </h2>
-            <div id="collapse1" class="accordion-collapse collapse show" aria-labelledby="heading1" data-bs-parent="#accordionExample">
+            <div id="collapse1" class="accordion-collapse collapse <?= $pageName == 'members-add' || $pageName == 'members-list' ? 'show' : '' ?> " aria-labelledby="heading1" data-bs-parent="#accordionExample">
               <div class="accordion-body p-0"> <!-- p-0 把li上下左右的空間清掉不要動-->
-                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'members-add' ? 'active' : '' ?> " href="members-add.php"><i class="bi bi-person-plus-fill "></i><span class="ms-2">增加會員資料</span></a></li>
-
-                <!-- <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'members-delete' ? 'active' : '' ?> " href="members-delete-list.php">刪除會員資料</a></li>
-
-                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'members-edit' ? 'active' : '' ?>" href="members-edit-list.php">編輯會員資料</a></li> -->
-
-                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'members-list' ? 'active' : '' ?>" href="members-list.php"><i class="bi bi-search"></i><span class="ms-2">查詢會員資料</span></a></li>
+                <!-- members-add -->
+                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'members-add' ? 'active' : '' ?> " href="members-add.php">
+                    <i class="bi bi-person-plus-fill "></i><span class="ms-2">增加會員資料</span></a>
+                </li>
+                <!-- members-list -->
+                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'members-list' ? 'active' : '' ?>" href="members-list.php">
+                    <i class="bi bi-search"></i><span class="ms-2">查詢會員資料</span></a>
+                </li>
               </div>
             </div>
           </div>
@@ -85,11 +90,11 @@ if (!isset($pageName))
           <!-- 2 -->
           <div class="accordion-item">
             <h2 class="accordion-header" id="heading2">
-              <button class="accordion-button collapsed fs-5 fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+              <button class="accordion-button collapsed fs-5 fw-bold <?= $pageName == 'employees-add' || $pageName == 'employees-list' ? 'bglightblue' : 'bg-white' ?> " type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
                 員工資料管理
               </button>
             </h2>
-            <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2" data-bs-parent="#accordionExample">
+            <div id="collapse2" class="accordion-collapse collapse <?= $pageName == 'employees-add' || $pageName == 'employees-list' ? 'show' : '' ?> " aria-labelledby="heading2" data-bs-parent="#accordionExample">
               <div class="accordion-body p-0"> <!-- p-0 把li上下左右的空間清掉不要動-->
                 <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'employees-add' ? 'active' : '' ?> " href="employees-add.php"><i class="bi bi-person-plus-fill"></i><span class="ms-2">增加員工資料</span></a></li>
                 <!-- <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'employees-delete' ? 'active' : '' ?> " href="employees-delete-list.php">刪除員工資料</a></li>
@@ -153,8 +158,6 @@ if (!isset($pageName))
             </div>
           </div>
 
-          <!--  -->
-
           <!-- 6 -->
           <div class="accordion-item">
             <h2 class="accordion-header" id="heading6">
@@ -201,8 +204,6 @@ if (!isset($pageName))
               </div>
             </div>
           </div>
-
-
         </div>
       </ul>
     </div>

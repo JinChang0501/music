@@ -25,6 +25,7 @@ $pageName = 'members-add';
 </style>
 
 
+
 <div class="container-fluid">
   <div class="row">
     <div class="col-2 p-0"><?php include __DIR__ . "/part/left-bar.php"; ?></div>
@@ -84,6 +85,18 @@ $pageName = 'members-add';
                 </div>
               </div>
 
+              <!-- <div class="col-4">
+                <label for="gender" class="form-label">Gender</label><br>
+
+                <div class="col-12 form-control">
+                  <input type="radio" name="gender" value="Male" required>男 - Male
+                  <input type="radio" name="gender" value="Female" class="ms-3" required>女 - Female
+                  <div class="invalid-feedback">
+                    Gender required.
+                  </div>
+                </div>
+              </div> -->
+
               <!-- gender -->
               <div class="col-4">
                 <label for="gender" class="form-label">Gender</label><br>
@@ -97,8 +110,7 @@ $pageName = 'members-add';
                 </div>
               </div>
 
-
-              <!-- phone number -->
+              <!-- phone_number -->
               <div class="col-4">
                 <label for="phone_number" class="form-label">Phone Number</label>
                 <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="09xxxxxxxx" pattern="[0]{1}[9]{1}[0-9]{8}" maxlength="10" required>
@@ -106,7 +118,8 @@ $pageName = 'members-add';
                   Phone number required.
                 </div>
               </div>
-              <!-- birthday -->
+
+              <!-- Birthday -->
               <div class="col-4">
                 <label for="birthday" class="form-label">Birthday</label>
                 <input type="date" class="form-control" id="birthday" name="birthday" placeholder="" required>
@@ -114,6 +127,7 @@ $pageName = 'members-add';
                   Birthday required.
                 </div>
               </div>
+
               <!-- address -->
               <div class="col-12">
                 <label for="address" class="form-label">Address</label>
@@ -122,19 +136,6 @@ $pageName = 'members-add';
                   Please enter your shipping address.
                 </div>
               </div>
-
-
-
-              <div class="col-12">
-                <label for="photo" class="form-label">Photo:</label>
-                <input type="file" class="form-control" id="photo" name="photo">
-              </div>
-
-
-
-
-
-
             </div>
             <div class="text-end">
               <button class="btn btn-primary my-3" type="submit">新增</button>
@@ -172,29 +173,7 @@ $pageName = 'members-add';
 <!-- Modal End-->
 
 <?php include __DIR__ . "/part/scripts.php"; ?>
-
-
 <script>
-  // (function() {
-  //   'use strict'
-
-  //   // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  //   var forms = document.querySelectorAll('.needs-validation')
-
-  //   // Loop over them and prevent submission
-  //   Array.prototype.slice.call(forms)
-  //     .forEach(function(form) {
-  //       form.addEventListener('submit', function(event) {
-  //         if (!form.checkValidity()) {
-  //           event.preventDefault()
-  //           event.stopPropagation()
-  //         }
-
-  //         form.classList.add('was-validated')
-  //       }, false)
-  //     })
-  // })()
-
   // 繼續新增
   const keepAdd = document.getElementById('keepAdd');
   const formControls = document.querySelectorAll('.form-control');
@@ -231,22 +210,22 @@ $pageName = 'members-add';
       emailField.nextElementSibling.innerText = '請填寫正確的 Email';
     }
     // 有通過檢查, 才要送表單
-    // if (isPass) {
-    //   const fd = new FormData(document.form1); // 沒有外觀的表單物件
-    //   fetch('members-add-api.php', {
-    //       method: 'POST',
-    //       body: fd, // Content-Type: multipart/form-data
-    //     }).then(r => r.json())
-    //     .then(data => {
-    //       console.log(data);
-    //       if (data.success) {
-    //         myModal.show();
-    //       } else {
+    if (isPass) {
+      const fd = new FormData(document.form1); // 沒有外觀的表單物件
+      fetch('members-add-api.php', {
+          method: 'POST',
+          body: fd, // Content-Type: multipart/form-data
+        }).then(r => r.json())
+        .then(data => {
+          console.log(data);
+          if (data.success) {
+            myModal.show();
+          } else {
 
-    //       }
-    //     })
-    //     .catch(ex => console.log(ex))
-    // }
+          }
+        })
+        .catch(ex => console.log(ex))
+    }
     //信箱驗證
     if (isPass) {
       const fd = new FormData(document.form1); // 創建 FormData 对象

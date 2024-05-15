@@ -96,18 +96,14 @@ if (empty($row)) {
 
               <!-- Gender Start -->
               <div class="col-4">
-                <label for="gender" class="form-label">Gender</label><br>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" id="male" name="gender" value="Male" <?= $row['gender'] === 'Male' ? 'checked' : '' ?> required>
-                  <label class="form-check-label" for="male">男 - Male</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" id="female" name="gender" value="Female" <?= $row['gender'] === 'Female' ? 'checked' : '' ?> required>
-                  <label class="form-check-label" for="female">女 - Female</label>
-                </div>
+                <label for="gender" class="form-label">Gender</label>
+                <select class="form-select" id="gender" name="gender" required>
+                  <option value="" disabled>Select gender</option>
+                  <option value="Male" <?= $row['gender'] === 'Male' ? 'selected' : '' ?>>男 - Male</option>
+                  <option value="Female" <?= $row['gender'] === 'Female' ? 'selected' : '' ?>>女 - Female</option>
+                </select>
               </div>
               <!-- Gender End -->
-
 
               <div class="col-4">
                 <label for="phone_number" class="form-label">Phone Number</label>
@@ -123,6 +119,15 @@ if (empty($row)) {
                 <input type="date" class="form-control" id="birthday" name="birthday" value="<?= $row['birthday'] ?>" required>
                 <div class="invalid-feedback">
                   Birthday required.
+                </div>
+              </div>
+
+
+              <div class="col-12">
+                <label for="address" class="form-label">Address</label>
+                <input type="text" class="form-control" id="address" name="address" value="<?= $row['address'] ?>" required>
+                <div class="invalid-feedback">
+                  address required.
                 </div>
               </div>
 

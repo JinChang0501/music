@@ -38,9 +38,7 @@ if ($stmtCheckEmail->rowCount() > 0) {
     exit; // 结束 PHP 程序
 }
 
-
-$sql = "INSERT INTO `members`(`first_name`, `last_name`, `email`, `passwords`, `gender`, `phone_number`, `birthday`, `address`,`photo`,`created_at`) VALUES (
-    ?,
+$sql = "INSERT INTO `members`(`first_name`, `last_name`, `email`, `passwords`, `gender`, `phone_number`, `birthday`, `address`,`created_at`) VALUES (
     ?,
     ?,
     ?,
@@ -60,7 +58,6 @@ $stmt->execute([
     $_POST['phone_number'],
     $_POST['birthday'],
     $_POST['address'],
-    $_POST['photo']
 ]);
 
 
