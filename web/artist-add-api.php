@@ -12,30 +12,37 @@ $output = [
 
 // TODO: 欄位資料檢查
 // 檢查是否有接收到必要的欄位資料
-if (!isset($_POST['artist_name']) || !isset($_POST['email']) || !isset($_POST['password']) || !isset($_POST['ManagementCompany']) || !isset($_POST['phone_number']) || !isset($_POST['debutDate']) || !isset($_POST['artist_picture'])) {
+if (!isset($_POST['art_name']) || !isset($_POST['email']) || !isset($_POST['password']) || !isset($_POST['ManagementCompany']) || !isset($_POST['phone_number']) || !isset($_POST['debutDate']) || !isset($_POST['art_picture'])) {
     echo json_encode($output);
     exit; // 結束 PHP 程式
 }
 
-$sql = "INSERT INTO `artist`(`artist_name`, `email`, `password`, `ManagementCompany`, `phone_number`, `debutDate`, `artist_picture`) VALUES (
+$de_date = strtotime($_POST['debutDate']);
+if ($de_date === false) {
+    $de_date = null;
+} else {
+    $de_date = date('Y-m-d', $de_date);
+}
+
+
+$sql = "INSERT INTO `artist_register`(`art_name`, `email`, `password`, `ManagementCompany`, `phone_number`, `debutDate`, `art_picture`) VALUES (
     ?,
     ?,
     ?,
     ?,
     ?,
     ?,
-    ?,
-    ?,NOW() )";
+    ?,)";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
-    $_POST['artist_name'],
+    $_POST['art_name'],
     $_POST['email'],
     $_POST['password'],
     $_POST['ManagementCompany'],
     $_POST['phone_number'],
-    $_POST['debutDate'],
-    $_POST['artist_picture'],
+    $de_date,
+    $_POST['art_picture'],
 ]);
 
 

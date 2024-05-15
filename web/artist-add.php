@@ -30,8 +30,8 @@ $pageName = 'add_artist';
           <h5 class="card-title">新增藝人資料</h5>
           <form name="form1" onsubmit="sendData(event)">
             <div class="mb-3">
-              <label for="artist_name" class="form-label">藝名</label>
-              <input type="text" class="form-control" id="artist_name" name="artist_name">
+              <label for="art_name" class="form-label">藝名</label>
+              <input type="text" class="form-control" id="art_name" name="art_name">
               <div class="form-text"></div>
             </div>
             <div class="mb-3">
@@ -102,6 +102,14 @@ $pageName = 'add_artist';
 
 <?php include __DIR__ . "/part/scripts.php"; ?>
 <script>
+  const keepAdd = document.getElementById('keepAdd');
+	// const artist_nameField = document.form_artist.art_name;
+
+  // keepAdd.addEventListener('click', function() {
+  //   formControls.forEach(function(control) {
+  //     control.value = ''; // 清空表單控件的值
+  //   });
+  // });
   
   const emailField = document.form1.email;
 
@@ -133,17 +141,20 @@ $pageName = 'add_artist';
           method: 'POST',
           body: fd, // Content-Type: multipart/form-data
         }).then(r => r.json())
-        .then(data => {
-          console.log(data);
-          if (data.success) {
-            myModal.show();
-          } else {
+				.then(data => {
+					console.log(data);
+					if (data.success) {
+						myModal1.show();
+					} else { 
+
 
           }
-        })
-        .catch(ex => console.log(ex))
-    }
-  };
-  const myModal = new bootstrap.Modal('#staticBackdrop')
+				})
+				.catch(ex => console.log(ex))
+		   }
+	};
+
+	const myModal1 = new bootstrap.Modal('#staticBackdrop')
+
 </script>
 <?php include __DIR__ . "/part/html-footer.php"; ?>
