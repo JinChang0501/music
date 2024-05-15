@@ -65,20 +65,21 @@ if (empty($row)) {
             </div>
 
             <div class="mb-3">
-              <label for="aname" class="form-label">活動名稱</label>
-              <input type="text" class="form-control" id="aname" name="aname" value="<?= $row['activity_name'] ?>">
+              <label for="activity_name" class="form-label">活動名稱</label>
+              <input type="text" class="form-control" id="activity_name" name="activity_name"
+                value="<?= $row['activity_name'] ?>">
               <div class="form-text"></div>
             </div>
 
             <div class="mb-3">
-              <label for="adate" class="form-label">日期</label>
-              <input type="date" class="form-control" id="adate" name="adate" value="<?= $row['a_date'] ?>">
+              <label for="a_date" class="form-label">日期</label>
+              <input type="date" class="form-control" id="a_date" name="a_date" value="<?= $row['a_date'] ?>">
               <div class="form-text"></div>
             </div>
 
             <div class="mb-3">
-              <label for="atime" class="form-label">時間</label>
-              <input type="time" class="form-control" id="atime" name="atime" value="<?= $row['a_time'] ?>">
+              <label for="a_time" class="form-label">時間</label>
+              <input type="time" class="form-control" id="a_time" name="a_time" value="<?= $row['a_time'] ?>">
               <div class="form-text"></div>
             </div>
 
@@ -117,6 +118,9 @@ if (empty($row)) {
 
             <div class="mb-3">
               <label for="picture" class="form-label">圖片</label>
+              <div class="mb-3">
+                <img src="../img/activities-img/<?= $row['picture'] ?>" class="img-thumbnail" alt="">
+              </div>
               <input type="file" class="form-control" id="picture" name="picture" value="<?= $row['picture'] ?>">
               <div class="form-text"></div>
             </div>

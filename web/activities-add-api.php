@@ -53,8 +53,16 @@ $stmt->execute([
     $_POST['descriptions'],
     $_POST['organizer'],
     $_POST['artist_id'],
-    $_POST['picture'],
+    $_FILES['picture']['name']
 ]);
+
+$id = $pdo->lastInsertId(); //最新一筆的ID
+
+# 組裝檔案路徑 並儲存
+$target_dir = "../img/activities-img/";
+$target_name = $_FILES['picture']['name'];
+$target_file = $target_dir . $target_name;
+move_uploaded_file($_FILES["picture"]["tmp_name"], $target_file);
 
 
 $output['success'] = !!$stmt->rowCount(); # 新增了幾筆

@@ -32,8 +32,6 @@ if (!empty($_FILES) and !empty($_FILES['avatar'])) {
   }
 }
 
-
-
 header('Content-Type: application/json');
 
 echo json_encode($output);
