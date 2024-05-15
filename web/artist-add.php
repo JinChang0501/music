@@ -1,5 +1,7 @@
 <?php
 require __DIR__ . '/admin-required.php';
+require __DIR__ . '/../config/pdo-connect.php';
+
 
 if (!isset($_SESSION)) {
 session_start();
@@ -8,6 +10,11 @@ session_start();
 
 $title = '新增藝人列表';
 $pageName = 'add_artist';
+
+
+$sql = sprintf("SELECT * FROM artist_register");
+$rows = $pdo->query($sql)->fetchAll();
+
 ?>
 
 
@@ -28,7 +35,7 @@ $pageName = 'add_artist';
       <div class="card mt-3">
         <div class="card-body">
           <h5 class="card-title">新增藝人資料</h5>
-          <form name="form1" onsubmit="sendData(event)">
+          <form name="form1" action="javascript:void(0)" onsubmit="sendData(event)">
             <div class="mb-3">
               <label for="art_name" class="form-label">藝名</label>
               <input type="text" class="form-control" id="art_name" name="art_name">
@@ -65,8 +72,8 @@ $pageName = 'add_artist';
             </div>
 
             <div class="mb-3">
-				<label for="artist_picture" class="form-label">藝人頭貼</label>
-				<input type="text" class="form-control" id="artist_picture" name="artist_picture">
+				<label for="art_picture" class="form-label">藝人頭貼</label>
+				<input type="text" class="form-control" id="art_picture" name="art_picture">
 				<div class="form-text"></div>
 			</div>
 
@@ -98,19 +105,20 @@ $pageName = 'add_artist';
     </div>
   </div>
 </div>
-<!-- Modal End-->
+  <!-- Modal End-->
 
 <?php include __DIR__ . "/part/scripts.php"; ?>
-<script>
-  const keepAdd = document.getElementById('keepAdd');
-	// const artist_nameField = document.form_artist.art_name;
+<script>  
+
+  // const keepAdd = document.getElementById('keepAdd');
+	const artist_nameField = document.form1.art_name;  
 
   // keepAdd.addEventListener('click', function() {
   //   formControls.forEach(function(control) {
-  //     control.value = ''; // 清空表單控件的值
+  //     control.value = '';
   //   });
   // });
-  
+    
   const emailField = document.form1.email;
 
   function validateEmail(email) {
@@ -120,9 +128,14 @@ $pageName = 'add_artist';
   }
 
 
-  const sendData = e => {
-    e.preventDefault(); // 不要讓 form1 以傳統的方式送出
+  function sendData(e) {
+    // 回復欄位的外觀
+    for (let el of fields) {
+      el.style.border = '1px solid #CCC';
+      el.nextElementSibling.innerHTML = '';
+    }
 
+    e.preventDefault(); 
     
     emailField.style.border = '1px solid #CCCCCC';
     emailField.nextElementSibling.innerText = '';
@@ -143,7 +156,7 @@ $pageName = 'add_artist';
         }).then(r => r.json())
 				.then(data => {
 					console.log(data);
-					if (data.success) {
+					if (data.success) { 
 						myModal1.show();
 					} else { 
 

@@ -11,11 +11,11 @@ if ($id < 1) {
   exit;
 }
 
-$sql = "Select * FROM `artist` WHERE id=$id";
+$sql = "Select * FROM `artist_register` WHERE id=$id";
 $row = $pdo->query($sql)->fetch();
 
 if (empty($row)) {
-  header('Location: artist-list .php');
+  header('Location: artist-list.php');
   exit;
 }
 
@@ -37,14 +37,14 @@ if (empty($row)) {
 
 </style>
 <div class="container-fluid">
-  <div class="row">s
+  <div class="row">
     <div class="col-2 p-0">
     <?php include __DIR__ . "/part/left-bar.php"; ?></div>
     <div class="col-6 mx-auto ">
       <div class="card mt-3"> 
           <h5 class="card-title">編輯藝人資料</h5>
           <form name="form1" onsubmit="sendData(event)">
-            <input type="hidden" name="sid" value="<?= $r['sid'] ?>">
+            <input type="hidden" name="id" value="<?= $r['id'] ?>">
             <div class="mb-3">
               <label for="art_name" class="form-label">藝名</label>
               <input type="text" class="form-control" id="art_name" name="art_name" value="<?= htmlentities($r['art_name']) ?>">
