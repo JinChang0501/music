@@ -127,12 +127,9 @@ $pageName = 'members-add';
 
               <div class="col-12">
                 <label for="photo" class="form-label">Photo:</label>
-                <input type="file" class="form-control" id="photo" name="photo">
+                <input type="file" class="form-control" id="photo" name="photo" onchange="previewPhoto(event)">
+                <img id="photoPreview" class="mt-2" style="max-width: 200px; display: none;">
               </div>
-
-
-
-
 
 
             </div>
@@ -175,6 +172,21 @@ $pageName = 'members-add';
 
 
 <script>
+  function previewPhoto(event) {
+    const fileInput = event.target;
+    const photoPreview = document.getElementById('photoPreview');
+
+    if (fileInput.files && fileInput.files[0]) {
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        photoPreview.src = e.target.result;
+        photoPreview.style.display = 'block';
+      };
+
+      reader.readAsDataURL(fileInput.files[0]);
+    }
+  }
   // (function() {
   //   'use strict'
 
