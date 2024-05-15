@@ -13,6 +13,45 @@ if ($page < 1) {
 
 $t_sql = "SELECT COUNT(actid) FROM activities";
 
+#篩選
+$sort = isset($_GET['sort']) ? $_GET['sort'] : 'actid';
+$order = isset($_GET['order']) ? $_GET['order'] : 'asc';
+$order = $order === 'desc' ? 'DESC' : 'ASC';
+
+$validSortColumns = ['actid', 'activity_class', 'a_date', 'art_name'];
+if (!in_array($sort, $validSortColumns)) {
+  $sort = 'actid';
+}
+
+$searchConditions = [];
+$params = [];
+
+if (!empty($_GET['actid'])) {
+  $searchConditions[] = 'actid = :actid';
+  $params[':actid'] = $_GET['actid'];
+}
+
+if (!empty($_GET['b2c_name'])) {
+  $searchConditions[] = 'b2c_name LIKE :b2c_name';
+  $params[':b2c_name'] = '%' . $_GET['b2c_name'] . '%';
+}
+
+if (!empty($_GET['b2c_email'])) {
+  $searchConditions[] = 'b2c_email LIKE :b2c_email';
+  $params[':b2c_email'] = '%' . $_GET['b2c_email'] . '%';
+}
+
+if (!empty($_GET['b2c_mobile'])) {
+  $searchConditions[] = 'b2c_mobile LIKE :b2c_mobile';
+  $params[':b2c_mobile'] = '%' . $_GET['b2c_mobile'] . '%';
+}
+
+$searchSql = '';
+if (!empty($searchConditions)) {
+  $searchSql = 'WHERE ' . implode(' AND ', $searchConditions);
+}
+
+
 # 總筆數
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 
@@ -42,6 +81,36 @@ if ($totalRows) {
 <?php include __DIR__ . '/part/html-header.php' ?>
 <?php include __DIR__ . '/part/navbar-head.php' ?>
 
+<!-- 搜尋功能Start -->
+<div class="row">
+  <form method="get" action="">
+    <div class="form text-dark">
+      <div class=" col-md-3">
+        <label for="b2c_id">編號</label>
+        <input type="text" class="form-control" id="b2c_id" name="b2c_id"
+          value="<?= htmlentities($_GET['b2c_id'] ?? '') ?>">
+      </div>
+      <div class=" col-md-3">
+        <label for="b2c_name">類別</label>
+        <input type="text" class="form-control" id="b2c_name" name="b2c_name"
+          value="<?= htmlentities($_GET['b2c_name'] ?? '') ?>">
+      </div>
+      <div class=" col-md-3">
+        <label for="b2c_email">日期</label>
+        <input type="text" class="form-control" id="b2c_email" name="b2c_email"
+          value="<?= htmlentities($_GET['b2c_email'] ?? '') ?>">
+      </div>
+      <div class="col-md-3">
+        <label for="b2c_mobile">表演者</label>
+        <input type="text" class="form-control" id="b2c_mobile" name="b2c_mobile"
+          value="<?= htmlentities($_GET['b2c_mobile'] ?? '') ?>">
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" hidden>搜尋</button>
+  </form>
+</div>
+<!-- 搜尋功能End -->
+
 <!-- 列表 -->
 <div class="container-fluid">
   <div class="row">
@@ -64,12 +133,12 @@ if ($totalRows) {
                   <i class="fa-solid fa-angle-left"></i>
                 </a>
               </li>
-              <?php for ($i = $page - 5; $i <= $page + 5; $i++) :
-                if ($i >= 1 and $i <= $totalPages) : ?>
+              <?php for ($i = $page - 5; $i <= $page + 5; $i++):
+                if ($i >= 1 and $i <= $totalPages): ?>
                   <li class="page-item <?= $i == $page ? 'active' : '' ?>">
                     <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
                   </li>
-              <?php endif;
+                <?php endif;
               endfor; ?>
               <li class="page-item ">
                 <a class="page-link" href="?page=<?= $page + 1 ?>">
@@ -117,10 +186,11 @@ if ($totalRows) {
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($rows as $r) : ?>
+            <?php foreach ($rows as $r): ?>
               <tr>
                 <td>
-                  <input class="checkboxes form-check-input" type="checkbox" value="<?= $r['actid'] ?>" id="flexCheckDefault<?= $r['actid'] ?>">
+                  <input class="checkboxes form-check-input" type="checkbox" value="<?= $r['actid'] ?>"
+                    id="flexCheckDefault<?= $r['actid'] ?>">
                 </td>
                 <td><?= $r['actid'] ?></td>
                 <td><?= $r['class'] ?></td>
@@ -132,7 +202,8 @@ if ($totalRows) {
                 <td><?= $r['descriptions'] ?></td>
                 <td><?= $r['organizer'] ?></td>
                 <td><?= $r['art_name'] ?></td>
-                <td><img src="<?= $r['picture'] ?>" class="image img-thumbnail" alt="activities_picture"></td>
+                <td><img src="../img/activities-img/<?= $r['picture'] ?>" alt="activities_picture"
+                    class="image img-thumbnail"></td>
                 <td><a href="javascript: deleteOne(<?= $r['actid'] ?>)">
                     <button type="button" class="btn btn-danger"><i class="fa-solid fa-trash text-white"></i></a></td>
                 </button>
@@ -159,7 +230,8 @@ if ($totalRows) {
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">保留</button>
         <!-- 這裡有問題 -->
-        <button type="button" class="btn btn-danger" herf="activities-delete.php?actid=<?php $r['actid'] ?>">確認刪除</button>
+        <button type="button" class="btn btn-danger"
+          herf="activities-delete.php?actid=<?php $r['actid'] ?>">確認刪除</button>
       </div>
     </div>
   </div>
@@ -176,7 +248,7 @@ if ($totalRows) {
   const checkAll = document.getElementById("checkAll");
   const checkboxes = document.getElementsByClassName("checkboxes");
 
-  checkAll.addEventListener('change', function() {
+  checkAll.addEventListener('change', function () {
     if (checkAll.checked === true) {
       for (let i = 0; i < checkboxes.length; i++) {
         checkboxes[i].checked = true;
@@ -192,7 +264,7 @@ if ($totalRows) {
   const dltAllSelect = document.getElementById("dltAllSelect");
   const checkboxes2 = document.querySelectorAll(".checkboxes");
 
-  dltAllSelect.addEventListener('click', function() {
+  dltAllSelect.addEventListener('click', function () {
     let selectedIds = []; // 儲存被勾選項目的 ID
 
     for (let i = 0; i < checkboxes2.length; i++) {

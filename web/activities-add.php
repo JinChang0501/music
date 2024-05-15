@@ -37,7 +37,7 @@ $rows = $pdo->query($sql)->fetchAll();
 			<div class="card my-3">
 				<div class="card-body">
 					<h4 class="card-title fw-bold">新增活動資料</h4>
-					<form name="form_activities" onsubmit="sendData(event)">
+					<form name="form_activities" onsubmit="sendData(event)" enctype="multipart/form-data">
 						<div class="mb-3">
 							<label for="activity_class" class="form-label">類別</label>
 							<select class="form-select" aria-label="Default select example" id="activity_class" name="activity_class">
@@ -105,19 +105,6 @@ $rows = $pdo->query($sql)->fetchAll();
 							<div class="form-text"></div>
 						</div>
 
-						<div class="mb-3">
-							<form name="dataForm" action="">
-								<input type="hidden" name="img_file" id="img_file" />
-								<img src="" alt="" id="myimg" width="300" />
-								<button type="button" onclick="avatar.click()">選擇檔案</button>
-								<!-- <input type="submit" /> -->
-							</form>
-
-							<form name="uploadForm" hidden>
-								<input type="file" name="avatar" accept="image/*" />
-							</form>
-						</div>
-
 						<button type="submit" class="btn btn-primary">新增</button>
 					</form>
 				</div>
@@ -152,25 +139,25 @@ $rows = $pdo->query($sql)->fetchAll();
 <?php include __DIR__ . "/part/scripts.php"; ?>
 <script>
 
-	const avatar = document.uploadForm.avatar;
-	avatar.onchange = (event) => {
-		const fd2 = new FormData(document.uploadForm);
+	// const avatar = document.uploadForm.avatar;
+	// avatar.onchange = (event) => {
+	// 	const fd2 = new FormData(document.uploadForm);
 
-		fetch("activities-upload-api.php", {
-			method: "POST",
-			body: fd2,
-		})
-			.then((r) => r.json())
-			.then((result) => {
-				if (result.success) {
-					// result.filename
-					img_file.value = result.filename;
-					myimg.src = `../activities-img/${result.filename}`;
-				}
+	// 	fetch("activities-upload-api.php", {
+	// 		method: "POST",
+	// 		body: fd2,
+	// 	})
+	// 		.then((r) => r.json())
+	// 		.then((result) => {
+	// 			if (result.success) {
+	// 				// result.filename
+	// 				img_file.value = result.filename;
+	// 				myimg.src = `../activities-img/${result.filename}`;
+	// 			}
 
-			})
-			.catch((ex) => console.log(ex));
-	};
+	// 		})
+	// 		.catch((ex) => console.log(ex));
+	// };
 
 	// const activity_class = document.form_activities.activity_class;
 	const activity_nameField = document.form_activities.activity_name;
