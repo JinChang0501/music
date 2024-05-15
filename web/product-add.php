@@ -1,10 +1,10 @@
 <?php
 require __DIR__ . '/admin-required.php';
+require __DIR__ . '/../config/pdo-connect.php';
 
 if (!isset($_SESSION)) {
   session_start();
 }
-
 
 $title = '新增商品';
 $pageName = 'product-add';
