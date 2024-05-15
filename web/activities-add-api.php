@@ -62,18 +62,18 @@ $output['newId'] = $pdo->lastInsertId(); # 取得最近的新增資料的primary
 
 echo json_encode($output);
 
-// 檢查是否有表單提交
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // 這裡處理表單的提交
-    // try
-    // 清空相應的欄位值
-    $field1 = "";
-    $field2 = "";
-    // 以此類推，清空所有需要清空的欄位值
+// // 檢查是否有表單提交
+// if ($_SERVER["REQUEST_METHOD"] == "POST") {
+//     // 這裡處理表單的提交
+//     // try
+//     // 清空相應的欄位值
+//     $field1 = "";
+//     $field2 = "";
+//     // 以此類推，清空所有需要清空的欄位值
 
-    // 假設這裡是將表單資料儲存到資料庫的程式碼
+//     // 假設這裡是將表單資料儲存到資料庫的程式碼
 
-    // 重定向到另一個頁面或者顯示成功消息
-    // header("Location: success.php");
-    exit();
-}
+//     // 重定向到另一個頁面或者顯示成功消息
+//     // header("Location: success.php");
+//     exit();
+// }

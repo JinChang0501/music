@@ -96,7 +96,8 @@ if (empty($row)) {
 
             <div class="mb-3">
               <label for="descriptions" class="form-label">活動內容</label>
-              <textarea class="form-control" id="descriptions" name="descriptions" cols="30" rows="3"><?= $row['descriptions'] ?></textarea>
+              <textarea class="form-control" id="descriptions" name="descriptions" cols="30"
+                rows="3"><?= $row['descriptions'] ?></textarea>
               <div class="form-text"></div>
             </div>
 
@@ -113,6 +114,7 @@ if (empty($row)) {
               <div class="form-text">
               </div>
             </div>
+
             <div class="mb-3">
               <label for="picture" class="form-label">圖片</label>
               <input type="file" class="form-control" id="picture" name="picture" value="<?= $row['picture'] ?>">
@@ -128,7 +130,8 @@ if (empty($row)) {
   </div>
 </div>
 <!-- ModalA -->
-<div class="modal fade" id="staticBackdropA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelA" aria-hidden="true">
+<div class="modal fade" id="staticBackdropA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabelA" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -150,7 +153,8 @@ if (empty($row)) {
 </div>
 
 <!-- ModalB -->
-<div class="modal fade" id="staticBackdropB" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelB" aria-hidden="true">
+<div class="modal fade" id="staticBackdropB" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabelB" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -204,9 +208,9 @@ if (empty($row)) {
       const fd = new FormData(document.form_activities); // 沒有外觀的表單物件
 
       fetch('activities-edit-api.php', {
-          method: 'POST',
-          body: fd, // Content-Type: multipart/form-data
-        }).then(r => r.json())
+        method: 'POST',
+        body: fd, // Content-Type: multipart/form-data
+      }).then(r => r.json())
         .then(data => {
           console.log(data);
           if (data.success) {
