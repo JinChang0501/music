@@ -204,7 +204,9 @@ LIMIT %d, %d",
 
                 <div class="input-group mb-3 d-flex justify-content-end">
                     <form id="search_form" method="get" class="d-flex">
-                        <input id="search_input" type="search" class="textSearch form-control border-5 me-3" name="search" placeholder="請輸入要搜尋的內容..." style="width: 400px;" value="<?= isset($searchKeyword) ? htmlspecialchars($searchKeyword) : '' ?>">
+                        <input id="search_input" type="search" class="textSearch form-control border-5 me-3"
+                            name="search" placeholder="請輸入要搜尋的內容..." style="width: 400px;"
+                            value="<?= isset($searchKeyword) ? htmlspecialchars($searchKeyword) : '' ?>">
                         <!-- 其他筛选参数的输入框 -->
                         <button id="search_button" type="submit" class="btn btn-secondary fw-bold">搜尋</button>
                     </form>
@@ -219,10 +221,13 @@ LIMIT %d, %d",
             <form id="search_form" action="?page=1" method="GET">
                 <div class="col-12 mb-3 d-flex justify-content-end">
                     <div class="d-flex mb-3">
-                        <input id="min_price_input" type="number" class="form-control border-5" name="min_price" min="1" placeholder="最小價格" value="<?= $minPrice ?>">
+                        <input id="min_price_input" type="number" class="form-control border-5" name="min_price" min="1"
+                            placeholder="最小價格" value="<?= $minPrice ?>">
                         <span class="mx-4 d-flex align-items-center fw-bold">一</span>
-                        <input id="max_price_input" type="number" class="form-control border-5 me-4" name="max_price" min="1" placeholder="最大價格" value="<?= $maxPrice ?>">
-                        <button type="submit" class="btn btn-secondary fw-bold text-nowrap d-flex align-items-center">搜尋</button>
+                        <input id="max_price_input" type="number" class="form-control border-5 me-4" name="max_price"
+                            min="1" placeholder="最大價格" value="<?= $maxPrice ?>">
+                        <button type="submit"
+                            class="btn btn-secondary fw-bold text-nowrap d-flex align-items-center">搜尋</button>
                     </div>
                 </div>
             </form>
@@ -236,11 +241,16 @@ LIMIT %d, %d",
                 <div class="d-flex align-items-center fs-5 me-4 fw-bold bg-secondary text-white rounded-pill px-4">
                     篩選活動座位</div>
 
-                <button id="btncheck1" data-value="A" type="button" class="btn btn-secondary fw-bold me-2 fs-5" onclick="window.location.href = `?page=1&sort=<?= $sort ?>&order=<?= $order ?>&filterTicketArea=A`;">A</button>
-                <button id="btncheck2" data-value="B" type="button" class="btn btn-secondary fw-bold me-2 fs-5" onclick="window.location.href = `?page=1&sort=<?= $sort ?>&order=<?= $order ?>&filterTicketArea=B`;">B</button>
-                <button id="btncheck3" data-value="C" type="button" class="btn btn-secondary fw-bold me-2 fs-5" onclick="window.location.href = `?page=1&sort=<?= $sort ?>&order=<?= $order ?>&filterTicketArea=C`;">C</button>
-                <button id="btncheck4" data-value="D" type="button" class="btn btn-secondary fw-bold me-2 fs-5" onclick="window.location.href = `?page=1&sort=<?= $sort ?>&order=<?= $order ?>&filterTicketArea=D`;">D</button>
-                <button id="btncheck5" data-value="E" type="button" class="btn btn-secondary fw-bold me-2 fs-5" onclick="window.location.href = `?page=1&sort=<?= $sort ?>&order=<?= $order ?>&filterTicketArea=E`;">E</button>
+                <button id="btncheck1" data-value="A" type="button" class="btn btn-secondary fw-bold me-2 fs-5"
+                    onclick="window.location.href = `?page=1&sort=<?= $sort ?>&order=<?= $order ?>&filterTicketArea=A`;">A</button>
+                <button id="btncheck2" data-value="B" type="button" class="btn btn-secondary fw-bold me-2 fs-5"
+                    onclick="window.location.href = `?page=1&sort=<?= $sort ?>&order=<?= $order ?>&filterTicketArea=B`;">B</button>
+                <button id="btncheck3" data-value="C" type="button" class="btn btn-secondary fw-bold me-2 fs-5"
+                    onclick="window.location.href = `?page=1&sort=<?= $sort ?>&order=<?= $order ?>&filterTicketArea=C`;">C</button>
+                <button id="btncheck4" data-value="D" type="button" class="btn btn-secondary fw-bold me-2 fs-5"
+                    onclick="window.location.href = `?page=1&sort=<?= $sort ?>&order=<?= $order ?>&filterTicketArea=D`;">D</button>
+                <button id="btncheck5" data-value="E" type="button" class="btn btn-secondary fw-bold me-2 fs-5"
+                    onclick="window.location.href = `?page=1&sort=<?= $sort ?>&order=<?= $order ?>&filterTicketArea=E`;">E</button>
 
             </div>
 
@@ -252,14 +262,17 @@ LIMIT %d, %d",
                 <div>
                     <a class="btn btn-secondary fw-bold" href="ticket-add.php">新增購票</a>
                     <a id="dltAllSelect" class="btn btn-secondary fw-bold">刪除所選</a>
-                    <a class="btn btn-secondary fw-bold" href="?page=1&sort=<?= $sort ?>&order=<?= $order ?>&filterFestival=music festival">music
+                    <a class="btn btn-secondary fw-bold"
+                        href="?page=1&sort=<?= $sort ?>&order=<?= $order ?>&filterFestival=music festival">music
                         festival</a>
-                    <a class="btn btn-secondary fw-bold" href="?page=1&sort=<?= $sort ?>&order=<?= $order ?>&filterFestival=concert">concert</a>
+                    <a class="btn btn-secondary fw-bold"
+                        href="?page=1&sort=<?= $sort ?>&order=<?= $order ?>&filterFestival=concert">concert</a>
                     <a class="reload btn btn-secondary fw-bold" href="ticket-list.php">顯示全部</a>
                 </div>
 
                 <div data-bs-toggle="modal" data-bs-target="#Modal">
-                    <a class="btn btn-secondary fw-bold" href="javascript:;">篩選器&nbsp;&nbsp;<i class="bi bi-filter"></i></a>
+                    <a class="btn btn-secondary fw-bold" href="javascript:;">篩選器&nbsp;&nbsp;<i
+                            class="bi bi-filter"></i></a>
                 </div>
             </div>
 
@@ -268,7 +281,8 @@ LIMIT %d, %d",
             <!-- #region Table -->
 
             <div class="col-12 mb-4 text-nowrap" style="overflow:auto">
-                <table class="table table-hover table-striped table-bordered caption-top text-center align-middle fw-bold">
+                <table
+                    class="table table-hover table-striped table-bordered caption-top text-center align-middle fw-bold">
                     <thead class="table-light">
                         <tr class="align-middle">
                             <th scope="col">全選<br><input type="checkbox" class="cb_all"></th>
@@ -291,11 +305,12 @@ LIMIT %d, %d",
                         </tr>
                     </thead>
                     <tbody class="tb">
-                        <?php foreach ($rows as $r) : ?>
+                        <?php foreach ($rows as $r): ?>
                             <tr>
                                 <td>
                                     <div>
-                                        <input class="checkboxes form-check-input mx-auto text-center d-flex " type="checkbox" value="<?= $r['tid'] ?>" id="flexCheckDefault<?= $r['tid'] ?>">
+                                        <input class="checkboxes form-check-input mx-auto text-center d-flex "
+                                            type="checkbox" value="<?= $r['tid'] ?>" id="flexCheckDefault<?= $r['tid'] ?>">
                                     </div>
                                 </td>
                                 <td><a class="btn btn-danger" href="javascript: deleteOne(<?= $r['tid'] ?>)">
@@ -303,12 +318,14 @@ LIMIT %d, %d",
                                     </a></td>
                                 <td><?= $r['tid'] ?></td>
                                 <td data-bs-toggle="modal" data-bs-target="#modelImage" data-actid="<?= $r['actid'] ?>">
-                                    <img src="../img/activities-img/<?= $r['picture'] ?>" class="image img-thumbnail" alt="activities_picture">
+                                    <img src="../img/activities-img/<?= $r['picture'] ?>" class="image img-thumbnail"
+                                        alt="activities_picture">
                                 </td>
                                 <td><?= $r['activity_name'] ?></td>
                                 <td><?= $r['art_name'] ?></td>
                                 <td><?= $r['location'] ?></td>
-                                <td class="description" data-bs-toggle="modal" data-bs-target="#description" data-actid="<?= $r['actid'] ?>" onclick="getDescription(this)">
+                                <td class="description" data-bs-toggle="modal" data-bs-target="#description"
+                                    data-actid="<?= $r['actid'] ?>" onclick="getDescription(this)">
                                     <?= $r['descriptions'] ?>
                                 </td>
                                 <td><?= $r['a_date'] . '<br><br>' . $r['a_time'] ?></td>
@@ -343,7 +360,8 @@ LIMIT %d, %d",
                             </a>
                         </li>
                         <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
-                            <a class="page-link" href="?page=<?= max(1, $page - 1) ?><?= buildQueryStringWithFilters() ?>">
+                            <a class="page-link"
+                                href="?page=<?= max(1, $page - 1) ?><?= buildQueryStringWithFilters() ?>">
                                 <i class="fa-solid fa-angle-left"></i>
                             </a>
                         </li>
@@ -354,15 +372,17 @@ LIMIT %d, %d",
                         $end = min($totalPages, $start + 4);
 
                         // Display the page numbers within the range
-                        for ($i = $start; $i <= $end; $i++) :
-                        ?>
+                        for ($i = $start; $i <= $end; $i++):
+                            ?>
                             <li class="page-item <?= $page == $i ? 'active' : '' ?>">
-                                <a class="page-link" href="?page=<?= $i ?><?= buildQueryStringWithFilters() ?>"><?= $i ?></a>
+                                <a class="page-link"
+                                    href="?page=<?= $i ?><?= buildQueryStringWithFilters() ?>"><?= $i ?></a>
                             </li>
                         <?php endfor; ?>
 
                         <li class="page-item <?= $page == $totalPages ? 'disabled' : '' ?>">
-                            <a class="page-link" href="?page=<?= min($totalPages, $page + 1) ?><?= buildQueryStringWithFilters() ?>">
+                            <a class="page-link"
+                                href="?page=<?= min($totalPages, $page + 1) ?><?= buildQueryStringWithFilters() ?>">
                                 <i class="fa-solid fa-angle-right"></i>
                             </a>
                         </li>
@@ -391,7 +411,8 @@ LIMIT %d, %d",
         <div class="modal-content bg-dark position-relative">
 
             <div class="position-absolute top-0 end-0">
-                <button type="button" class="btn-close bg-white fs-4" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close bg-white fs-4" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
 
             <div class="d-flex justify-content-center my-4 mb-3">
@@ -415,21 +436,33 @@ LIMIT %d, %d",
                         </thead>
                         <tbody class="filter">
                             <tr>
-                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=tid&order=desc" onclick="preserveFilters(event, 'sort=tid&order=desc')">由大到小</a></td>
-                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=counts&order=desc" onclick="preserveFilters(event, 'sort=counts&order=desc')">由多到少</a></td>
-                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=price&order=desc" onclick="preserveFilters(event, 'sort=price&order=desc')">由高到低</a></td>
-                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=a_date&a_time&order=desc" onclick="preserveFilters(event, 'sort=a_date&a_time&order=desc')">最遠活動時間</a>
+                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=tid&order=desc"
+                                        onclick="preserveFilters(event, 'sort=tid&order=desc')">由大到小</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=counts&order=desc"
+                                        onclick="preserveFilters(event, 'sort=counts&order=desc')">由多到少</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=price&order=desc"
+                                        onclick="preserveFilters(event, 'sort=price&order=desc')">由高到低</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=a_date&a_time&order=desc"
+                                        onclick="preserveFilters(event, 'sort=a_date&a_time&order=desc')">最遠活動時間</a>
                                 </td>
-                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=created_at&order=desc" onclick="preserveFilters(event, 'sort=created_at&order=desc')">最新建立時間</a></td>
-                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=editTime&order=desc" onclick="preserveFilters(event, 'sort=editTime&order=desc')">最新修改時間</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=created_at&order=desc"
+                                        onclick="preserveFilters(event, 'sort=created_at&order=desc')">最新建立時間</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=editTime&order=desc"
+                                        onclick="preserveFilters(event, 'sort=editTime&order=desc')">最新修改時間</a></td>
                             </tr>
                             <tr>
-                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=tid&order=asc" onclick="preserveFilters(event, 'sort=tid&order=asc')">由小到大</a></td>
-                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=counts&order=asc" onclick="preserveFilters(event, 'sort=counts&order=asc')">由少到多</a></td>
-                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=price&order=asc" onclick="preserveFilters(event, 'sort=price&order=asc')">由低到高</a></td>
-                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=a_date&a_time&order=asc" onclick="preserveFilters(event, 'sort=a_date&a_time&order=asc')">最近活動時間</a></td>
-                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=created_at&order=asc" onclick="preserveFilters(event, 'sort=created_at&order=asc')">最舊建立時間</a></td>
-                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=editTime&order=asc" onclick="preserveFilters(event, 'sort=editTime&order=asc')">最舊修改時間</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=tid&order=asc"
+                                        onclick="preserveFilters(event, 'sort=tid&order=asc')">由小到大</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=counts&order=asc"
+                                        onclick="preserveFilters(event, 'sort=counts&order=asc')">由少到多</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=price&order=asc"
+                                        onclick="preserveFilters(event, 'sort=price&order=asc')">由低到高</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=a_date&a_time&order=asc"
+                                        onclick="preserveFilters(event, 'sort=a_date&a_time&order=asc')">最近活動時間</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=created_at&order=asc"
+                                        onclick="preserveFilters(event, 'sort=created_at&order=asc')">最舊建立時間</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=editTime&order=asc"
+                                        onclick="preserveFilters(event, 'sort=editTime&order=asc')">最舊修改時間</a></td>
                             </tr>
                         </tbody>
 
@@ -448,7 +481,8 @@ LIMIT %d, %d",
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content bg-dark position-relative">
             <div class="position-absolute top-0 end-0">
-                <button type="button" class="btn-close bg-white fs-4" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close bg-white fs-4" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
             <div class="d-flex justify-content-center my-4 mb-3">
                 <div>
@@ -468,7 +502,8 @@ LIMIT %d, %d",
     <div class="modal-dialog modal-xl">
         <div class="modal-content bg-dark position-relative">
             <div class="position-absolute top-0 end-0">
-                <button type="button" class="btn-close bg-white fs-4" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close bg-white fs-4" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
             <div class="d-flex justify-content-center my-4 mb-3">
                 <div>
@@ -476,7 +511,7 @@ LIMIT %d, %d",
                 </div>
             </div>
             <div class="modal-body d-flex justify-content-center align-items-center">
-                <img id="activityPicture" class="img-fluid w-100 rounded" alt="Activity Picture">
+                <img id="modalImage" src="" class="img-fluid">
             </div>
         </div>
     </div>
@@ -487,8 +522,9 @@ LIMIT %d, %d",
 <?php include __DIR__ . "/part/scripts.php"; ?>
 
 <script>
+
     // 模糊搜尋
-    document.getElementById('search_form').addEventListener('submit', function(event) {
+    document.getElementById('search_form').addEventListener('submit', function (event) {
         // 防止預設的表單提交行為
         event.preventDefault();
 
@@ -515,7 +551,7 @@ LIMIT %d, %d",
     }
 
     // 價格區間篩選
-    document.getElementById("search_button").addEventListener("click", function() {
+    document.getElementById("search_button").addEventListener("click", function () {
         var minPrice = document.getElementById("min_price_input").value;
         var maxPrice = document.getElementById("max_price_input").value;
 
@@ -562,7 +598,7 @@ LIMIT %d, %d",
 
     // 購票價格排序
     var searchForm = document.getElementById('search_form');
-    searchForm.addEventListener('submit', function(event) {
+    searchForm.addEventListener('submit', function (event) {
         event.preventDefault(); // 阻止表單的默認提交行為
         var searchQuery = document.getElementById('search_input').value;
         // 在這裡可以根據搜索內容執行相應的搜索操作，例如向服務器發送Ajax請求
@@ -582,14 +618,14 @@ LIMIT %d, %d",
     let cb_all = document.querySelector('.cb_all');
     let tbs = document.querySelector('.tb').querySelectorAll('input');
 
-    cb_all.addEventListener('click', function() {
+    cb_all.addEventListener('click', function () {
         for (let i = 0; i < tbs.length; i++) {
             tbs[i].checked = this.checked; // 將所有單選框的選中狀態設置為全選框的選中狀態
         }
     });
 
     for (let i = 0; i < tbs.length; i++) {
-        tbs[i].onclick = function() {
+        tbs[i].onclick = function () {
             let flag = true;
             for (let i = 0; i < tbs.length; i++) {
                 if (!tbs[i].checked) {
@@ -605,7 +641,7 @@ LIMIT %d, %d",
     const dltAllSelect = document.getElementById("dltAllSelect");
     const checkboxes2 = document.querySelectorAll(".checkboxes");
 
-    dltAllSelect.addEventListener('click', function() {
+    dltAllSelect.addEventListener('click', function () {
         let selectedIds = []; // 儲存被選中項目的 ID
 
         for (let i = 0; i < checkboxes2.length; i++) {
@@ -645,7 +681,7 @@ LIMIT %d, %d",
 
     // 點擊連結時設置LocalStorage並更新樣式
     for (let i = 0; i < links.length; i++) {
-        links[i].addEventListener('click', function() {
+        links[i].addEventListener('click', function () {
             // 先清除所有連結的背景色
             for (let j = 0; j < links.length; j++) {
                 links[j].classList.remove('modelStyle');
@@ -665,7 +701,7 @@ LIMIT %d, %d",
     const maxPriceInput = document.querySelector('input[name="max_price"]');
 
     // 當最小價格輸入框內容發生變化時觸發
-    minPriceInput.addEventListener('input', function() {
+    minPriceInput.addEventListener('input', function () {
         // 更新最大價格輸入框的最小值為最小價格輸入框的值
         maxPriceInput.min = this.value;
         // 如果最大價格輸入框的值小於最小價格輸入框的值，則將其設置為最小價格輸入框的值
@@ -680,7 +716,7 @@ LIMIT %d, %d",
         var actid = element.getAttribute('data-actid');
 
         var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById('descriptionContent').innerHTML = this.responseText;
             }
@@ -691,25 +727,18 @@ LIMIT %d, %d",
 
     // model圖片
 
-    let modal = document.getElementById('modelImage');
-    modal.addEventListener('show.bs.modal', function(event) {
-        let button = event.relatedTarget; // 觸發模態框的按鈕
-        let actid = button.getAttribute('data-actid'); // 從觸發按鈕獲取 actid
-        // Ajax 請求獲取 actid 對應的圖片鏈接
-        let xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    // 將獲取的圖片鏈接設置到模態框中
-                    let response = xhr.responseText;
-                    modal.querySelector('.modal-body #activityPicture').src = response;
-                } else {
-                    console.error('Error fetching image');
-                }
-            }
-        };
-        xhr.open('GET', 'ticket-get-picture.php?actid=' + encodeURIComponent(actid)); // 使用 GET 請求
-        xhr.send();
+    function displayImage(event) {
+        var imageSrc = event.target.src;
+        var modalImage = document.getElementById('modalImage');
+        modalImage.src = imageSrc;
+    }
+
+    // Add event listener to each image
+    var images = document.querySelectorAll('.image');
+    images.forEach(function (image) {
+        image.addEventListener('click', displayImage);
     });
+
 </script>
+
 <?php include __DIR__ . "/part/html-footer.php"; ?>
