@@ -45,7 +45,8 @@ if (!empty($searchTerm)) {
                   OR `first_name` LIKE :searchTerm
                   OR `last_name` LIKE :searchTerm
                   OR `email` LIKE :searchTerm 
-                  OR `phone_number` LIKE :searchTerm";
+                  OR `phone_number` LIKE :searchTerm
+                  OR `address` LIKE :searchTerm";
 }
 
 $sort = isset($_GET['sort']) ? $_GET['sort'] : 'id';
