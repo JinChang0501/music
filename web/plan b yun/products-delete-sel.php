@@ -1,6 +1,6 @@
 <?php
 require __DIR__ . "/admin-required.php";
-require __DIR__ . '/../config/pdo-connect.php';
+require __DIR__ . '../../config/pdo-connect.php';
 
 $ids = isset($_GET['id']) ? $_GET['id'] : '';
 $idsArray = explode(',', $ids); // 將逗號分隔的 ID 字串轉換成陣列

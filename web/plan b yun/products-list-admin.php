@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../config/pdo-connect.php';
+require __DIR__ . '../config/pdo-connect.php';
 $title = '商品列表';
 $pageName = 'products-list';
 
@@ -11,7 +11,7 @@ if ($page < 1) {
   exit;
 }
 
-$t_sql = "SELECT COUNT(actid) FROM products";
+$t_sql = "SELECT COUNT(id) FROM products";
 
 #篩選
 $sort = isset($_GET['sort']) ? $_GET['sort'] : 'id';
