@@ -1,10 +1,10 @@
 -- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
 -- Host: localhost    Database: music_project
-drop database music_project;
+-- drop database music_project;
 create database music_project;
 use music_project;
-show warnings;
+-- show warnings;
     
 -- SELECT 
 --   *
@@ -199,34 +199,37 @@ UNLOCK TABLES;
 -- Table structure for table `members`
 --
 
+-- Table structure for table members
+--
+
 DROP TABLE IF EXISTS `members`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `members` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(50) NOT NULL,
-  `last_name` varchar(50) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `passwords` varchar(30) NOT NULL,
-  `gender` varchar(10) NOT NULL,
-  `phone_number` varchar(20) NOT NULL,
-  `birthday` date DEFAULT NULL,
-  `address` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+CREATE TABLE members (
+  id int NOT NULL AUTO_INCREMENT,
+  first_name varchar(50) NOT NULL,
+  last_name varchar(50) NOT NULL,
+  email varchar(100) NOT NULL,
+  passwords varchar(30) NOT NULL,
+  gender varchar(10) NOT NULL,
+  phone_number varchar(20) NOT NULL,
+  birthday date DEFAULT NULL,
+  address varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  photo varchar(255) DEFAULT NULL,
+  created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `members`
+-- Dumping data for table members
 --
 
-LOCK TABLES `members` WRITE;
-/*!40000 ALTER TABLE `members` DISABLE KEYS */;
-INSERT INTO `members` VALUES (1,'John','Doe','johndoe@example.com','johndoe@123','Male','0912345678','1990-05-15','123 Main St, Anytown','2024-05-03 08:00:00'),(2,'Jane','Smith','janesmith@example.com','janesmith@123','Female','0923456789','1985-09-25','456 Oak Ave, Another City','2024-05-03 09:30:00'),(3,'Michael','Johnson','michaeljohnson@example.com','michael123','Male','0934567890','1978-12-10','789 Elm St, Someplace','2024-05-03 10:45:00'),(4,'Emily','Williams','emilywilliams@example.com','emily@123','Female','0945678901','1995-03-20','1010 Pine Dr, Anywhere','2024-05-03 12:15:00'),(5,'David','Brown','davidbrown@example.com','davidbrown123','Male','0956789012','1982-07-05','1212 Maple Ln, Nowhere','2024-05-03 14:00:00'),(6,'Jack','Test','test@test.com','12345678','male','0312548784','2024-05-23','Taipei','2024-05-04 17:15:09'),(7,'test','two','ttwo@gmai.com','123456789','male','0911111111','2024-05-01','','2024-05-04 17:23:19'),(10,'John','Doe','johndoe@gmail.com','password1','Male','0912345678','1990-01-01','123 Main St.','2024-05-12 17:41:48'),(11,'Jane','Smith','janesmith@yahoo.com','password2','Female','0923456789','1995-02-15','456 Elm St.','2024-05-12 17:41:48'),(12,'Michael','Johnson','michaeljohnson@gmail.com','password3','Male','0934567890','1988-07-20','789 Oak St.','2024-05-12 17:41:48'),(13,'Emily','Williams','emilywilliams@yahoo.com','password4','Female','0945678901','1987-12-10','1011 Pine St.','2024-05-12 17:41:48'),(14,'David','Brown','davidbrown@gmail.com','password5','Male','0956789012','1992-04-05','1315 Maple St.','2024-05-12 17:41:48'),(15,'Sarah','Jones','sarahjones@yahoo.com','password6','Female','0967890123','1984-09-30','1617 Cedar St.','2024-05-12 17:41:48'),(16,'James','Garcia','jamesgarcia@gmail.com','password7','Male','0978901234','1982-11-25','1819 Birch St.','2024-05-12 17:41:48'),(17,'Jessica','Martinez','jessicamartinez@yahoo.com','password8','Female','0989012345','1998-06-12','2021 Walnut St.','2024-05-12 17:41:48'),(18,'Christopher','Hernandez','christopherhernandez@gmail.com','password9','Male','0990123456','1989-03-18','2223 Hickory St.','2024-05-12 17:41:48'),(19,'Ashley','Lopez','ashleylopez@yahoo.com','password10','Female','0911234567','1993-08-22','2425 Chestnut St.','2024-05-12 17:41:48'),(20,'Matthew','Gonzalez','matthewgonzalez@gmail.com','password11','Male','0922345678','1991-05-17','2627 Poplar St.','2024-05-12 17:41:48'),(21,'Amanda','Wilson','amandawilson@yahoo.com','password12','Female','0933456789','1986-02-28','2829 Sycamore St.','2024-05-12 17:41:48'),(22,'Daniel','Anderson','danielanderson@gmail.com','password13','Male','0944567890','1980-10-08','3031 Cedar St.','2024-05-12 17:41:48'),(23,'Melissa','Thomas','melissathomas@yahoo.com','password14','Female','0955678901','1997-07-03','3233 Maple St.','2024-05-12 17:41:48'),(24,'Andrew','Taylor','andrewtaylor@gmail.com','password15','Male','0966789012','1983-04-15','3435 Elm St.','2024-05-12 17:41:48'),(25,'Stephanie','Moore','stephaniemoore@yahoo.com','password16','Female','0977890123','1979-12-20','3637 Oak St.','2024-05-12 17:41:48'),(46,'JJJJJJJJJJAA','Min','rsded@yahoo.com','099595295','female','0912548484','2024-04-29','Test City','2024-05-12 22:58:12'),(49,'JackAAA','AAAAAA','red@yahoo.com','123414','male','0912344444','2024-05-01','Test City1421324','2024-05-13 11:52:31'),(50,'Jack','Red','mem@gmail.com','123456','male','0961691919','2024-04-30','Test City','2024-05-13 13:39:38');
-/*!40000 ALTER TABLE `members` ENABLE KEYS */;
+LOCK TABLES members WRITE;
+/*!40000 ALTER TABLE members DISABLE KEYS */;
+INSERT INTO members VALUES (1,'John','Doe','johndoe@example.com','johndoe@123','Male','0912345678','1990-05-15','123 Main St, Anytown',NULL,'2024-05-03 08:00:00'),(2,'Jane','Smith','janesmith@example.com','janesmith@123','Female','0923456789','1985-09-25','456 Oak Ave, Another City',NULL,'2024-05-03 09:30:00'),(3,'Michael','Johnson','michaeljohnson@example.com','michael123','Male','0934567890','1978-12-10','789 Elm St, Someplace',NULL,'2024-05-03 10:45:00'),(4,'Emily','Williams','emilywilliams@example.com','emily@123','Female','0945678901','1995-03-20','1010 Pine Dr, Anywhere',NULL,'2024-05-03 12:15:00'),(5,'David','Brown','davidbrown@example.com','davidbrown123','Male','0956789012','1982-07-05','1212 Maple Ln, Nowhere',NULL,'2024-05-03 14:00:00'),(6,'Jack','Test','test@test.com','12345678','male','0312548784','2024-05-23','Taipei',NULL,'2024-05-04 17:15:09'),(7,'test','two','ttwo@gmai.com','123456789','male','0911111111','2024-05-01','',NULL,'2024-05-04 17:23:19'),(10,'John','Doe','johndoe@gmail.com','password1','Male','0912345678','1990-01-01','123 Main St.',NULL,'2024-05-12 17:41:48'),(11,'Jane','Smith','janesmith@yahoo.com','password2','Female','0923456789','1995-02-15','456 Elm St.',NULL,'2024-05-12 17:41:48'),(12,'Michael','Johnson','michaeljohnson@gmail.com','password3','Male','0934567890','1988-07-20','789 Oak St.',NULL,'2024-05-12 17:41:48'),(13,'Emily','Williams','emilywilliams@yahoo.com','password4','Female','0945678901','1987-12-10','1011 Pine St.',NULL,'2024-05-12 17:41:48'),(14,'David','Brown','davidbrown@gmail.com','password5','Male','0956789012','1992-04-05','1315 Maple St.',NULL,'2024-05-12 17:41:48'),(15,'Sarah','Jones','sarahjones@yahoo.com','password6','Female','0967890123','1984-09-30','1617 Cedar St.',NULL,'2024-05-12 17:41:48'),(16,'James','Garcia','jamesgarcia@gmail.com','password7','Male','0978901234','1982-11-25','1819 Birch St.',NULL,'2024-05-12 17:41:48'),(17,'Jessica','Martinez','jessicamartinez@yahoo.com','password8','Female','0989012345','1998-06-12','2021 Walnut St.',NULL,'2024-05-12 17:41:48'),(18,'Christopher','Hernandez','christopherhernandez@gmail.com','password9','Male','0990123456','1989-03-18','2223 Hickory St.',NULL,'2024-05-12 17:41:48'),(19,'Ashley','Lopez','ashleylopez@yahoo.com','password10','Female','0911234567','1993-08-22','2425 Chestnut St.',NULL,'2024-05-12 17:41:48'),(20,'Matthew','Gonzalez','matthewgonzalez@gmail.com','password11','Male','0922345678','1991-05-17','2627 Poplar St.',NULL,'2024-05-12 17:41:48'),(21,'Amanda','Wilson','amandawilson@yahoo.com','password12','Female','0933456789','1986-02-28','2829 Sycamore St.',NULL,'2024-05-12 17:41:48'),(22,'Daniel','Anderson','danielanderson@gmail.com','password13','Male','0944567890','1980-10-08','3031 Cedar St.',NULL,'2024-05-12 17:41:48'),(23,'Melissa','Thomas','melissathomas@yahoo.com','password14','Female','0955678901','1997-07-03','3233 Maple St.',NULL,'2024-05-12 17:41:48'),(24,'Andrew','Taylor','andrewtaylor@gmail.com','password15','Male','0966789012','1983-04-15','3435 Elm St.',NULL,'2024-05-12 17:41:48'),(25,'Stephanie','Moore','stephaniemoore@yahoo.com','password16','Male','0977890123','1979-12-20','3637 Oak St.',NULL,'2024-05-12 17:41:48'),(51,'Jack','Min','johndoe@example.com','12345678','Male','0984918158','2024-04-08','Test City1421324sdfsdfsdf',NULL,'2024-05-15 10:01:04'),(52,'John','Wick','johndoe@example.com','123456789','Male','0981581881','2024-05-01','fpigwiongnpwh',NULL,'2024-05-15 10:02:53'),(53,'Jack','Min','johndoe@example.com','test','Female','0984884848','2024-05-02','GGGGGGGGGGG',NULL,'2024-05-15 10:05:17'),(54,'Jack','Red','you@example.com','12346','Male','0910112584','2024-05-09','Test City1421324FF',NULL,'2024-05-15 10:19:01'),(55,'Jack','Min','johndoe@example.commm','13211189891','Male','0988844844','2024-05-01','GGGGGGGGGGG',NULL,'2024-05-15 10:34:17'),(56,'Test','Photo','phpto@gmail.com','1891919','Male','0958484848','2024-05-01','Test City1421324sdfsdfsdf',NULL,'2024-05-15 11:35:46'),(57,'Test','Photo','phpto@gmail.comasd','1891919','Male','0958484848','2024-05-01','Test City1421324sdfsdfsdf','5659e5e9ae9cd110f7ec0a108b1c7a65bbdde78c.jpg','2024-05-15 11:36:41'),(59,'Show','Test','EORIGNRIO@RGMRPOMG.CVOWNMGIN','SOGMPOSEGMPWIEM','Male','0988181181','2024-05-01','1819191','ff22c176824a171f6c2fac38c752d8449c201106.jpg','2024-05-15 13:35:01'),(60,'Show','Kitty','red@yahoo.com','09884848488448','Female','0984848848','2024-05-01','GGGGGGGGGGG','7281b2a14591494e6657226cbb7fa96cc84501c5.jpg','2024-05-15 15:00:14'),(61,'Jack','Name','jin@test.com','18919191','Female','0910112584','2024-05-01','Test City','d6b91e4c3b07b642e575a48e22da7cd6adeb7d38.jpg','2024-05-15 15:33:20'),(62,'Show','Red','jin@test.comsd','191919191','Female','0910112584','2024-04-29','GGGGGGGGGGG','d2049f40d801d7c020d28c3c9749cd4323aaa539.webp','2024-05-15 15:33:51'),(63,'ShowLian','Kitty','jin@test.comsdgSG','SGWGWG','Male','0988888888','2024-05-08','9219199wegounweuogno','bb7d69bb4d8c10d1797322336fbffc9f5f5049ec.webp','2024-05-15 18:25:28'),(64,'Jack','Min','johndodwdwde@example.cob','919111919','Female','0984848484','0191-09-19','132dfiniin 123','c135f0403d728bb7fa576be7cd2ee1fb9c748382.webp','2024-05-16 11:45:56');
+/*!40000 ALTER TABLE members ENABLE KEYS */;
 UNLOCK TABLES;
-
 --
 -- Table structure for table `nclass`
 --
@@ -386,6 +389,7 @@ CREATE TABLE `ticket` (
   `counts` int NOT NULL,
   `price` int NOT NULL,
   `created_at` datetime NOT NULL,
+  `editTime` datetime NOT NULL,
   PRIMARY KEY (`tid`),
   KEY `activities_id` (`activities_id`),
   CONSTRAINT `ticket_ibfk_1` FOREIGN KEY (`activities_id`) REFERENCES `activities` (`actid`)
@@ -398,112 +402,112 @@ CREATE TABLE `ticket` (
 
 LOCK TABLES `ticket` WRITE;
 /*!40000 ALTER TABLE `ticket` DISABLE KEYS */;
-INSERT INTO `ticket` (`activities_id`, `ticket_area`, `counts`, `price`, `created_at`) VALUES
-(1, 'A', 50, 1000, NOW()),
-(1, 'B', 100, 2000, NOW()),
-(1, 'C', 150, 3000, NOW()),
-(1, 'D', 200, 4000, NOW()),
-(1, 'E', 250, 5000, NOW()),
-(2, 'A', 50, 1000, NOW()),
-(2, 'B', 100, 2000, NOW()),
-(2, 'C', 150, 3000, NOW()),
-(2, 'D', 200, 4000, NOW()),
-(2, 'E', 250, 5000, NOW()),
-(3, 'A', 50, 1000, NOW()),
-(3, 'B', 100, 2000, NOW()),
-(3, 'C', 150, 3000, NOW()),
-(3, 'D', 200, 4000, NOW()),
-(3, 'E', 250, 5000, NOW()),
-(4, 'A', 50, 1000, NOW()),
-(4, 'B', 100, 2000, NOW()),
-(4, 'C', 150, 3000, NOW()),
-(4, 'D', 200, 4000, NOW()),
-(4, 'E', 250, 5000, NOW()),
-(5, 'A', 50, 1000, NOW()),
-(5, 'B', 100, 2000, NOW()),
-(5, 'C', 150, 3000, NOW()),
-(5, 'D', 200, 4000, NOW()),
-(5, 'E', 250, 5000, NOW()),
-(6, 'A', 50, 1000, NOW()),
-(6, 'B', 100, 2000, NOW()),
-(6, 'C', 150, 3000, NOW()),
-(6, 'D', 200, 4000, NOW()),
-(6, 'E', 250, 5000, NOW()),
-(7, 'A', 50, 1000, NOW()),
-(7, 'B', 100, 2000, NOW()),
-(7, 'C', 150, 3000, NOW()),
-(7, 'D', 200, 4000, NOW()),
-(7, 'E', 250, 5000, NOW()),
-(8, 'A', 50, 1000, NOW()),
-(8, 'B', 100, 2000, NOW()),
-(8, 'C', 150, 3000, NOW()),
-(8, 'D', 200, 4000, NOW()),
-(8, 'E', 250, 5000, NOW()),
-(9, 'A', 50, 1000, NOW()),
-(9, 'B', 100, 2000, NOW()),
-(9, 'C', 150, 3000, NOW()),
-(9, 'D', 200, 4000, NOW()),
-(9, 'E', 250, 5000, NOW()),
-(10, 'A', 50, 1000, NOW()),
-(10, 'B', 100, 2000, NOW()),
-(10, 'C', 150, 3000, NOW()),
-(10, 'D', 200, 4000, NOW()),
-(10, 'E', 250, 5000, NOW()),
-(11, 'A', 50, 1000, NOW()),
-(11, 'B', 100, 2000, NOW()),
-(11, 'C', 150, 3000, NOW()),
-(11, 'D', 200, 4000, NOW()),
-(11, 'E', 250, 5000, NOW()),
-(12, 'A', 50, 1000, NOW()),
-(12, 'B', 100, 2000, NOW()),
-(12, 'C', 150, 3000, NOW()),
-(12, 'D', 200, 4000, NOW()),
-(12, 'E', 250, 5000, NOW()),
-(13, 'A', 50, 1000, NOW()),
-(13, 'B', 100, 2000, NOW()),
-(13, 'C', 150, 3000, NOW()),
-(13, 'D', 200, 4000, NOW()),
-(13, 'E', 250, 5000, NOW()),
-(14, 'A', 50, 1000, NOW()),
-(14, 'B', 100, 2000, NOW()),
-(14, 'C', 150, 3000, NOW()),
-(14, 'D', 200, 4000, NOW()),
-(14, 'E', 250, 5000, NOW()),
-(15, 'A', 50, 1000, NOW()),
-(15, 'B', 100, 2000, NOW()),
-(15, 'C', 150, 3000, NOW()),
-(15, 'D', 200, 4000, NOW()),
-(15, 'E', 250, 5000, NOW()),
-(16, 'A', 50, 1000, NOW()),
-(16, 'B', 100, 2000, NOW()),
-(16, 'C', 150, 3000, NOW()),
-(16, 'D', 200, 4000, NOW()),
-(16, 'E', 250, 5000, NOW()),
-(17, 'A', 50, 1000, NOW()),
-(17, 'B', 100, 2000, NOW()),
-(17, 'C', 150, 3000, NOW()),
-(17, 'D', 200, 4000, NOW()),
-(17, 'E', 250, 5000, NOW()),
-(18, 'A', 50, 1000, NOW()),
-(18, 'B', 100, 2000, NOW()),
-(18, 'C', 150, 3000, NOW()),
-(18, 'D', 200, 4000, NOW()),
-(18, 'E', 250, 5000, NOW()),
-(19, 'A', 50, 1000, NOW()),
-(19, 'B', 100, 2000, NOW()),
-(19, 'C', 150, 3000, NOW()),
-(19, 'D', 200, 4000, NOW()),
-(19, 'E', 250, 5000, NOW()),
-(20, 'A', 50, 1000, NOW()),
-(20, 'B', 100, 2000, NOW()),
-(20, 'C', 150, 3000, NOW()),
-(20, 'D', 200, 4000, NOW()),
-(20, 'E', 250, 5000, NOW()),
-(21, 'A', 50, 1000, NOW()),
-(21, 'B', 100, 2000, NOW()),
-(21, 'C', 150, 3000, NOW()),
-(21, 'D', 200, 4000, NOW()),
-(21, 'E', 250, 5000, NOW());
+INSERT INTO `ticket` (`activities_id`, `ticket_area`, `counts`, `price`, `created_at`, `editTime`) VALUES
+(1, 'A', 50, 1000, NOW(), NOW()),
+(1, 'B', 100, 2000, NOW(), NOW()),
+(1, 'C', 150, 3000, NOW(), NOW()),
+(1, 'D', 200, 4000, NOW(), NOW()),
+(1, 'E', 250, 5000, NOW(), NOW()),
+(2, 'A', 50, 1000, NOW(), NOW()),
+(2, 'B', 100, 2000, NOW(), NOW()),
+(2, 'C', 150, 3000, NOW(), NOW()),
+(2, 'D', 200, 4000, NOW(), NOW()),
+(2, 'E', 250, 5000, NOW(), NOW()),
+(3, 'A', 50, 1000, NOW(), NOW()),
+(3, 'B', 100, 2000, NOW(), NOW()),
+(3, 'C', 150, 3000, NOW(), NOW()),
+(3, 'D', 200, 4000, NOW(), NOW()),
+(3, 'E', 250, 5000, NOW(), NOW()),
+(4, 'A', 50, 1000, NOW(), NOW()),
+(4, 'B', 100, 2000, NOW(), NOW()),
+(4, 'C', 150, 3000, NOW(), NOW()),
+(4, 'D', 200, 4000, NOW(), NOW()),
+(4, 'E', 250, 5000, NOW(), NOW()),
+(5, 'A', 50, 1000, NOW(), NOW()),
+(5, 'B', 100, 2000, NOW(), NOW()),
+(5, 'C', 150, 3000, NOW(), NOW()),
+(5, 'D', 200, 4000, NOW(), NOW()),
+(5, 'E', 250, 5000, NOW(), NOW()),
+(6, 'A', 50, 1000, NOW(), NOW()),
+(6, 'B', 100, 2000, NOW(), NOW()),
+(6, 'C', 150, 3000, NOW(), NOW()),
+(6, 'D', 200, 4000, NOW(), NOW()),
+(6, 'E', 250, 5000, NOW(), NOW()),
+(7, 'A', 50, 1000, NOW(), NOW()),
+(7, 'B', 100, 2000, NOW(), NOW()),
+(7, 'C', 150, 3000, NOW(), NOW()),
+(7, 'D', 200, 4000, NOW(), NOW()),
+(7, 'E', 250, 5000, NOW(), NOW()),
+(8, 'A', 50, 1000, NOW(), NOW()),
+(8, 'B', 100, 2000, NOW(), NOW()),
+(8, 'C', 150, 3000, NOW(), NOW()),
+(8, 'D', 200, 4000, NOW(), NOW()),
+(8, 'E', 250, 5000, NOW(), NOW()),
+(9, 'A', 50, 1000, NOW(), NOW()),
+(9, 'B', 100, 2000, NOW(), NOW()),
+(9, 'C', 150, 3000, NOW(), NOW()),
+(9, 'D', 200, 4000, NOW(), NOW()),
+(9, 'E', 250, 5000, NOW(), NOW()),
+(10, 'A', 50, 1000, NOW(), NOW()),
+(10, 'B', 100, 2000, NOW(), NOW()),
+(10, 'C', 150, 3000, NOW(), NOW()),
+(10, 'D', 200, 4000, NOW(), NOW()),
+(10, 'E', 250, 5000, NOW(), NOW()),
+(11, 'A', 50, 1000, NOW(), NOW()),
+(11, 'B', 100, 2000, NOW(), NOW()),
+(11, 'C', 150, 3000, NOW(), NOW()),
+(11, 'D', 200, 4000, NOW(), NOW()),
+(11, 'E', 250, 5000, NOW(), NOW()),
+(12, 'A', 50, 1000, NOW(), NOW()),
+(12, 'B', 100, 2000, NOW(), NOW()),
+(12, 'C', 150, 3000, NOW(), NOW()),
+(12, 'D', 200, 4000, NOW(), NOW()),
+(12, 'E', 250, 5000, NOW(), NOW()),
+(13, 'A', 50, 1000, NOW(), NOW()),
+(13, 'B', 100, 2000, NOW(), NOW()),
+(13, 'C', 150, 3000, NOW(), NOW()),
+(13, 'D', 200, 4000, NOW(), NOW()),
+(13, 'E', 250, 5000, NOW(), NOW()),
+(14, 'A', 50, 1000, NOW(), NOW()),
+(14, 'B', 100, 2000, NOW(), NOW()),
+(14, 'C', 150, 3000, NOW(), NOW()),
+(14, 'D', 200, 4000, NOW(), NOW()),
+(14, 'E', 250, 5000, NOW(), NOW()),
+(15, 'A', 50, 1000, NOW(), NOW()),
+(15, 'B', 100, 2000, NOW(), NOW()),
+(15, 'C', 150, 3000, NOW(), NOW()),
+(15, 'D', 200, 4000, NOW(), NOW()),
+(15, 'E', 250, 5000, NOW(), NOW()),
+(16, 'A', 50, 1000, NOW(), NOW()),
+(16, 'B', 100, 2000, NOW(), NOW()),
+(16, 'C', 150, 3000, NOW(), NOW()),
+(16, 'D', 200, 4000, NOW(), NOW()),
+(16, 'E', 250, 5000, NOW(), NOW()),
+(17, 'A', 50, 1000, NOW(), NOW()),
+(17, 'B', 100, 2000, NOW(), NOW()),
+(17, 'C', 150, 3000, NOW(), NOW()),
+(17, 'D', 200, 4000, NOW(), NOW()),
+(17, 'E', 250, 5000, NOW(), NOW()),
+(18, 'A', 50, 1000, NOW(), NOW()),
+(18, 'B', 100, 2000, NOW(), NOW()),
+(18, 'C', 150, 3000, NOW(), NOW()),
+(18, 'D', 200, 4000, NOW(), NOW()),
+(18, 'E', 250, 5000, NOW(), NOW()),
+(19, 'A', 50, 1000, NOW(), NOW()),
+(19, 'B', 100, 2000, NOW(), NOW()),
+(19, 'C', 150, 3000, NOW(), NOW()),
+(19, 'D', 200, 4000, NOW(), NOW()),
+(19, 'E', 250, 5000, NOW(), NOW()),
+(20, 'A', 50, 1000, NOW(), NOW()),
+(20, 'B', 100, 2000, NOW(), NOW()),
+(20, 'C', 150, 3000, NOW(), NOW()),
+(20, 'D', 200, 4000, NOW(), NOW()),
+(20, 'E', 250, 5000, NOW(), NOW()),
+(21, 'A', 50, 1000, NOW(), NOW()),
+(21, 'B', 100, 2000, NOW(), NOW()),
+(21, 'C', 150, 3000, NOW(), NOW()),
+(21, 'D', 200, 4000, NOW(), NOW()),
+(21, 'E', 250, 5000, NOW(), NOW());
 /*!40000 ALTER TABLE `ticket` ENABLE KEYS */;
 UNLOCK TABLES;
 -- drop table ticket;
