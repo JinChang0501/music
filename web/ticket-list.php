@@ -1,11 +1,12 @@
 <?php
+
 require __DIR__ . '/admin-required.php';
 require __DIR__ . '/../config/pdo-connect.php';
 
 $title = '上架購票清單';
 $pageName = 'ticket-list';
 
-$perPage = 5; # 每一頁最多有幾筆
+$perPage = 10; # 每一頁最多有幾筆
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 if ($page < 1) {
@@ -13,9 +14,97 @@ if ($page < 1) {
     exit; # 結束這支程式
 }
 
+// 篩選器排序
 $sort = isset($_GET['sort']) ? $_GET['sort'] : 'tid';
 $order = isset($_GET['order']) ? $_GET['order'] : 'desc';
 $order = $order === 'desc' ? 'desc' : 'asc';
+
+// 獲取篩選條件（例如，這裡是 "music festival"）
+$filterFestival = isset($_GET['filterFestival']) ? $_GET['filterFestival'] : '';
+
+// 獲取 ticket_area 篩選條件
+$filterTicketArea = isset($_GET['filterTicketArea']) ? $_GET['filterTicketArea'] : '';
+
+// 篩選條件
+$filterCondition = '';
+if (!empty($filterFestival)) {
+    $filterCondition = "WHERE aclass.class = '$filterFestival'";
+}
+
+// 添加 ticket_area 篩選條件
+if (!empty($filterTicketArea)) {
+    $filterCondition .= !empty($filterCondition) ? " AND ticket.ticket_area = '$filterTicketArea'" : " WHERE ticket.ticket_area = '$filterTicketArea'";
+}
+
+// 價格範圍
+$minPrice = isset($_GET['min_price']) ? $_GET['min_price'] : '';
+$maxPrice = isset($_GET['max_price']) ? $_GET['max_price'] : '';
+
+// 添加價格範圍篩選條件
+if (!empty($minPrice) && !empty($maxPrice)) {
+    $priceCondition = "ticket.price BETWEEN $minPrice AND $maxPrice";
+    $filterCondition .= !empty($filterCondition) ? " AND $priceCondition" : " WHERE $priceCondition";
+}
+
+// 模糊搜索
+$searchKeyword = isset($_GET['search']) ? urldecode($_GET['search']) : '';
+$searchCondition = '';
+if (!empty($searchKeyword)) {
+    $searchCondition = "AND (
+        activities.activity_name LIKE '%$searchKeyword%' 
+        OR artist.art_name LIKE '%$searchKeyword%'
+        OR activities.location LIKE '%$searchKeyword%'
+        OR activities.descriptions LIKE '%$searchKeyword%'
+    )";
+}
+
+// 模糊搜索
+$searchKeyword = isset($_GET['search']) ? urldecode($_GET['search']) : '';
+
+// 在分頁連結中包含所有篩選條件
+function buildQueryStringWithFilters()
+{
+    $queryString = '';
+
+    // 筛选器排序
+    $sort = isset($_GET['sort']) ? $_GET['sort'] : 'tid';
+    $order = isset($_GET['order']) ? $_GET['order'] : 'desc';
+    $order = $order === 'desc' ? 'desc' : 'asc';
+
+    // 獲取篩選條件（例如，這裡是 "music festival"）
+    $filterFestival = isset($_GET['filterFestival']) ? $_GET['filterFestival'] : '';
+
+    // 價格範圍
+    $minPrice = isset($_GET['min_price']) ? $_GET['min_price'] : '';
+    $maxPrice = isset($_GET['max_price']) ? $_GET['max_price'] : '';
+
+    // 模糊搜索
+    $searchKeyword = isset($_GET['search']) ? urldecode($_GET['search']) : '';
+
+    // 獲取 ticket_area 篩選條件
+    $filterTicketArea = isset($_GET['filterTicketArea']) ? $_GET['filterTicketArea'] : '';
+
+    // 構建包含所有篩選條件的查詢字符串
+    $queryString .= '&sort=' . $sort . '&order=' . $order;
+    if (!empty($filterFestival)) {
+        $queryString .= '&filterFestival=' . urlencode($filterFestival);
+    }
+    if (!empty($minPrice)) {
+        $queryString .= '&min_price=' . $minPrice;
+    }
+    if (!empty($maxPrice)) {
+        $queryString .= '&max_price=' . $maxPrice;
+    }
+    if (!empty($searchKeyword)) {
+        $queryString .= '&search=' . urlencode($searchKeyword);
+    }
+    // 添加 ticket_area 到查询字符串
+    if (!empty($filterTicketArea)) {
+        $queryString .= '&filterTicketArea=' . urlencode($filterTicketArea);
+    }
+
+    return $queryString;
+}
 
 $t_sql = "SELECT COUNT(tid) FROM ticket;";
 
@@ -34,32 +123,31 @@ if ($totalRows) {
         exit; # 結束這支程式
     }
 
-    # 取得分頁資料
     $sql = sprintf(
-        "SELECT 
-        *
-    FROM 
-        ticket
-    JOIN 
-        activities ON ticket.activities_id = activities.actid
-    JOIN 
-        aclass ON activities.activity_class = aclass.id
-    JOIN 
-        artist ON activities.artist_id = artist.id ORDER BY $sort {$order} LIMIT %s, %s",
+        "SELECT
+*
+FROM
+ticket
+JOIN
+activities ON ticket.activities_id = activities.actid
+JOIN
+aclass ON activities.activity_class = aclass.id
+JOIN
+artist ON activities.artist_id = artist.id
+%s
+%s
+ORDER BY %s %s
+LIMIT %d, %d",
+        $filterCondition,
+        $searchCondition,
+        $sort,
+        $order,
         ($page - 1) * $perPage,
         $perPage
     );
+
     $rows = $pdo->query($sql)->fetchAll();
 }
-
-/*
-echo json_encode([
-'totalRows' => $totalRows,
-'totalPages' => $totalPages,
-'page' => $page,
-'rows' => $rows,
-]);
-*/
 
 ?>
 
@@ -108,67 +196,78 @@ echo json_encode([
 
         <div class="col-10 p-4">
 
-            <h2 class="col-12 mt-5 mb-4 fw-bold">上架購票管理</h2>
+            <h1 class="col-12 mt-5 mb-4 fw-bold">上架購票管理</h1>
+
+            <!-- #region 文字搜尋 -->
 
             <div class="col-12 mb-3 d-flex justify-content-end">
 
-                <div class="input-group mb-3 w-50">
-                    <button class="btn btn-secondary dropdown-toggle fw-bold" type="button" id="dropdownMenuButton2"
-                        data-bs-toggle="dropdown">
-                        請選擇要查詢的項目
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-dark">
-                        <li><a class="dropdown-item active" href="#">活動名稱</a></li>
-                        <li><a class="dropdown-item" href="#">活動描述</a></li>
-                    </ul>
-                    <input type="search" class="textSearch form-control border-5" name="search"
-                        placeholder="請輸入要搜尋的內容...">
-                    <input type="submit" class="search btn btn-secondary fw-bold" value="搜尋">
+                <div class="input-group mb-3 d-flex justify-content-end">
+                    <form id="search_form" method="get" class="d-flex">
+                        <input id="search_input" type="search" class="textSearch form-control border-5 me-3"
+                            name="search" placeholder="請輸入要搜尋的內容..." style="width: 400px;"
+                            value="<?= isset($searchKeyword) ? htmlspecialchars($searchKeyword) : '' ?>">
+                        <!-- 其他筛选参数的输入框 -->
+                        <button id="search_button" type="submit" class="btn btn-secondary fw-bold">搜尋</button>
+                    </form>
                 </div>
 
             </div>
 
-            <div class="col-12 mb-3 d-flex justify-content-end">
-                <div class="d-flex mb-3">
-                    <input type="number" class="form-control border-5" name="min_price" min="0" placeholder="最小價格">
-                    <span class="mx-4 d-flex align-items-center fw-bold">一</span>
-                    <input type="number" class="form-control border-5 me-4" name="max_price" min="0" placeholder="最大價格">
-                    <input type="submit" class="btn btn-secondary fw-bold" value="搜尋價格範圍">
+            <!-- #endregion 文字搜尋 -->
+
+            <!-- #region 區間價格篩選 -->
+
+            <form id="search_form" action="?page=1" method="GET">
+                <div class="col-12 mb-3 d-flex justify-content-end">
+                    <div class="d-flex mb-3">
+                        <input id="min_price_input" type="number" class="form-control border-5" name="min_price" min="1"
+                            placeholder="最小價格" value="<?= $minPrice ?>">
+                        <span class="mx-4 d-flex align-items-center fw-bold">一</span>
+                        <input id="max_price_input" type="number" class="form-control border-5 me-4" name="max_price"
+                            min="1" placeholder="最大價格" value="<?= $maxPrice ?>">
+                        <button type="submit"
+                            class="btn btn-secondary fw-bold text-nowrap d-flex align-items-center">搜尋</button>
+                    </div>
                 </div>
-            </div>
+            </form>
+
+            <!-- #endregion 區間價格篩選 -->
+
+            <!-- #region 篩選活動座位 -->
 
             <div class="col-12 mb-3 d-flex justify-content-end">
 
                 <div class="d-flex align-items-center fs-5 me-4 fw-bold bg-secondary text-white rounded-pill px-4">
                     篩選活動座位</div>
 
-                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                    <input type="checkbox" class="btn-check" id="btncheck1" name="btncheck1" autocomplete="off">
-                    <label class="btn btn-outline-secondary fw-bold" for="btncheck1">A</label>
-
-                    <input type="checkbox" class="btn-check" id="btncheck2" name="btncheck2" autocomplete="off">
-                    <label class="btn btn-outline-secondary fw-bold" for="btncheck2">B</label>
-
-                    <input type="checkbox" class="btn-check" id="btncheck3" name="btncheck3" autocomplete="off">
-                    <label class="btn btn-outline-secondary fw-bold" for="btncheck3">C</label>
-
-                    <input type="checkbox" class="btn-check" id="btncheck4" name="btncheck4" autocomplete="off">
-                    <label class="btn btn-outline-secondary fw-bold" for="btncheck4">D</label>
-
-                    <input type="checkbox" class="btn-check" id="btncheck5" name="btncheck5" autocomplete="off">
-                    <label class="btn btn-outline-secondary fw-bold" for="btncheck5">E</label>
-                </div>
+                <button id="btncheck1" data-value="A" type="button" class="btn btn-secondary fw-bold me-2 fs-5"
+                    onclick="window.location.href = `?page=1&sort=<?= $sort ?>&order=<?= $order ?>&filterTicketArea=A`;">A</button>
+                <button id="btncheck2" data-value="B" type="button" class="btn btn-secondary fw-bold me-2 fs-5"
+                    onclick="window.location.href = `?page=1&sort=<?= $sort ?>&order=<?= $order ?>&filterTicketArea=B`;">B</button>
+                <button id="btncheck3" data-value="C" type="button" class="btn btn-secondary fw-bold me-2 fs-5"
+                    onclick="window.location.href = `?page=1&sort=<?= $sort ?>&order=<?= $order ?>&filterTicketArea=C`;">C</button>
+                <button id="btncheck4" data-value="D" type="button" class="btn btn-secondary fw-bold me-2 fs-5"
+                    onclick="window.location.href = `?page=1&sort=<?= $sort ?>&order=<?= $order ?>&filterTicketArea=D`;">D</button>
+                <button id="btncheck5" data-value="E" type="button" class="btn btn-secondary fw-bold me-2 fs-5"
+                    onclick="window.location.href = `?page=1&sort=<?= $sort ?>&order=<?= $order ?>&filterTicketArea=E`;">E</button>
 
             </div>
 
+            <!-- #endregion 篩選活動座位 -->
+
+            <!-- #region 新增購票、刪除所選、music festival、concert、顯示全部、篩選器 -->
 
             <div class="d-flex justify-content-between col-12 mb-4">
                 <div>
                     <a class="btn btn-secondary fw-bold" href="ticket-add.php">新增購票</a>
                     <a id="dltAllSelect" class="btn btn-secondary fw-bold">刪除所選</a>
-                    <a class="musicFestival btn btn-secondary fw-bold">music festival</a>
-                    <a class="concert btn lightgraytn btn-secondary fw-bold">concert</a>
-                    <a class="reload btn btn-secondary fw-bold">顯示全部</a>
+                    <a class="btn btn-secondary fw-bold"
+                        href="?page=1&sort=<?= $sort ?>&order=<?= $order ?>&filterFestival=music festival">music
+                        festival</a>
+                    <a class="btn btn-secondary fw-bold"
+                        href="?page=1&sort=<?= $sort ?>&order=<?= $order ?>&filterFestival=concert">concert</a>
+                    <a class="reload btn btn-secondary fw-bold" href="ticket-list.php">顯示全部</a>
                 </div>
 
                 <div data-bs-toggle="modal" data-bs-target="#Modal">
@@ -177,7 +276,11 @@ echo json_encode([
                 </div>
             </div>
 
-            <div class="col-12 mb-4">
+            <!-- #endregion 新增購票、刪除所選、music festival、concert、顯示全部、篩選器 -->
+
+            <!-- #region Table -->
+
+            <div class="col-12 mb-4 text-nowrap" style="overflow:auto">
                 <table
                     class="table table-hover table-striped table-bordered caption-top text-center align-middle fw-bold">
                     <thead class="table-light">
@@ -214,12 +317,14 @@ echo json_encode([
                                         <i class="bi bi-trash3"></i>
                                     </a></td>
                                 <td><?= $r['tid'] ?></td>
-                                <td><img src="<?= $r['picture'] ?>" class="image img-thumbnail" alt="activities_picture">
+                                <td data-bs-toggle="modal" data-bs-target="#modelImage" data-actid="<?= $r['actid'] ?>">
+                                    <img src="../img/activities-img/<?= $r['picture'] ?>" class="image img-thumbnail" alt="activities_picture">
                                 </td>
                                 <td><?= $r['activity_name'] ?></td>
                                 <td><?= $r['art_name'] ?></td>
                                 <td><?= $r['location'] ?></td>
-                                <td class="description" data-bs-toggle="modal" data-bs-target="#description">
+                                <td class="description" data-bs-toggle="modal" data-bs-target="#description"
+                                    data-actid="<?= $r['actid'] ?>" onclick="getDescription(this)">
                                     <?= $r['descriptions'] ?>
                                 </td>
                                 <td><?= $r['a_date'] . '<br><br>' . $r['a_time'] ?></td>
@@ -241,34 +346,48 @@ echo json_encode([
                 </table>
             </div>
 
+            <!-- #endregion Table -->
+
+            <!-- #region pagination -->
+
             <div class="col-12 d-flex justify-content-center">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
                         <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
-                            <a class="page-link" href="?page=1">
+                            <a class="page-link" href="?page=1<?= buildQueryStringWithFilters() ?>">
                                 <i class="fa-solid fa-angles-left"></i>
                             </a>
                         </li>
                         <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
-                            <a class="page-link" href="?page=<?= max(1, $page - 1) ?>">
+                            <a class="page-link"
+                                href="?page=<?= max(1, $page - 1) ?><?= buildQueryStringWithFilters() ?>">
                                 <i class="fa-solid fa-angle-left"></i>
                             </a>
                         </li>
 
-                        <?php for ($i = $page - 2; $i <= $page + 2; $i++):
-                            if ($i >= 1 and $i <= $totalPages): ?>
-                                <li class="page-item <?= $page == $i ? 'active' : '' ?>">
-                                    <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
-                                </li>
-                            <?php endif; endfor; ?>
+                        <?php
+                        // Calculate the range of page numbers to display
+                        $start = max(1, min($page - 2, $totalPages - 4));
+                        $end = min($totalPages, $start + 4);
+
+                        // Display the page numbers within the range
+                        for ($i = $start; $i <= $end; $i++):
+                            ?>
+                            <li class="page-item <?= $page == $i ? 'active' : '' ?>">
+                                <a class="page-link"
+                                    href="?page=<?= $i ?><?= buildQueryStringWithFilters() ?>"><?= $i ?></a>
+                            </li>
+                        <?php endfor; ?>
+
                         <li class="page-item <?= $page == $totalPages ? 'disabled' : '' ?>">
-                            <a class="page-link" href="?page=<?= min($totalPages, $page + 1) ?>">
+                            <a class="page-link"
+                                href="?page=<?= min($totalPages, $page + 1) ?><?= buildQueryStringWithFilters() ?>">
                                 <i class="fa-solid fa-angle-right"></i>
                             </a>
                         </li>
 
                         <li class="page-item <?= $page == $totalPages ? 'disabled' : '' ?>">
-                            <a class="page-link" href="?page=<?= $totalPages ?>">
+                            <a class="page-link" href="?page=<?= $totalPages ?><?= buildQueryStringWithFilters() ?>">
                                 <i class="fa-solid fa-angles-right"></i>
                             </a>
                         </li>
@@ -276,13 +395,15 @@ echo json_encode([
                 </nav>
             </div>
 
+            <!-- #endregion pagination -->
+
         </div>
 
     </div>
 
 </div>
 
-<!-- model -->
+<!-- #region modal 篩選器 Filter -->
 
 <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="Modal" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
@@ -314,34 +435,36 @@ echo json_encode([
                         </thead>
                         <tbody class="filter">
                             <tr>
-                                <td class="filterBtn"><a class="model-a"
-                                        href="?sort=tid&order=desc&page=<?= $page ?>">由大到小</a></td>
-                                <td class="filterBtn"><a class="model-a"
-                                        href="?sort=counts&order=desc&page=<?= $page ?>">由多到少</a></td>
-                                <td class="filterBtn"><a class="model-a"
-                                        href="?sort=price&order=desc&page=<?= $page ?>">由高到低</a></td>
-                                <td class="filterBtn"><a class="model-a"
-                                        href="?sort=a_date&a_time&order=desc&page=<?= $page ?>">最遠活動時間</a></td>
-                                <td class="filterBtn"><a class="model-a"
-                                        href="?sort=created_at&order=desc&page=<?= $page ?>">最新建立時間</a></td>
-                                <td class="filterBtn"><a class="model-a"
-                                        href="?sort=editTime&order=desc&page=<?= $page ?>">最新修改時間</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=tid&order=desc"
+                                        onclick="preserveFilters(event, 'sort=tid&order=desc')">由大到小</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=counts&order=desc"
+                                        onclick="preserveFilters(event, 'sort=counts&order=desc')">由多到少</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=price&order=desc"
+                                        onclick="preserveFilters(event, 'sort=price&order=desc')">由高到低</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=a_date&a_time&order=desc"
+                                        onclick="preserveFilters(event, 'sort=a_date&a_time&order=desc')">最遠活動時間</a>
+                                </td>
+                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=created_at&order=desc"
+                                        onclick="preserveFilters(event, 'sort=created_at&order=desc')">最新建立時間</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=editTime&order=desc"
+                                        onclick="preserveFilters(event, 'sort=editTime&order=desc')">最新修改時間</a></td>
                             </tr>
                             <tr>
-                                <td class="filterBtn"><a class="model-a"
-                                        href="?sort=tid&order=asc&page=<?= $page ?>">由小到大</a></th>
-                                <td class="filterBtn"><a class="model-a"
-                                        href="?sort=counts&order=asc&page=<?= $page ?>">由少到多</a></td>
-                                <td class="filterBtn"><a class="model-a"
-                                        href="?sort=price&order=asc&page=<?= $page ?>">由低到高</a></td>
-                                <td class="filterBtn"><a class="model-a"
-                                        href="?sort=a_date&a_time&order=asc&page=<?= $page ?>">最近活動時間</a></td>
-                                <td class="filterBtn"><a class="model-a"
-                                        href="?sort=created_at&order=asc&page=<?= $page ?>">最舊建立時間</a></td>
-                                <td class="filterBtn"><a class="model-a"
-                                        href="?sort=editTime&order=asc&page=<?= $page ?>">最舊修改時間</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=tid&order=asc"
+                                        onclick="preserveFilters(event, 'sort=tid&order=asc')">由小到大</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=counts&order=asc"
+                                        onclick="preserveFilters(event, 'sort=counts&order=asc')">由少到多</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=price&order=asc"
+                                        onclick="preserveFilters(event, 'sort=price&order=asc')">由低到高</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=a_date&a_time&order=asc"
+                                        onclick="preserveFilters(event, 'sort=a_date&a_time&order=asc')">最近活動時間</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=created_at&order=asc"
+                                        onclick="preserveFilters(event, 'sort=created_at&order=asc')">最舊建立時間</a></td>
+                                <td class="filterBtn"><a class="model-a" href="?page=1&sort=editTime&order=asc"
+                                        onclick="preserveFilters(event, 'sort=editTime&order=asc')">最舊修改時間</a></td>
                             </tr>
                         </tbody>
+
                     </table>
                 </div>
             </div>
@@ -349,11 +472,12 @@ echo json_encode([
     </div>
 </div>
 
-<!-- description -->
+<!-- #endregion modal 篩選器 Filter -->
 
-<!-- Modal -->
+<!-- #region modal description -->
+
 <div class="modal fade " id="description" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content bg-dark position-relative">
             <div class="position-absolute top-0 end-0">
                 <button type="button" class="btn-close bg-white fs-4" data-bs-dismiss="modal"
@@ -361,176 +485,141 @@ echo json_encode([
             </div>
             <div class="d-flex justify-content-center my-4 mb-3">
                 <div>
-                    <h4 class="fw-bold text-white fs-2">搜尋篩選器</h4>
+                    <h4 class="fw-bold text-white fs-2">活動描述</h4>
                 </div>
             </div>
-            <div class="modal-body fs-2 fw-bold text-white p-5 lh-lg spacing">
-                <?= $r['descriptions'] ?>
+            <div class="modal-body fs-2 fw-bold text-white p-5 lh-lg spacing" id="descriptionContent"></div>
+        </div>
+    </div>
+</div>
+
+<!-- #endregion modal description -->
+
+<!-- #region modal image -->
+
+<div class="modal fade" id="modelImage" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content bg-dark position-relative">
+            <div class="position-absolute top-0 end-0">
+                <button type="button" class="btn-close bg-white fs-4" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="d-flex justify-content-center my-4 mb-3">
+                <div>
+                    <h4 class="fw-bold text-white fs-2">活動圖片</h4>
+                </div>
+            </div>
+            <div class="modal-body d-flex justify-content-center align-items-center">
+                <img id="activityPicture" class="img-fluid w-100 rounded" alt="Activity Picture">
             </div>
         </div>
     </div>
 </div>
 
+<!-- #endregion modal image -->
+
 <?php include __DIR__ . "/part/scripts.php"; ?>
+
 <script>
-    // search
 
-    const searchInput = document.querySelector('.textSearch');
-    const searchButton = document.querySelector('.search');
+    // 模糊搜尋
+    document.getElementById('search_form').addEventListener('submit', function (event) {
+        // 防止預設的表單提交行為
+        event.preventDefault();
 
-    searchButton.addEventListener('click', function () {
-        const searchText = searchInput.value;
-        // 使用 AJAX 向後端發送請求
-        fetch(`ticket-search-api.php?keyword=${searchText}`)
-            .then(response => response.json())
-            .then(data => {
-                // 更新前端頁面，例如更新表格內容
-                updateTable(data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+        // 手動提交表單
+        this.submit();
     });
 
-    // search
+    // 保留篩選條件並跳轉頁面
+    function preserveFilters(event, filter) {
+        event.preventDefault(); // 防止點擊分頁連結默認跳轉
+        var pageLink = event.target.href; // 獲取點擊的分頁連結
+        var baseUrl = pageLink.split('?')[0]; // 獲取連結的基本部分
+        var params = new URLSearchParams(window.location.search); // 解析當前 URL 中的參數
 
-    // reload
+        // 清除原始的分頁參數，並將其設置為 1
+        params.set('page', '1');
 
-    const reload = document.querySelector('.reload');
+        // 設置新的排序和篩選條件
+        params.set('sort', filter.split('&')[0].split('=')[1]); // 設置新的排序條件
+        params.set('order', filter.split('&')[1].split('=')[1]); // 設置新的排序方式
 
-    reload.addEventListener('click', function () {
-        // 在 JavaScript 中重新整理頁面
-        location.reload();
-    });
-
-    // reload
-
-    /* musicFestival-api */
-
-    const musicFestival = document.querySelector('.musicFestival');
-
-    musicFestival.addEventListener('click', function () {
-        // 發送 AJAX 請求到後端
-        fetch('ticket-musicFestival-api.php')
-            .then(response => response.json())
-            .then(data => {
-                // 更新前端頁面
-                updateTable(data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    });
-
-    function updateTable(data) {
-        const tbody = document.querySelector('.tb');
-        tbody.innerHTML = ''; // 清空表格內容
-        data.forEach(row => {
-            const tr = document.createElement('tr');
-            // 創建表格行並填充數據
-            tr.innerHTML = `
-            <td><input type="checkbox"></td>
-            <td><a class="btn btn-danger" href="javascript: deleteOne(${row['tid']})">
-                <i class="bi bi-trash3"></i>
-                </a></td>
-            <td>${row['tid']}</td>
-            <td><img src="${row['picture']}" class="image img-thumbnail" alt="activities_picture"></td>
-            <td>${row['activity_name']}</td>
-            <td>${row['art_name']}</td>
-            <td>${row['location']}</td>
-            <td>${row['descriptions']}</td>
-            <td>${row['a_date']}<br><br>${row['a_time']}</td>
-            <td>${row['counts']}</td>
-            <td>${row['price']}</td>
-            <td>${row['class']}</td>
-            <td>${row['ticket_area']}</td>
-            <td>${row['organizer']}</td>
-            <td></td>
-            <td></td>
-            <td>
-                <a class="btn btn-warning" href="ticket-edit.php?id=${row['tid']}">
-                    <i class="bi bi-pencil-square"></i>
-                </a>
-            </td>
-        `;
-            tbody.appendChild(tr);
-        });
+        // 在基本部分後添加所有參數並跳轉
+        window.location.href = baseUrl + '?' + params.toString();
     }
 
-    /* musicFestival-api */
+    // 價格區間篩選
+    document.getElementById("search_button").addEventListener("click", function () {
+        var minPrice = document.getElementById("min_price_input").value;
+        var maxPrice = document.getElementById("max_price_input").value;
 
-    /* concert-api */
+        // 構建 URL
+        var url = "http://localhost/music/web/ticket-list.php?";
+        if (minPrice !== "") {
+            url += "min_price=" + encodeURIComponent(minPrice) + "&";
+        }
+        if (maxPrice !== "") {
+            url += "max_price=" + encodeURIComponent(maxPrice);
+        }
 
-    const concert = document.querySelector('.concert');
-
-    concert.addEventListener('click', function () {
-        // 發送 AJAX 請求到後端
-        fetch('ticket-concert-api.php')
-            .then(response => response.json())
-            .then(data => {
-                // 更新前端頁面
-                updateTable(data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+        // 更新搜尋按鈕的 href 屬性
+        document.getElementById("search_button").href = url;
     });
 
-    function updateTable(data) {
-        const tbody = document.querySelector('.tb');
-        tbody.innerHTML = ''; // 清空表格內容
-        data.forEach(row => {
-            const tr = document.createElement('tr');
-            // 創建表格行並填充數據
-            tr.innerHTML = `
-        <td><input type="checkbox"></td>
-        <td><a class="btn btn-danger" href="javascript: deleteOne(${row['tid']})">
-            <i class="bi bi-trash3"></i>
-            </a></td>
-        <td>${row['tid']}</td>
-        <td><img src="${row['picture']}" class="image img-thumbnail" alt="activities_picture"></td>
-        <td>${row['activity_name']}</td>
-        <td>${row['art_name']}</td>
-        <td>${row['location']}</td>
-        <td>${row['descriptions']}</td>
-        <td>${row['a_date']}<br><br>${row['a_time']}</td>
-        <td>${row['counts']}</td>
-        <td>${row['price']}</td>
-        <td>${row['class']}</td>
-        <td>${row['ticket_area']}</td>
-        <td>${row['organizer']}</td>
-        <td></td>
-        <td></td>
-        <td>
-            <a class="btn btn-warning" href="ticket-edit.php?id=${row['tid']}">
-                <i class="bi bi-pencil-square"></i>
-            </a>
-        </td>
-    `;
-            tbody.appendChild(tr);
-        });
+    // 保留篩選條件和排序方式
+    function preserveFiltersAndSort(event, filter) {
+        event.preventDefault(); // 防止點擊分頁連結默認跳轉
+        var pageLink = event.target.href; // 獲取點擊的分頁連結
+        var baseUrl = pageLink.split('?')[0]; // 獲取連結的基本部分
+        var params = new URLSearchParams(window.location.search); // 解析當前 URL 中的參數
+
+        // 清除原始的分頁參數，並將其設置為 1
+        params.set('page', '1');
+
+        // 設置新的排序和篩選條件
+        params.set('sort', filter.split('&')[0].split('=')[1]); // 設置新的排序條件
+        params.set('order', filter.split('&')[1].split('=')[1]); // 設置新的排序方式
+
+        // 將輸入框的值添加到 URL 參數中
+        var minPrice = document.getElementById("min_price_input").value;
+        var maxPrice = document.getElementById("max_price_input").value;
+        if (minPrice !== "") {
+            params.set('min_price', minPrice);
+        }
+        if (maxPrice !== "") {
+            params.set('max_price', maxPrice);
+        }
+
+        // 在基本部分後添加所有參數並跳轉
+        window.location.href = baseUrl + '?' + params.toString();
     }
 
-    /* concert-api */
+    // 購票價格排序
+    var searchForm = document.getElementById('search_form');
+    searchForm.addEventListener('submit', function (event) {
+        event.preventDefault(); // 阻止表單的默認提交行為
+        var searchQuery = document.getElementById('search_input').value;
+        // 在這裡可以根據搜索內容執行相應的搜索操作，例如向服務器發送Ajax請求
+        // 這裡只是簡單地打印搜索內容到控制台
+        console.log('搜索內容：', searchQuery);
+    });
 
-    // delete
-
+    // 單個刪除
     const deleteOne = (tid) => {
+        // 確認是否刪除特定編號的資料
         if (confirm(`是否要刪除編號為 ${tid} 的資料?`)) {
-            location.href = `ticket-list-delete.php?tid=${tid}`;
+            location.href = `ticket-list-delete.php?tid=${tid}`; // 跳轉至刪除頁面
         }
     }
 
-    // delete
-
-    // 全選反選
-
+    // 全選與反選
     let cb_all = document.querySelector('.cb_all');
     let tbs = document.querySelector('.tb').querySelectorAll('input');
 
     cb_all.addEventListener('click', function () {
         for (let i = 0; i < tbs.length; i++) {
-            tbs[i].checked = this.checked;
+            tbs[i].checked = this.checked; // 將所有單選框的選中狀態設置為全選框的選中狀態
         }
     });
 
@@ -543,19 +632,16 @@ echo json_encode([
                     break;
                 }
             }
-            cb_all.checked = flag;
+            cb_all.checked = flag; // 若有單選框未選中，則全選框也取消選中
         }
     }
 
-    // 全選反選
-
     // 刪除所選Script
-
     const dltAllSelect = document.getElementById("dltAllSelect");
     const checkboxes2 = document.querySelectorAll(".checkboxes");
 
     dltAllSelect.addEventListener('click', function () {
-        let selectedIds = []; // 儲存被勾選項目的 ID
+        let selectedIds = []; // 儲存被選中項目的 ID
 
         for (let i = 0; i < checkboxes2.length; i++) {
             if (checkboxes2[i].checked) {
@@ -575,15 +661,12 @@ echo json_encode([
         }
     });
 
-    // 刪除所選Script
+    // 篩選器 filter 背景顏色變化
 
-    // filter 背景顏色變化
-
-    // 獲取所有帶有類名 "model-a" 的元素
-
-    // const filter = document.querySelector('.filter');
+    // 取得所有帶有 "model-a" 類別的元素
     const links = document.querySelectorAll('#Modal .modal-body .filter .filterBtn');
 
+    // 從本地存儲中獲取活動連結
     const activeLink = localStorage.getItem('activeLink');
 
     if (activeLink) {
@@ -610,11 +693,9 @@ echo json_encode([
         });
     }
 
-    // filter 背景顏色變化
-
     // 價格範圍限制最小最大價格
 
-    // 找到最小價格輸入框和最大價格輸入框
+    // 取得最小價格輸入框和最大價格輸入框
     const minPriceInput = document.querySelector('input[name="min_price"]');
     const maxPriceInput = document.querySelector('input[name="max_price"]');
 
@@ -628,16 +709,43 @@ echo json_encode([
         }
     });
 
-    // 當最大價格輸入框內容發生變化時觸發
-    maxPriceInput.addEventListener('input', function () {
-        // 如果最大價格輸入框的值小於最小價格輸入框的值，則將其設置為最小價格輸入框的值
-        if (parseInt(this.value) < parseInt(minPriceInput.value)) {
-            this.value = minPriceInput.value;
-        }
+    // model描述
+
+    function getDescription(element) {
+        var actid = element.getAttribute('data-actid');
+
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById('descriptionContent').innerHTML = this.responseText;
+            }
+        };
+        xhr.open("GET", "ticket-get-description.php?actid=" + actid, true);
+        xhr.send();
+    }
+
+    // model圖片
+
+    let modal = document.getElementById('modelImage');
+    modal.addEventListener('show.bs.modal', function (event) {
+        let button = event.relatedTarget; // 觸發模態框的按鈕
+        let actid = button.getAttribute('data-actid'); // 從觸發按鈕獲取 actid
+        // Ajax 請求獲取 actid 對應的圖片鏈接
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    // 將獲取的圖片鏈接設置到模態框中
+                    let response = xhr.responseText;
+                    modal.querySelector('.modal-body #activityPicture').src = response;
+                } else {
+                    console.error('Error fetching image');
+                }
+            }
+        };
+        xhr.open('GET', 'ticket-get-picture.php?actid=' + encodeURIComponent(actid)); // 使用 GET 請求
+        xhr.send();
     });
-
-    // 價格範圍限制最小最大價格
-
 
 </script>
 <?php include __DIR__ . "/part/html-footer.php"; ?>
