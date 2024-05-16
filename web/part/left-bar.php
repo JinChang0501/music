@@ -112,7 +112,7 @@ if (!isset($pageName))
             </h2>
             <div id="collapse3" class="accordion-collapse collapse <?= $pageName == 'ticket-order-list' || $pageName == 'ticket-list' || $pageName == 'ticket-add' || $pageName == 'ticket-edit' ? 'show' : '' ?>" aria-labelledby="heading3" data-bs-parent="#accordionExample">
               <div class="accordion-body p-0"> <!-- p-0 把li上下左右的空間清掉不要動-->
-                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'ticket-order-list' ? 'active' : '' ?>" href="ticket-order-list.php" href="#">購票訂單</a></li>
+                <!-- <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'ticket-order-list' ? 'active' : '' ?>" href="ticket-order-list.php" href="#">購票訂單</a></li> -->
                 <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'ticket-list' ? 'active' : '' ?>" href="ticket-list.php">上架購票清單</a></li>
                 <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'ticket-add' ? 'active' : '' ?>" href="ticket-add.php">新增購票</a></li>
               </div>
