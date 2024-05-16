@@ -6,7 +6,7 @@ if (!isset($_SESSION)) {
 }
 
 $title = '新增會員列表';
-$pageName = 'members-add';
+$pageName = 'products-add';
 
 ?>
 
@@ -32,7 +32,7 @@ $pageName = 'members-add';
       <!-- NEW START-->
       <div class="row">
         <div class="col-8 mx-auto border rounded-3 my-3 bg-white shadow">
-          <h4 class="my-3">新增會員</h4>
+          <h4 class="my-3">新增產品</h4>
 
           <!-- 錯誤提示訊息 -->
           <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
@@ -52,83 +52,43 @@ $pageName = 'members-add';
           <form name="form1" onsubmit="sendData(event)" class="needs-validation" novalidate>
             <div class="row g-3">
               <div class="col-sm-6">
-                <label for="first_name" class="form-label">First name</label>
-                <input type="text" class="form-control" id="first_name" name="first_name" required>
+                <label for="product_name" class="form-label">Product name</label>
+                <input type="text" class="form-control" id="product_name" name="product_name" required>
                 <div class="invalid-feedback">
                   Valid first name is required.
                 </div>
               </div>
 
               <div class="col-sm-6">
-                <label for="last_name" class="form-label">Last name</label>
-                <input type="text" class="form-control" id="last_name" name="last_name" required>
-                <div class="invalid-feedback">
-                  Valid last name is required.
-                </div>
+                <label for="picture" class="form-label">Picture:</label>
+                <input type="file" class="form-control" id="picture" name="picture" onchange="previewPhoto(event)">
+                <img id="photoPreview" class="mt-2" style="max-width: 200px; display: none;">
               </div>
 
 
               <div class="col-12">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
+                <label for="price" class="form-label">Price</label>
+                <input type="text" class="form-control" id="price" name="price" required>
                 <div class="invalid-feedback">
                   Please enter a valid email address for shipping updates.
                 </div>
               </div>
 
               <div class="col-12">
-                <label for="passwords" class="form-label">Passwords</label>
-                <input type="password" class="form-control" id="passwords" name="passwords" placeholder="" required>
+                <label for="purchase_quantity" class="form-label">purchase_quantity</label>
+                <input type="text" class="form-control" id="purchase_quantity" name="purchase_quantity" required>
                 <div class="invalid-feedback">
                   Please enter a valid password for shipping updates.
                 </div>
               </div>
 
-              <!-- gender -->
+              <!-- activitie_id -->
               <div class="col-4">
-                <label for="gender" class="form-label">Gender</label><br>
-                <select class="form-select" id="gender" name="gender" required>
-                  <option value="" selected disabled>Select gender</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                </select>
+                <label for="activitie_id" class="form-label">Activitie_id</label><br>
+                <input type="text" class="form-control" id="activitie_id" name="activitie_id" required>
                 <div class="invalid-feedback">
-                  Gender required.
+                  Please enter a valid password for shipping updates.
                 </div>
-              </div>
-
-
-              <!-- phone number -->
-              <div class="col-4">
-                <label for="phone_number" class="form-label">Phone Number</label>
-                <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="09xxxxxxxx" pattern="[0]{1}[9]{1}[0-9]{8}" maxlength="10" required>
-                <div class="invalid-feedback">
-                  Phone number required.
-                </div>
-              </div>
-              <!-- birthday -->
-              <div class="col-4">
-                <label for="birthday" class="form-label">Birthday</label>
-                <input type="date" class="form-control" id="birthday" name="birthday" placeholder="" required>
-                <div class="invalid-feedback">
-                  Birthday required.
-                </div>
-              </div>
-              <!-- address -->
-              <div class="col-12">
-                <label for="address" class="form-label">Address</label>
-                <input type="text" class="form-control" id="address" name="address" placeholder="1234 Main St" required>
-                <div class="invalid-feedback">
-                  Please enter your shipping address.
-                </div>
-              </div>
-
-
-
-              <div class="col-12">
-                <label for="photo" class="form-label">Photo:</label>
-                <input type="file" class="form-control" id="photo" name="photo" onchange="previewPhoto(event)">
-                <img id="photoPreview" class="mt-2" style="max-width: 200px; display: none;">
               </div>
 
 
@@ -160,7 +120,7 @@ $pageName = 'members-add';
       </div>
       <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary" onclick="location.href='members-list.php'">到列表頁</button>
+        <button type="button" class="btn btn-primary" onclick="location.href='product-list.php'">到列表頁</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="keepAdd">繼續新增</button>
       </div>
     </div>
@@ -262,7 +222,7 @@ $pageName = 'members-add';
     //信箱驗證
     if (isPass) {
       const fd = new FormData(document.form1); // 創建 FormData 对象
-      fetch('members-add-api.php', {
+      fetch('product-add-api.php', {
           method: 'POST',
           body: fd, // 表单数据
         })

@@ -23,7 +23,6 @@ $t_sql = "SELECT COUNT(id) FROM `members`";
 
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 
-
 # 總頁數
 $totalPages = ceil($totalRows / $per_page);
 if ($page > $totalPages) {
@@ -36,42 +35,22 @@ if ($page > $totalPages) {
 // SELECT * FROM `address_book` ORDER BY id DESC LIMIT 40, 20
 // SELECT * FROM `address_book` ORDER BY id DESC LIMIT 60, 20
 
-// 搜尋設定
-$searchTerm = isset($_GET['search']) ? '%' . $_GET['search'] . '%' : ''; // 添加通配符
-$searchSql = '';
 
-if (!empty($searchTerm)) {
-  $searchSql = "WHERE `id` LIKE :searchTerm 
-                  OR `first_name` LIKE :searchTerm
-                  OR `last_name` LIKE :searchTerm
-                  OR `email` LIKE :searchTerm 
-                  OR `phone_number` LIKE :searchTerm";
-}
 
 $sort = isset($_GET['sort']) ? $_GET['sort'] : 'id';
 $order = isset($_GET['order']) ? $_GET['order'] : 'desc';
 $order = $order === 'asc' ? 'asc' : 'desc';
 
 $sql = sprintf(
-  "SELECT * FROM `members` %s ORDER BY $sort $order LIMIT :start, :per_page",
-  $searchSql
+  "SELECT * FROM `members`  ORDER BY $sort $order LIMIT %s,%s",
+  ($page - 1) * $per_page,
+  $per_page
 );
 
-$stmt = $pdo->prepare($sql);
-
-// Bind search term if applicable
-if (!empty($searchTerm)) {
-  $stmt->bindParam(':searchTerm', $searchTerm, PDO::PARAM_STR);
-}
-
-// Bind pagination parameters
-$start = ($page - 1) * $per_page;
-$stmt->bindParam(':start', $start, PDO::PARAM_INT);
-$stmt->bindParam(':per_page', $per_page, PDO::PARAM_INT);
-
-$stmt->execute();
-$rows = $stmt->fetchAll();
-
+// $stmt = $pdo->prepare($sql);
+// $stmt->execute($params);
+$rows = $pdo->query($sql)->fetchAll();
+// $rows = $stmt->fetchAll();
 
 include __DIR__ . "/part/html-header.php";
 include __DIR__ . "/part/navbar-head.php";
@@ -122,34 +101,18 @@ include __DIR__ . "/part/navbar-head.php";
       </nav>
       <!-- 頁面選單 End -->
       <!-- 按鈕列 Start -->
-      <div class="row d-flex mb-3">
+      <div class="row d-flex">
         <!-- <div class="col-2 mb-4"><button class="bg-warning rounded-2" id="checkall">一鍵全選</button></div> -->
         <div class="col-2 my-auto">
           <a href="members-add.php" class="bg-success rounded-2 border border-1 border-black p-1 text-decoration-none text-black">新增會員</a>
           <button class="bg-warning rounded-2" id="dltAllSelect">刪除所選</button>
         </div>
 
-        <form class="ms-auto d-flex" id="searchForm" style="width: 350px;">
-          <input type="text" class="form-control px-auto" id="search" name="search" value="<?= htmlentities($_GET['search'] ?? '') ?>" placeholder="請輸入姓名/電話/信箱進行搜尋">
-          <input type="hidden" id="isSearched" name="isSearched" value="<?= isset($_GET['search']) ? 'true' : 'false' ?>">
-          <button type="submit" class="btn btn-primary ms-1"><i class="bi bi-search text-white"></i></button>
-
+        <form class="col-12 col-lg-auto mb-lg-0 ms-auto">
+          <input type="search" class="form-control form-control-dark my-3" placeholder="Search..." aria-label="Search">
         </form>
       </div>
 
-      <!-- 搜尋功能Start -->
-      <!-- <div class="row">
-        <form method="get" action="">
-          <div class="form text-dark row">
-            <div class="col-md-12">
-              <label for="search">搜尋</label>
-              <input type="text" class="form-control" id="search" name="search" value="<?= htmlentities($_GET['search'] ?? '') ?>">
-            </div>
-          </div>
-          <button type="submit" class="btn btn-primary">搜尋</button>
-        </form>
-      </div> -->
-      <!-- 搜尋功能End -->
 
 
 
@@ -235,47 +198,6 @@ include __DIR__ . "/part/navbar-head.php";
 
 <?php include __DIR__ . "/part/scripts.php" ?>
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('search');
-    const isSearchedInput = document.getElementById('isSearched');
-    const searchButton = document.getElementById('searchButton');
-
-    // 初始化按鈕文字和狀態
-    updateSearchButton();
-
-    // 點擊按鈕時的事件處理程序
-    searchButton.addEventListener('click', function(e) {
-      e.preventDefault();
-      toggleSearch();
-      updateSearchButton();
-    });
-
-    // 切換搜尋狀態
-    function toggleSearch() {
-      const isSearched = isSearchedInput.value === 'true';
-      isSearchedInput.value = isSearched ? 'false' : 'true';
-    }
-
-    // 更新按鈕文本
-    function updateSearchButton() {
-      const isSearched = isSearchedInput.value === 'true';
-      if (isSearched) {
-        searchButton.textContent = '清除搜尋';
-      } else {
-        searchButton.textContent = '搜尋';
-      }
-      searchInput.placeholder = isSearched ? '清除搜尋文字' : '請輸入 First_name / Last_name/ Email / Phone_number進行搜尋';
-      searchInput.value = isSearched ? '' : searchInput.value;
-    }
-  });
-
-
-
-
-
-
-
-
   const deleteOne = (id) => {
     if (confirm(`確定要刪除${id}的資料嗎?`)) {
       location.href = `members-delete.php?id=${id}`;

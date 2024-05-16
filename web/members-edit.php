@@ -43,7 +43,7 @@ if (empty($row)) {
       <div class="row">
         <div class="col-8 mx-auto border rounded-3 my-3 bg-white shadow">
           <h4 class="my-3">編輯會員</h4>
-          <form name="form1" onsubmit="sendData(event)" class="needs-validation" novalidate>
+          <form name="form1" onsubmit="sendData(event)" class="needs-validation" novalidate enctype="multipart/form-data">
             <input type="hidden" name="id" value="<?= $row['id'] ?>">
 
 
@@ -131,18 +131,25 @@ if (empty($row)) {
                 </div>
               </div>
 
-
-              <div class="col-12">
-                <label for="address" class="form-label">Address</label>
-                <input type="text" class="form-control" id="address" name="address" value="<?= $row['address'] ?>" required>
-                <div class="invalid-feedback">
-                  address required.
-                </div>
+              <div class="col-6">
+                <label for="photo" class="form-label">原始照片</label><br>
+                <img src="../img/members-img/<?= $row['photo'] ?>" alt="原始照片" class="w-50">
               </div>
+              <div class="col-6">
+
+                <label for="photo" class="form-label">選擇新照片:</label>
+                <input type="file" id="photo" name="photo" accept="image/*" onchange="previewNewPhoto(event)" class="form-control">
+                <br>
+                <img src="" alt="新照片預覽" id="newPhotoPreview" class="w-50" style="display: none;">
+              </div>
+
+
+
+
 
             </div>
             <div class="text-end">
-              <button class="btn btn-primary my-3" type="submit">新增</button>
+              <button class="btn btn-primary my-3" type="submit">更新</button>
               <button class="btn btn-secondary my-3" type="reset">清除</button>
             </div>
           </form>
@@ -274,6 +281,29 @@ if (empty($row)) {
 
 <?php include __DIR__ . "/part/scripts.php"; ?>
 <script>
+  //img
+  function previewNewPhoto(event) {
+    const fileInput = event.target;
+    const preview = document.getElementById('newPhotoPreview');
+
+    if (fileInput.files && fileInput.files[0]) {
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+      };
+
+      reader.readAsDataURL(fileInput.files[0]);
+    }
+  };
+
+
+
+
+
+
+
   const first_nameField = document.form1.first_name;
   const last_nameField = document.form1.last_name;
   const emailField = document.form1.email;
@@ -292,22 +322,22 @@ if (empty($row)) {
     // first_nameField.nextElementSibling.innerText = '';
     // last_nameField.style.border = '1px solid #CCCCCC';
     // last_nameField.nextElementSibling.innerText = '';
-    // emailField.style.border = '1px solid #CCCCCC';
-    // emailField.nextElementSibling.innerText = '';
+    emailField.style.border = '1px solid #CCCCCC';
+    emailField.nextElementSibling.innerText = '';
     // TODO: 欄位資料檢查
 
     let isPass = true; // 表單有沒有通過檢查
-    if (first_nameField.value.length < 2) {
-      isPass = false;
-      first_nameField.style.border = '1px solid red';
-      first_nameField.nextElementSibling.innerText = '請填寫正確的姓名';
-    }
+    // if (first_nameField.value.length < 2) {
+    //   isPass = false;
+    //   first_nameField.style.border = '1px solid red';
+    //   first_nameField.nextElementSibling.innerText = '請填寫正確的姓名';
+    // }
 
-    if (last_nameField.value.length < 2) {
-      isPass = false;
-      last_nameField.style.border = '1px solid red';
-      last_nameField.nextElementSibling.innerText = '請填寫正確的姓名';
-    }
+    // if (last_nameField.value.length < 2) {
+    //   isPass = false;
+    //   last_nameField.style.border = '1px solid red';
+    //   last_nameField.nextElementSibling.innerText = '請填寫正確的姓名';
+    // }
 
     if (!validateEmail(emailField.value)) {
       isPass = false;
