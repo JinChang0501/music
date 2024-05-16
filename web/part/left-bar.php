@@ -189,7 +189,7 @@ if (!isset($pageName))
             </div>
           </div>
           <!-- 8 -->
-          <div class="accordion-item">
+          <!-- <div class="accordion-item">
             <h2 class="accordion-header" id="heading8">
               <button class="accordion-button collapsed fs-5 fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse8" aria-expanded="false" aria-controls="collapse8">
                 訂單資料管理
@@ -197,13 +197,13 @@ if (!isset($pageName))
             </h2>
             <div id="collapse8" class="accordion-collapse collapse" aria-labelledby="heading8" data-bs-parent="#accordionExample">
               <div class="accordion-body p-0"> <!-- p-0 把li上下左右的空間清掉不要動-->
-                <li class="li-hover"><a class="dropdown-item py-3 border  " href="#">增加訂單資料</a></li>
+          <!-- <li class="li-hover"><a class="dropdown-item py-3 border  " href="#">增加訂單資料</a></li>
                 <li class="li-hover"><a class="dropdown-item py-3 border" href="#">刪除訂單資料</a></li>
                 <li class="li-hover"><a class="dropdown-item py-3 border" href="#">編輯訂單資料</a></li>
                 <li class="li-hover"><a class="dropdown-item py-3 border" href="#">查詢訂單資料</a></li>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </ul>
     </div>
