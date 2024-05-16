@@ -182,8 +182,8 @@ if (!isset($pageName))
             <div id="collapse7" class="accordion-collapse collapse" aria-labelledby="heading7" data-bs-parent="#accordionExample">
               <div class="accordion-body p-0"> <!-- p-0 把li上下左右的空間清掉不要動-->
                 <li class="li-hover"><a class="dropdown-item py-3 border  " href="product-add.php">增加商品資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="product-list.php">編輯與刪除商品資料</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border" href="#">查詢商品資料</a></li>
+                <!-- <li class="li-hover"><a class="dropdown-item py-3 border" href="product-list.php">編輯與刪除商品資料</a></li> -->
+                <li class="li-hover"><a class="dropdown-item py-3 border" href="product-list.php">查詢商品資料</a></li>
               </div>
             </div>
           </div>
