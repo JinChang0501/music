@@ -121,7 +121,7 @@ if (empty($row)) {
               <div class="mb-3">
                 <img src="../img/activities-img/<?= $row['picture'] ?>" class="img-thumbnail" alt="">
               </div>
-              <input type="file" class="form-control" id="picture" name="picture" value="<?= $row['picture'] ?>">
+              <input type="file" class="form-control" id="picture" name="picture">
               <div class="form-text"></div>
             </div>
 
@@ -133,7 +133,7 @@ if (empty($row)) {
     </div>
   </div>
 </div>
-<!-- ModalA -->
+<!-- ModalA 資料修改成功 -->
 <div class="modal fade" id="staticBackdropA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
   aria-labelledby="staticBackdropLabelA" aria-hidden="true">
   <div class="modal-dialog">
@@ -156,7 +156,7 @@ if (empty($row)) {
   </div>
 </div>
 
-<!-- ModalB -->
+<!-- ModalB 資料沒有修改 -->
 <div class="modal fade" id="staticBackdropB" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
   aria-labelledby="staticBackdropLabelB" aria-hidden="true">
   <div class="modal-dialog">
@@ -258,7 +258,7 @@ if (empty($row)) {
 
       // 為表單添加提交事件監聽器
       const activitiesForm = document.getElementById('form_activities');
-      activitiesForm.addEventListener('submit', sendData);
+      //activitiesForm.addEventListener('submit', sendData);
 
       // 在選擇活動 select 欄位變化時執行的函數
       const onArtistSelectChange = () => {

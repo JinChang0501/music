@@ -40,7 +40,7 @@ CREATE TABLE `aclass` (
   `id` int NOT NULL AUTO_INCREMENT,
   `class` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,7 +77,7 @@ CREATE TABLE `activities` (
   KEY `artist_id` (`artist_id`),
   CONSTRAINT `activities_ibfk_1` FOREIGN KEY (`activity_class`) REFERENCES `aclass` (`id`),
   CONSTRAINT `activities_ibfk_2` FOREIGN KEY (`artist_id`) REFERENCES `artist` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -87,27 +87,27 @@ CREATE TABLE `activities` (
 LOCK TABLES `activities` WRITE;
 /*!40000 ALTER TABLE `activities` DISABLE KEYS */;
 INSERT INTO `activities` VALUES 
-(1,1,'一生到底 One Life, One Shot','2024-06-15','19:30:00','臺北流行音樂中心','台北市南港區市民大道8段99號','一生到底 One Life, One Shot人生像場一鏡到底的電影，時間不曾為誰停下，無法倒轉重來、也無法按下暫停。 \r\nLet’s keep rolling!不斷前進的過程中，最珍貴的便是每次聚在一起就充滿能量，很多事情一時沒有答案，至少、你有滅火器的音樂可以作伴。人生keep rolling的BGM，讓滅火器陪你，一生到底。','火氣音樂',1,'fireextp.jpeg'),
-(2,1,'The Yussef Dayes Experience - Live in Taipei','2024-07-25','20:00:00','Legacy Taipei','台北市中正區八德路一段1號華山1914創意文化園區中5A館','南倫敦出生的 Yussef Dayes，合成一系列來自南半球、西非到加勒比海和南美洲等令人眼花繚亂的聲音和節奏，他的表演融合了精湛的技術、強烈的激情和原始的情感，更以突破界限的音樂風景吸引全世界的樂迷觀眾，在倫敦當代爵士樂壇中占有重要地位。\nYussef Dayes 4歲就開始了他的音樂生涯，10歲從師 Billy Cobham（爵士巨人 Miles Davis 鼓手、Mahavishnu Orchestra 成員），和兄弟及朋友們組成樂團 United Vibrations，2011年發行《Galaxies Not Ghettos》，當時的 Yussef Dayes 只有16歲。儘管後來以 Kamaal Williams 組成的 Yussef Kamaal、以及和 Tom Misch 合作專輯《What Kinda Music》聲名大噪，Yussef Dayes 在2023年發行個人首張專輯《Black Classical Music》，融合爵士樂、雷鬼與嘻哈，邀來 Masego、Chronixx、Jamiliah Barry、Tom Misch 等人合作，獲得全英音樂獎（BRIT Awards）「最佳新人」「最佳另類／搖滾藝人」兩項年度提名。','Young Team Productions',1,'0725_Yussef Dayes.jpg'),
-(3,1,'10CM演唱會2024台北站','2024-09-06','19:00:00','Zepp New Taipei','新北市新莊區新北大道四段3號8樓','10CM在今年1月推出單曲’5.5 소년(少年)’，而4月25日發布全新單曲 5.6 ’너랑 밤새고 싶어(Late Night Walk)‘緩慢而甜蜜的唱出了戀情萌芽的羞澀與喜悅，近期甫創下收視紀錄的韓劇《淚之女王》中，10CM的聲音也讓電視劇大放異彩，過去半年內不斷推出作品的10CM將從7月開始於亞洲各國帶來精彩的演出。','LA RUE 文創設計',2,'10cm.jpg'),
-(4,1,'aespa台北演唱會2024','2024-08-10','19:00:00','國立體育大學綜合體育館(林口體育館)','桃園市龜山區文化一路250號','aespa出道四年首次正式來台北開專場演唱會，將於8月10號在林口體育館舉行。自從今年一月在台北舉行過專輯簽售會和受邀參加科技公司商演後，台北的MY對aespa來台北舉辦演唱會的呼聲越發高漲，在之後無預警公布的世界巡演城市名單中台北赫然在列，讓台北粉絲又驚又喜，希望演唱會快點到來。\naespa由四名成員Karina、Giselle、Winter、Ningning組成，自出道以來就以獨特的世界觀、前衛的團體概念，以及超強的舞台魅力，收穫眾多粉絲的心。她們在Youtube上每首MV的最低觀看次數都超過1億，是當代超人氣女團。\naespa在時尚方面也非常出色，瑞士奢華珠寶Chopard、義大利Versace、美國Ralph Lauren等世界知名品牌也選擇aespa團體及其成員作為該品牌的宣傳大使和代言人。\n這次台北場的演出日剛好是七夕情人節，在這個充滿粉色泡泡的日子裡，不知道成員們會給台北粉絲們帶來什麼樣的驚喜呢! 台北的MY們，八月一定要來現場和aespa一起創造幸福的回憶！','iMe TW',3,'aespa.jpg'),
-(5,1,'2024 Energy《一觸即發》台北演唱會','2024-07-27','19:30:00','台北小巨蛋','臺北市松山區南京東路4段2號','招牌發電｜經典回憶殺唱個夠\n帶你走進音樂回憶殺，首首都是陪伴人生的迷人觸景，不只「放手」、「多愛我一天」、「某年某月某一天」、「Come On」、「無懈可擊」，承諾過「永遠不說再見」的Energy，現在實現諾言，再度因你而聚，為你而跳。\n全面放電｜天王天后御用總監 打造最大夜店 \n潮流舞曲製造機音樂總監 Starr Chen 陳星翰，全新改編經典歌曲，將音樂能量觸電、發電、放電，音浪電力無限激盪，震撼台北小巨蛋！\n天王天后御用舞蹈總監林大鈞，炸裂編舞跨年代舞風大精華！舞曲全場炸翻最大夜店！\n零距離觸電｜天地對立光柱 巨型地面Led延伸舞台\n演唱會製作魔法團隊必應創造，訂製天地對立移動巨型異變光柱、巨型地面Led延伸舞台，近距離與你接觸！重磅打造超升級超大型的動感Party！\n記憶充電｜橫跨街舞世代挑動舞感神經 \n睽違22年重返當年，結合跨世代舞曲大招，當累積的能量重新匯集，走過分合 Energy 再衝一次，一起共寫屬於我們的新傳奇！','用心音樂',5,'energy.jpg'),
-(6,1,'Travis Japan World Tour 2024 Road to A','2024-09-03','20:00:00','Zepp New Taipei','新北市新莊區新北大道四段3號8樓','Travis Japan於2012年由麥可傑克森的編舞師Travis Payne所舉辦的徵選會中選出的成員所組成，是一支擁有強大舞蹈、表演實力的七人團體。\nTravis Japan曾參與舞台劇《虎者-NINJAPAN-》演出並擔任重要角色。2020年於可容納一萬七千人的橫濱體育場連續舉辦三場演出，門票全數售罄，2021年即在日本12個城市展開全國巡演《IMAGE NATION》。\n2022年3月，成員們為了精進自身能力，前往美國洛杉磯留學，留學期間參加了世界最大規模的舞蹈比賽「World of Dance」，以及美國NBC播出的指標性選秀節目「美國達人秀」，展現出他們精湛的舞蹈技巧，也成為了他們出道的契機。備受高度期待的首支主打單曲《JUST DANCE!》MV不但於YouTube觀看次數衝破千萬，也是J-POP史上首位以出道曲強勢登上告示牌美國除外全球單曲榜第五名的團體，此曲MV在YouTube觀看次數已突破千萬次。\n以首張專輯《Road to A》為題，不僅已在日本完成全國巡迴演唱會，吸引約31萬人參與，如今更宣布將開啟首次世界巡迴演唱會《Travis Japan World Tour 2024 Road to A》，要向世界展現他們最精彩、吸睛的舞蹈魅力！','大鴻藝術BIG ART',4,'Travis_Japan.jpeg'),
-(7,1,'2024 BTOB FAN-CON [OUR DREAM] in TAIPEI','2024-06-28','19:30:00','TICC台北國際會議中心','台北市信義區信義路五段一號','等了近六年！韓流三代團BTOB徐恩光、李旼赫、任炫植、PENIEL宣布6/29來台！\n很會唱、很會跳還很放閃！BTOB 終於要來啦！\n距離上次2018/9/8來台舉辦「BTOB TIME -THIS IS US」演唱會後，Melody（官粉名）等了近六年，終於要在6/29（六）見到韓流人氣實力三代團BTOB的四帥成員徐恩光、李旼赫、任炫植、PENIEL於TICC台北國際會議中心舉辦「2024 BTOB FAN-CON [OUR DREAM] in TAIPEI」！','SHOW Office Entertainment.co.ltd',6,'BTOB.jpeg'),
-(8,1,'小男孩樂團〔老闆！到底行不行？〕','2024-06-30','18:00:00','Zepp New Taipei','新北市新莊區新北大道四段3號8樓','是勞模們迷茫徬徨的職涯課題\n是小男孩拒絕世故的搖滾初心','滾石唱片',7,'LittleBoy.JPG'),
-(9,1,'血肉果汁機2024建宮蓋廟-宇宙預言','2024-07-27','19:30:00','臺北流行音樂中心','台北市南港區市民大道8段99號','宮廟\n不僅是多重領域大門，也是意識流的集合中心；\n宮廟\n不僅建造在地球上，也建造在太陽系八大行星衛星裡。\n令人驚奇的是\n太陽系邊界守門行星冥王星本身就是一座漂浮的宮廟行星。\n為什麼太陽系裏遍佈宮廟？\n是古地球人得到神仙的旨意、神仙的法力，而建宮蓋廟於整個太陽系？\n還是太陽系的古生命對於信仰有共識？\n我們看到的不只是過去，而是未來。\n2154年9大行星及衛星出現鬧鬼附身現象\n2159年正式進入「交由撒旦統治太陽系1000年」。\n3206年進入土星環發現多座破損宮廟隕石漂流在環中\n3264年發現冥王星是一座巨大的漂流宮廟\n3278年太陽系血肉宮廟網絡完成，血肉Boyz持續在宇宙中殺翻現場！','血肉果汁機',8,'flesh_temple.png'),
-(10,2,'霓虹綠洲音樂祭','2024-01-20','12:00:00','新店文山生態農場','新北市新店區湖子內路100號','本屆活動除了再度邀請台灣、日本、韓國、泰國等地的音樂人，更邀請到來自中國石家莊的搖滾傳奇萬能青年旅店、紐西蘭的蒙面歌手 JonathanBree、香港天團 RubberBand，以及前陣子於社群引起熱烈關注的金氏世界紀錄年紀最小的小學生DJ RINOKA，吸引了許多親子、寵物家庭族群一同參與本屆活動。此外，霓虹綠洲音樂祭還將新增主打嘻哈、新聲的舞台與「前夜祭」擴大舉辦，透過結合音樂祭、露營、市集，為北部都會區帶來冬日弛放音樂盛事！','霓虹綠洲音樂祭',9,'neon-oasis.jpg'),
-(11,2,'浮現祭','2024-02-24','11:00:00','清水鰲峰山運動公園','台中市清水區鰲海路70號','・2024年春假出遊首選音樂祭盛事\n・連續三年完售，台灣大型指標性音樂祭之一\n・台中海線小鎮漫遊，吃喝玩樂應有盡有\n・五周年擴大舉行，九大區域等你來解鎖\n・超過六國演出藝人即將來台獻技\n生活的紛擾及懊悔就留在那裡吧！一起邁向未知的新方向，大步踏出步伐，每一步都會有新風景的誕生，如同主視覺想傳達給每個朋友，跨過「浮現大門」後，回歸最純粹的模樣，化身為能代表你自己的角色，讓我們一起登陸小鎮的慶典吧！\n浮現祭五周年，再解鎖兩大場域，走進常民生活場景中，以及與海線當地有更多連結。未來，我們也將持續跨出海外，寫下更多新故事！如果你也想加入這段旅程，明年春天，我們相約老地方——台中清水，一個屬於我們冒險的起點。','浮現音樂藝文有限公司',10,'emerge_fest.png'),
-(12,2,'大港開唱','2024-03-30','11:00:00','高雄駁二藝術特區','高雄市鹽埕區大勇路1號','《大港開唱》（Megaport Festival），創立於2006年，由台北《野台開唱》（Formoz Festival：1995～2013）主辦團隊，在高雄創立。一南一北的兩大型音樂祭品牌，是台灣如今百花齊放音樂祭市場的先趨。即將於今年邁入第十五屆的大港開唱，於每年三月底舉辦，也是目前台灣最具指標性的大型戶外音樂祭活動。\n大港位於高雄港邊，獨特的海港地景和人文風情，常勾起人生中各種酸甜苦辣的回憶。也因如此，大港總是邀請有著豐富人生歷程的知名藝人及業界前輩演出，也會與新一代的樂團或藝人一起合作演出，交融出世代之間的化學效應，往往成為當年度為人津津樂道的經典現場，包括《黃金夜總會》的賀一航、《古惑仔》裡的大飛哥-黃秋生，永駐在人們青春回憶中的日本偶像酒井法子，再到唱出《心事誰人知》的沈文程和演出《花甲男孩》的三金得主蔡振南。除此之外，唱著《少年吔，安啦！》的伍佰以及後來變成姐姐的謝金燕，都曾是大港舞台的主角之一。','出日音樂股份有限公司',5,'mega-port.png'),
-(13,2,'火球祭','2024-11-25','11:00:00','樂天桃園棒球場','桃園市中壢區領航北路一段1號','地球人請注意\n重返愛的主場，火球祭正式回歸！\n距離上次火球祭\n已經過了 1,344 天\n但！有些記憶不管過多久還是難忘\n還記得播放著搖滾樂的旋轉木馬上，她的笑容讓我暈到現在\n人生中第一次踏上紅土、在音樂聲中滾草皮\n時不時被感動到哭得像個傻瓜、下一秒又笑得像個笨蛋\n在雨中熱舞、在太陽下的草皮曬乾自己\n直接拿著感應手環、買個外帶坐到看台區爽吃爽喝爽聽團❤\n48 小時裡不間斷的快樂\n現在回想起來都會笑，太爽了吧？有夠夢幻\n準備好重返我們的搖滾遊樂園嗎？','夥球擊股份有限公司',9,'fireball.jpg'),
-(14,2,'赤聲躁動音樂祭','2024-05-18','11:00:00','台中烏日觀光啤酒廠','台中市烏日區光華街1號','大膽飛天｜不純的純愛｜Y2K大爆炸\n「把糖果穿在身上、大聲唱歌，和冰友跳著最in的舞步並肩搖擺！」\n千禧年代的自由及美好令人無限懷念，\n浪漫五月，跟著赤聲戰隊來去Y2K的世界，\n一起大膽追愛，在浪漫大宇宙中自由飛翔！！','浮現音樂藝文有限公司',8,'carnival-fever.png'),
-(15,2,'台秋祭','2024-07-27','11:00:00','台中驛鐵道文化園區','台中市中區台灣大道一段1段1號','台中，\n是一個充滿熱情的所在，\n一個從北到南都得路過的所在，\n在這個交會點，\n無論是快樂、寂寞還是難過，我們都曾一起度過，\n就在「台秋祭」這個地方。\n說的沒錯，\n彼此都是生命中的過客，\n那既然你我都是旅客，\n就一起感受現場的一切，\n像是一種洗禮，一種契機，\n也會是一種轉運。\n感謝過去兩年的支持，\n歡迎來到，台秋轉運站。','大發展演有限公司',7,'taichill.jpg'),
-(16,2,'打狗祭','2024-10-07','11:00:00','高雄流行音樂中心','高雄市鹽埕區真愛路1號','遨遊在大宇宙中的外星小怪獸，受到打狗港灣的強大召喚！為了這群有夢想的人，打狗星際入口再度開啟》》》》》》\n延續去年的活動場域，以高流海音館、海風廣場為核心演出場域，加上珊瑚礁群、LIVE WAREHOUSE等五大場域，再次將愛河灣打造成充滿奇幻外星小怪獸的音樂宇宙星樂園，就是要讓樂迷與外星小怪獸一同遨遊穿梭，享受音樂的衝撞搖擺與微醺的快樂。','高雄流行音樂中心',6,'takao-rock.jpg'),
-(17,2,'雨山祭','2024-09-24','11:00:00','國立政治大學','台北市文山區指南路二段64號','單日雙舞台十二組卡司，一次滿足你12個願望\n雨山眾神召集中：椅子樂團、南西肯恩、庸俗救星、靈魂沙發、JADE⋯⋯等共聚一堂，邀請所有觀眾與神同慶！\n與 「 Legacy 傳 音樂展演空間 」共同合作，將聲光音響的極致饗宴帶至政大校園\n當日活動將與「小蝸牛市集」合作，精選文山區在地特色商家，並邀請各式特色攤商集結雨山祭，打造獨一無二的雨山市集','國立政治大學',5,'nccu-music-fest.jpg'),
-(18,2,'貴人散步音樂節','2024-11-04','10:30:00','台南市中西區多場館','台南市中西區永福路二段187號','象徵圓滿幸運的第7年，超強Lucky 7企劃陣容展現台灣音樂面貌\n來自世界各地多種面向的77組音樂人等你來挖寶\n全亞洲最多人潮、全台灣最國際化的Showcase音樂節\n在台南多個場館從古蹟到藝廊感受不同的演出體驗\n音樂演出之外還能享受城市探險的吃喝玩樂\n各式講座論壇，產業人士齊聚，與同業對話交流的好機會！\n多元跨界展演、城市漫遊旅程，還有更多結合音樂的另類體驗享受！','HO合為貴',4,'LUCfest.jpg'),
-(19,2,'禾火OUT','2024-09-28','11:00:00','公館水岸廣場','台北市中正區思源街1號','中秋連假首選，雙日雙舞台，超過 25 組超強卡司在公館水岸輪番演出\n最酷主題市集：從美食、飲品、到古著選物，吃喝玩買一次到位\n充氣沙發區、露天座位區，讓你躺著看坐著看都可以','PIPE Live Music',3,'chilloutfest.jpg'),
-(20,2,'浪人祭','2024-10-13','11:00:00','觀夕平台旁大草皮','台南市安平區金城里洲安三街','⟢　五週年 - 震撼王城 海味鉅獻　⟣\n戎克、朱印、克拉克大帆船，晚渡於海陸之城，港內寬衍，可泊千艘。\n夕陽西下，海晏捲朱旗，歷史的軌跡被鑲入城牆壁鎖，世世代代的王城，經過四個世紀的變革，帶來多族群的共生共榮。\n⟢　浪撼魚龍宅，盂懸上下天　⟣\n深海的龍嚎引萬物復甦，海底的熔岩劃開一道赤浪，鯤魚鼓浪，位於高處的龍宮，秋夜即將展開三日熱鬧晚宴，龍宮照欲醒，金黃色魚群奏起樂器，抬起「玉手箱」穿梭於赤足章魚觸手前，優美的旋律將撼動這片大海。','笨道策展有限公司',2,'Vega-Fest.jpg'),
-(21,2,'簡單生活節','2024-12-28','12:00:00','台北華山','台北市中正區八德路一段1號','「簡單生活 Simple Life」這個品牌，自我期許是個風格化的媒介，我們希望能夠讓創作者與熱愛者在其中相遇，並且彼此扶持成長。創作者可以從生活中萌芽，在生活中成長，直到力量足夠強大。','簡單生活節',1,'Simple-Life.jpg');
+(1,1,'一生到底 One Life, One Shot','2024-06-15','19:30:00','臺北流行音樂中心','台北市南港區市民大道8段99號','一生到底 One Life, One Shot人生像場一鏡到底的電影，時間不曾為誰停下，無法倒轉重來、也無法按下暫停。 \r\nLet’s keep rolling!不斷前進的過程中，最珍貴的便是每次聚在一起就充滿能量，很多事情一時沒有答案，至少、你有滅火器的音樂可以作伴。人生keep rolling的BGM，讓滅火器陪你，一生到底。','火氣音樂',1,'https://i.postimg.cc/ZnVqK6dt/fireextp.jpg'),
+(2,1,'The Yussef Dayes Experience - Live in Taipei','2024-07-25','20:00:00','Legacy Taipei','台北市中正區八德路一段1號華山1914創意文化園區中5A館','南倫敦出生的 Yussef Dayes，合成一系列來自南半球、西非到加勒比海和南美洲等令人眼花繚亂的聲音和節奏，他的表演融合了精湛的技術、強烈的激情和原始的情感，更以突破界限的音樂風景吸引全世界的樂迷觀眾，在倫敦當代爵士樂壇中占有重要地位。\nYussef Dayes 4歲就開始了他的音樂生涯，10歲從師 Billy Cobham（爵士巨人 Miles Davis 鼓手、Mahavishnu Orchestra 成員），和兄弟及朋友們組成樂團 United Vibrations，2011年發行《Galaxies Not Ghettos》，當時的 Yussef Dayes 只有16歲。儘管後來以 Kamaal Williams 組成的 Yussef Kamaal、以及和 Tom Misch 合作專輯《What Kinda Music》聲名大噪，Yussef Dayes 在2023年發行個人首張專輯《Black Classical Music》，融合爵士樂、雷鬼與嘻哈，邀來 Masego、Chronixx、Jamiliah Barry、Tom Misch 等人合作，獲得全英音樂獎（BRIT Awards）「最佳新人」「最佳另類／搖滾藝人」兩項年度提名。','Young Team Productions',1,'https://i.postimg.cc/RFxhPSB8/0725-Yussef-Dayes.jpg'),
+(3,1,'10CM演唱會2024台北站','2024-09-06','19:00:00','Zepp New Taipei','新北市新莊區新北大道四段3號8樓','10CM在今年1月推出單曲’5.5 소년(少年)’，而4月25日發布全新單曲 5.6 ’너랑 밤새고 싶어(Late Night Walk)‘緩慢而甜蜜的唱出了戀情萌芽的羞澀與喜悅，近期甫創下收視紀錄的韓劇《淚之女王》中，10CM的聲音也讓電視劇大放異彩，過去半年內不斷推出作品的10CM將從7月開始於亞洲各國帶來精彩的演出。','LA RUE 文創設計',2,'https://i.postimg.cc/DyxW23rJ/10cm.jpg'),
+(4,1,'aespa台北演唱會2024','2024-08-10','19:00:00','國立體育大學綜合體育館(林口體育館)','桃園市龜山區文化一路250號','aespa出道四年首次正式來台北開專場演唱會，將於8月10號在林口體育館舉行。自從今年一月在台北舉行過專輯簽售會和受邀參加科技公司商演後，台北的MY對aespa來台北舉辦演唱會的呼聲越發高漲，在之後無預警公布的世界巡演城市名單中台北赫然在列，讓台北粉絲又驚又喜，希望演唱會快點到來。\naespa由四名成員Karina、Giselle、Winter、Ningning組成，自出道以來就以獨特的世界觀、前衛的團體概念，以及超強的舞台魅力，收穫眾多粉絲的心。她們在Youtube上每首MV的最低觀看次數都超過1億，是當代超人氣女團。\naespa在時尚方面也非常出色，瑞士奢華珠寶Chopard、義大利Versace、美國Ralph Lauren等世界知名品牌也選擇aespa團體及其成員作為該品牌的宣傳大使和代言人。\n這次台北場的演出日剛好是七夕情人節，在這個充滿粉色泡泡的日子裡，不知道成員們會給台北粉絲們帶來什麼樣的驚喜呢! 台北的MY們，八月一定要來現場和aespa一起創造幸福的回憶！','iMe TW',3,'https://i.postimg.cc/WpnzncfW/aespa.jpg'),
+(5,1,'2024 Energy《一觸即發》台北演唱會','2024-07-27','19:30:00','台北小巨蛋','臺北市松山區南京東路4段2號','招牌發電｜經典回憶殺唱個夠\n帶你走進音樂回憶殺，首首都是陪伴人生的迷人觸景，不只「放手」、「多愛我一天」、「某年某月某一天」、「Come On」、「無懈可擊」，承諾過「永遠不說再見」的Energy，現在實現諾言，再度因你而聚，為你而跳。\n全面放電｜天王天后御用總監 打造最大夜店 \n潮流舞曲製造機音樂總監 Starr Chen 陳星翰，全新改編經典歌曲，將音樂能量觸電、發電、放電，音浪電力無限激盪，震撼台北小巨蛋！\n天王天后御用舞蹈總監林大鈞，炸裂編舞跨年代舞風大精華！舞曲全場炸翻最大夜店！\n零距離觸電｜天地對立光柱 巨型地面Led延伸舞台\n演唱會製作魔法團隊必應創造，訂製天地對立移動巨型異變光柱、巨型地面Led延伸舞台，近距離與你接觸！重磅打造超升級超大型的動感Party！\n記憶充電｜橫跨街舞世代挑動舞感神經 \n睽違22年重返當年，結合跨世代舞曲大招，當累積的能量重新匯集，走過分合 Energy 再衝一次，一起共寫屬於我們的新傳奇！','用心音樂',5,'https://i.postimg.cc/4yJdgWnQ/energy.jpg'),
+(6,1,'Travis Japan World Tour 2024 Road to A','2024-09-03','20:00:00','Zepp New Taipei','新北市新莊區新北大道四段3號8樓','Travis Japan於2012年由麥可傑克森的編舞師Travis Payne所舉辦的徵選會中選出的成員所組成，是一支擁有強大舞蹈、表演實力的七人團體。\nTravis Japan曾參與舞台劇《虎者-NINJAPAN-》演出並擔任重要角色。2020年於可容納一萬七千人的橫濱體育場連續舉辦三場演出，門票全數售罄，2021年即在日本12個城市展開全國巡演《IMAGE NATION》。\n2022年3月，成員們為了精進自身能力，前往美國洛杉磯留學，留學期間參加了世界最大規模的舞蹈比賽「World of Dance」，以及美國NBC播出的指標性選秀節目「美國達人秀」，展現出他們精湛的舞蹈技巧，也成為了他們出道的契機。備受高度期待的首支主打單曲《JUST DANCE!》MV不但於YouTube觀看次數衝破千萬，也是J-POP史上首位以出道曲強勢登上告示牌美國除外全球單曲榜第五名的團體，此曲MV在YouTube觀看次數已突破千萬次。\n以首張專輯《Road to A》為題，不僅已在日本完成全國巡迴演唱會，吸引約31萬人參與，如今更宣布將開啟首次世界巡迴演唱會《Travis Japan World Tour 2024 Road to A》，要向世界展現他們最精彩、吸睛的舞蹈魅力！','大鴻藝術BIG ART',4,'https://i.postimg.cc/Cxfw93mV/Travis-Japan.jpg'),
+(7,1,'2024 BTOB FAN-CON [OUR DREAM] in TAIPEI','2024-06-28','19:30:00','TICC台北國際會議中心','台北市信義區信義路五段一號','等了近六年！韓流三代團BTOB徐恩光、李旼赫、任炫植、PENIEL宣布6/29來台！\n很會唱、很會跳還很放閃！BTOB 終於要來啦！\n距離上次2018/9/8來台舉辦「BTOB TIME -THIS IS US」演唱會後，Melody（官粉名）等了近六年，終於要在6/29（六）見到韓流人氣實力三代團BTOB的四帥成員徐恩光、李旼赫、任炫植、PENIEL於TICC台北國際會議中心舉辦「2024 BTOB FAN-CON [OUR DREAM] in TAIPEI」！','SHOW Office Entertainment.co.ltd',6,'https://i.postimg.cc/8z3j6dnT/BTOB.jpg'),
+(8,1,'小男孩樂團〔老闆！到底行不行？〕','2024-06-30','18:00:00','Zepp New Taipei','新北市新莊區新北大道四段3號8樓','是勞模們迷茫徬徨的職涯課題\n是小男孩拒絕世故的搖滾初心','滾石唱片',7,'https://i.postimg.cc/m2prvN47/Little-Boy.jpg'),
+(9,1,'血肉果汁機2024建宮蓋廟-宇宙預言','2024-07-27','19:30:00','臺北流行音樂中心','台北市南港區市民大道8段99號','宮廟\n不僅是多重領域大門，也是意識流的集合中心；\n宮廟\n不僅建造在地球上，也建造在太陽系八大行星衛星裡。\n令人驚奇的是\n太陽系邊界守門行星冥王星本身就是一座漂浮的宮廟行星。\n為什麼太陽系裏遍佈宮廟？\n是古地球人得到神仙的旨意、神仙的法力，而建宮蓋廟於整個太陽系？\n還是太陽系的古生命對於信仰有共識？\n我們看到的不只是過去，而是未來。\n2154年9大行星及衛星出現鬧鬼附身現象\n2159年正式進入「交由撒旦統治太陽系1000年」。\n3206年進入土星環發現多座破損宮廟隕石漂流在環中\n3264年發現冥王星是一座巨大的漂流宮廟\n3278年太陽系血肉宮廟網絡完成，血肉Boyz持續在宇宙中殺翻現場！','血肉果汁機',8,'https://i.postimg.cc/QxdtYY2X/flesh-temple.png'),
+(10,2,'霓虹綠洲音樂祭','2024-01-20','12:00:00','新店文山生態農場','新北市新店區湖子內路100號','本屆活動除了再度邀請台灣、日本、韓國、泰國等地的音樂人，更邀請到來自中國石家莊的搖滾傳奇萬能青年旅店、紐西蘭的蒙面歌手 JonathanBree、香港天團 RubberBand，以及前陣子於社群引起熱烈關注的金氏世界紀錄年紀最小的小學生DJ RINOKA，吸引了許多親子、寵物家庭族群一同參與本屆活動。此外，霓虹綠洲音樂祭還將新增主打嘻哈、新聲的舞台與「前夜祭」擴大舉辦，透過結合音樂祭、露營、市集，為北部都會區帶來冬日弛放音樂盛事！','霓虹綠洲音樂祭',9,'https://i.postimg.cc/HxmWw601/neon-oasis.jpg'),
+(11,2,'浮現祭','2024-02-24','11:00:00','清水鰲峰山運動公園','台中市清水區鰲海路70號','・2024年春假出遊首選音樂祭盛事\n・連續三年完售，台灣大型指標性音樂祭之一\n・台中海線小鎮漫遊，吃喝玩樂應有盡有\n・五周年擴大舉行，九大區域等你來解鎖\n・超過六國演出藝人即將來台獻技\n生活的紛擾及懊悔就留在那裡吧！一起邁向未知的新方向，大步踏出步伐，每一步都會有新風景的誕生，如同主視覺想傳達給每個朋友，跨過「浮現大門」後，回歸最純粹的模樣，化身為能代表你自己的角色，讓我們一起登陸小鎮的慶典吧！\n浮現祭五周年，再解鎖兩大場域，走進常民生活場景中，以及與海線當地有更多連結。未來，我們也將持續跨出海外，寫下更多新故事！如果你也想加入這段旅程，明年春天，我們相約老地方——台中清水，一個屬於我們冒險的起點。','浮現音樂藝文有限公司',10,'https://i.postimg.cc/L6WHC9kT/image.png'),
+(12,2,'大港開唱','2024-03-30','11:00:00','高雄駁二藝術特區','高雄市鹽埕區大勇路1號','《大港開唱》（Megaport Festival），創立於2006年，由台北《野台開唱》（Formoz Festival：1995～2013）主辦團隊，在高雄創立。一南一北的兩大型音樂祭品牌，是台灣如今百花齊放音樂祭市場的先趨。即將於今年邁入第十五屆的大港開唱，於每年三月底舉辦，也是目前台灣最具指標性的大型戶外音樂祭活動。\n大港位於高雄港邊，獨特的海港地景和人文風情，常勾起人生中各種酸甜苦辣的回憶。也因如此，大港總是邀請有著豐富人生歷程的知名藝人及業界前輩演出，也會與新一代的樂團或藝人一起合作演出，交融出世代之間的化學效應，往往成為當年度為人津津樂道的經典現場，包括《黃金夜總會》的賀一航、《古惑仔》裡的大飛哥-黃秋生，永駐在人們青春回憶中的日本偶像酒井法子，再到唱出《心事誰人知》的沈文程和演出《花甲男孩》的三金得主蔡振南。除此之外，唱著《少年吔，安啦！》的伍佰以及後來變成姐姐的謝金燕，都曾是大港舞台的主角之一。','出日音樂股份有限公司',5,'https://i.postimg.cc/gkjzHXhj/mega-port.png'),
+(13,2,'火球祭','2024-11-25','11:00:00','樂天桃園棒球場','桃園市中壢區領航北路一段1號','地球人請注意\n重返愛的主場，火球祭正式回歸！\n距離上次火球祭\n已經過了 1,344 天\n但！有些記憶不管過多久還是難忘\n還記得播放著搖滾樂的旋轉木馬上，她的笑容讓我暈到現在\n人生中第一次踏上紅土、在音樂聲中滾草皮\n時不時被感動到哭得像個傻瓜、下一秒又笑得像個笨蛋\n在雨中熱舞、在太陽下的草皮曬乾自己\n直接拿著感應手環、買個外帶坐到看台區爽吃爽喝爽聽團❤\n48 小時裡不間斷的快樂\n現在回想起來都會笑，太爽了吧？有夠夢幻\n準備好重返我們的搖滾遊樂園嗎？','夥球擊股份有限公司',9,'https://i.postimg.cc/Bndn6SX6/fireball.jpg'),
+(14,2,'赤聲躁動音樂祭','2024-05-18','11:00:00','台中烏日觀光啤酒廠','台中市烏日區光華街1號','大膽飛天｜不純的純愛｜Y2K大爆炸\n「把糖果穿在身上、大聲唱歌，和冰友跳著最in的舞步並肩搖擺！」\n千禧年代的自由及美好令人無限懷念，\n浪漫五月，跟著赤聲戰隊來去Y2K的世界，\n一起大膽追愛，在浪漫大宇宙中自由飛翔！！','浮現音樂藝文有限公司',8,'https://i.postimg.cc/DzXmdWtL/carnival-fever.png'),
+(15,2,'台秋祭','2024-07-27','11:00:00','台中驛鐵道文化園區','台中市中區台灣大道一段1段1號','台中，\n是一個充滿熱情的所在，\n一個從北到南都得路過的所在，\n在這個交會點，\n無論是快樂、寂寞還是難過，我們都曾一起度過，\n就在「台秋祭」這個地方。\n說的沒錯，\n彼此都是生命中的過客，\n那既然你我都是旅客，\n就一起感受現場的一切，\n像是一種洗禮，一種契機，\n也會是一種轉運。\n感謝過去兩年的支持，\n歡迎來到，台秋轉運站。','大發展演有限公司',7,'https://i.postimg.cc/5yNxGjkP/taichill.jpg'),
+(16,2,'打狗祭','2024-10-07','11:00:00','高雄流行音樂中心','高雄市鹽埕區真愛路1號','遨遊在大宇宙中的外星小怪獸，受到打狗港灣的強大召喚！為了這群有夢想的人，打狗星際入口再度開啟》》》》》》\n延續去年的活動場域，以高流海音館、海風廣場為核心演出場域，加上珊瑚礁群、LIVE WAREHOUSE等五大場域，再次將愛河灣打造成充滿奇幻外星小怪獸的音樂宇宙星樂園，就是要讓樂迷與外星小怪獸一同遨遊穿梭，享受音樂的衝撞搖擺與微醺的快樂。','高雄流行音樂中心',6,'https://i.postimg.cc/zvtJ15sq/takao-rock.jpg'),
+(17,2,'雨山祭','2024-09-24','11:00:00','國立政治大學','台北市文山區指南路二段64號','單日雙舞台十二組卡司，一次滿足你12個願望\n雨山眾神召集中：椅子樂團、南西肯恩、庸俗救星、靈魂沙發、JADE⋯⋯等共聚一堂，邀請所有觀眾與神同慶！\n與 「 Legacy 傳 音樂展演空間 」共同合作，將聲光音響的極致饗宴帶至政大校園\n當日活動將與「小蝸牛市集」合作，精選文山區在地特色商家，並邀請各式特色攤商集結雨山祭，打造獨一無二的雨山市集','國立政治大學',5,'https://i.postimg.cc/mrC21vHS/nccu-music-fest.jpg'),
+(18,2,'貴人散步音樂節','2024-11-04','10:30:00','台南市中西區多場館','台南市中西區永福路二段187號','象徵圓滿幸運的第7年，超強Lucky 7企劃陣容展現台灣音樂面貌\n來自世界各地多種面向的77組音樂人等你來挖寶\n全亞洲最多人潮、全台灣最國際化的Showcase音樂節\n在台南多個場館從古蹟到藝廊感受不同的演出體驗\n音樂演出之外還能享受城市探險的吃喝玩樂\n各式講座論壇，產業人士齊聚，與同業對話交流的好機會！\n多元跨界展演、城市漫遊旅程，還有更多結合音樂的另類體驗享受！','HO合為貴',4,'https://i.postimg.cc/3xywY4rV/LUCfest.jpg'),
+(19,2,'禾火OUT','2024-09-28','11:00:00','公館水岸廣場','台北市中正區思源街1號','中秋連假首選，雙日雙舞台，超過 25 組超強卡司在公館水岸輪番演出\n最酷主題市集：從美食、飲品、到古著選物，吃喝玩買一次到位\n充氣沙發區、露天座位區，讓你躺著看坐著看都可以','PIPE Live Music',3,'https://i.postimg.cc/9MPMK6Xf/chilloutfest.jpg'),
+(20,2,'浪人祭','2024-10-13','11:00:00','觀夕平台旁大草皮','台南市安平區金城里洲安三街','⟢　五週年 - 震撼王城 海味鉅獻　⟣\n戎克、朱印、克拉克大帆船，晚渡於海陸之城，港內寬衍，可泊千艘。\n夕陽西下，海晏捲朱旗，歷史的軌跡被鑲入城牆壁鎖，世世代代的王城，經過四個世紀的變革，帶來多族群的共生共榮。\n⟢　浪撼魚龍宅，盂懸上下天　⟣\n深海的龍嚎引萬物復甦，海底的熔岩劃開一道赤浪，鯤魚鼓浪，位於高處的龍宮，秋夜即將展開三日熱鬧晚宴，龍宮照欲醒，金黃色魚群奏起樂器，抬起「玉手箱」穿梭於赤足章魚觸手前，優美的旋律將撼動這片大海。','笨道策展有限公司',2,'https://i.postimg.cc/pVqVjYp3/Vega-Fest.jpg'),
+(21,2,'簡單生活節','2024-12-28','12:00:00','台北華山','台北市中正區八德路一段1號','「簡單生活 Simple Life」這個品牌，自我期許是個風格化的媒介，我們希望能夠讓創作者與熱愛者在其中相遇，並且彼此扶持成長。創作者可以從生活中萌芽，在生活中成長，直到力量足夠強大。','簡單生活節',1,'https://i.postimg.cc/NMxspRb9/Simple-Life.jpg');
 /*!40000 ALTER TABLE `activities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -127,7 +127,7 @@ CREATE TABLE `artist` (
   `album` int DEFAULT NULL,
   `albumDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,7 +157,7 @@ CREATE TABLE `employees` (
   `phone_number` varchar(20) NOT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -182,7 +182,7 @@ CREATE TABLE `markets` (
   `market_name` varchar(50) DEFAULT NULL,
   `address` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -211,10 +211,10 @@ CREATE TABLE `members` (
   `gender` varchar(10) NOT NULL,
   `phone_number` varchar(20) NOT NULL,
   `birthday` date DEFAULT NULL,
-  `address` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `address` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -238,7 +238,7 @@ CREATE TABLE `nclass` (
   `id` int NOT NULL AUTO_INCREMENT,
   `class` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -267,7 +267,7 @@ CREATE TABLE `notification` (
   PRIMARY KEY (`notid`),
   KEY `noti_class` (`noti_class`),
   CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`noti_class`) REFERENCES `nclass` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -299,7 +299,7 @@ CREATE TABLE `order_details` (
   KEY `order_id` (`order_id`),
   CONSTRAINT `order_details_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
   CONSTRAINT `order_details_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -329,7 +329,7 @@ CREATE TABLE `orders` (
   KEY `market_id` (`market_id`),
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `members` (`id`),
   CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`market_id`) REFERENCES `markets` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -359,7 +359,7 @@ CREATE TABLE `products` (
   PRIMARY KEY (`id`),
   KEY `activitie_id` (`activitie_id`),
   CONSTRAINT `products_ibfk_1` FOREIGN KEY (`activitie_id`) REFERENCES `activities` (`actid`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -389,7 +389,7 @@ CREATE TABLE `ticket` (
   PRIMARY KEY (`tid`),
   KEY `activities_id` (`activities_id`),
   CONSTRAINT `ticket_ibfk_1` FOREIGN KEY (`activities_id`) REFERENCES `activities` (`actid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -530,7 +530,7 @@ CREATE TABLE `ticket_order` (
   CONSTRAINT `ticket_order_ibfk_1` FOREIGN KEY (`ticket_status`) REFERENCES `ticket_status` (`id`),
   CONSTRAINT `ticket_order_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `members` (`id`),
   CONSTRAINT `ticket_order_ibfk_3` FOREIGN KEY (`ticket_id`) REFERENCES `ticket` (`tid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -554,7 +554,7 @@ CREATE TABLE `ticket_status` (
   `id` int NOT NULL AUTO_INCREMENT,
   `t_status` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -585,7 +585,7 @@ CREATE TABLE `user_notification` (
   KEY `notification_id` (`notification_id`),
   CONSTRAINT `user_notification_ibfk_1` FOREIGN KEY (`members_id`) REFERENCES `members` (`id`),
   CONSTRAINT `user_notification_ibfk_2` FOREIGN KEY (`notification_id`) REFERENCES `notification` (`notid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

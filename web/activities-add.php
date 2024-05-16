@@ -41,7 +41,7 @@ $rows = $pdo->query($sql)->fetchAll();
 						<div class="mb-3">
 							<label for="activity_class" class="form-label">類別</label>
 							<select class="form-select" aria-label="Default select example" id="activity_class" name="activity_class">
-								<option selected>-- 請選擇類別 --</option>
+								<option value="0" selected>-- 請選擇類別 --</option>
 								<option value="1">concert</option>
 								<option value="2">music festival</option>
 							</select>
@@ -92,7 +92,7 @@ $rows = $pdo->query($sql)->fetchAll();
 						<div class="mb-3">
 							<label for="artist_id" class="form-label">表演者</label>
 							<select class="form-select" aria-label="Default select example" id="artist_id" name="artist_id">
-								<option selected>-- 請選擇表演者 --</option>
+								<option value="0" selected>-- 請選擇表演者 --</option>
 								<?php foreach ($rows as $r): ?>
 									<option value="<?= $r['id'] ?>"><?= $r['art_name'] ?></option>
 								<?php endforeach; ?>
@@ -129,7 +129,7 @@ $rows = $pdo->query($sql)->fetchAll();
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary" onclick="location.href='activities-list.php'">到列表頁</button>
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">繼續新增</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="keepAdd">繼續新增</button>
 			</div>
 		</div>
 	</div>
@@ -138,26 +138,18 @@ $rows = $pdo->query($sql)->fetchAll();
 
 <?php include __DIR__ . "/part/scripts.php"; ?>
 <script>
+	const keepAdd = document.getElementById('keepAdd');
+	const formControls = document.querySelectorAll('.form-control');
+	const formControlSel = document.querySelectorAll('.form-select');
 
-	// const avatar = document.uploadForm.avatar;
-	// avatar.onchange = (event) => {
-	// 	const fd2 = new FormData(document.uploadForm);
-
-	// 	fetch("activities-upload-api.php", {
-	// 		method: "POST",
-	// 		body: fd2,
-	// 	})
-	// 		.then((r) => r.json())
-	// 		.then((result) => {
-	// 			if (result.success) {
-	// 				// result.filename
-	// 				img_file.value = result.filename;
-	// 				myimg.src = `../activities-img/${result.filename}`;
-	// 			}
-
-	// 		})
-	// 		.catch((ex) => console.log(ex));
-	// };
+	keepAdd.addEventListener('click', function () {
+		formControls.forEach(function (control) {
+			control.value = ''; // 清空表單控件的值
+		});
+		formControlSel.forEach(function (controlSel) {
+			controlSel.value = '0'; // 清空表單控件的值
+		});
+	});
 
 	// const activity_class = document.form_activities.activity_class;
 	const activity_nameField = document.form_activities.activity_name;
