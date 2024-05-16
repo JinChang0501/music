@@ -14,6 +14,26 @@ if ($page < 1) {
 
 # 算總筆數 $totalRows
 $t_sql = "SELECT COUNT(id) FROM `products`";
+
+#篩選
+$sort = isset($_GET['sort']) ? $_GET['sort'] : 'id';
+$order = isset($_GET['order']) ? $_GET['order'] : 'asc';
+$order = $order === 'desc' ? 'DESC' : 'ASC';
+
+$validSortColumns = ['id', 'product_name', 'picture', 'price'];
+if (!in_array($sort, $validSortColumns)) {
+  $sort = 'id';
+}
+
+$searchConditions = [];
+$params = [];
+
+if (!empty($_GET['id'])) {
+  $searchConditions[] = 'id = :id';
+  $params[':id'] = $_GET['id'];
+}
+
+# 總筆數
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 
 $totalPages = 0;
@@ -42,12 +62,17 @@ if ($totalRows) {
     </div>
     <div  class="col-10">
       <h5 class="card-title text-primary fs-3 fw-bold mb-5 text-center">商品列表</h5>
+      <!-- 搜尋 -->
       <div class="col-12 mb-3 d-flex justify-content-end">
-        <div class="input-group mb-3 w-50">
-          <input type="search" class="textSearch form-control border-5" name="search" placeholder="請輸入要搜尋的商品名稱...">
-          <input type="submit" class="search btn btn-info fw-bold" value="搜尋">
+        <div class="input-group mb-3 w-25">
+        <input type="text" class="form-control border-5" id="product_name" name="product_name" placeholder="請輸入要搜尋的商品名稱..."
+          value="<?= htmlentities($_GET['product_name'] ?? '') ?>">  
+        <input type="submit" class="search btn btn-info fw-bold" value="搜尋">
         </div>
       </div>
+      <!-- 搜尋 end -->
+      
+
       <nav aria-label="Page navigation example">
         <ul class="pagination">
           <li class="page-item">

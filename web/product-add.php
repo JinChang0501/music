@@ -8,7 +8,15 @@ if (!isset($_SESSION)) {
 
 $title = '新增商品';
 $pageName = 'product-add';
+
+$rows = [];
+
+// $sql = sprintf("SELECT * FROM activities JOIN artist ON artist_id = artist.id");
+$sql = sprintf("SELECT * FROM products");
+$rows = $pdo->query($sql)->fetchAll();
+
 ?>
+
 <?php include __DIR__ . '/part/html-header.php' ?>
 <?php include __DIR__ . '/part/navbar-head.php' ?>
 
@@ -46,9 +54,67 @@ $pageName = 'product-add';
               <div class="form-text"></div>
             </div>
             <div class="mb-4">
-              <label for="activitie_id" class="form-label fw-bold">活動名稱</label>
-              <input type="text" class="form-control" id="activitie_id" name="activitie_id">
-              <div class="form-text"></div>
+              <label for="activitie_id" class="form-label fw-bold">活動編號</label>
+              <div class="form-check form-check-inline mb-3">
+                <input class="form-check-input" type="radio" name="rank" id="normal" checked>
+                <label class="form-check-label" for="6inch">
+                1
+                </label>
+              </div>
+              <div class="form-check form-check-inline mb-3">
+                  <input class="form-check-input" type="radio" name="rank" id="vip" >
+                  <label class="form-check-label" for="8inch">
+                    2
+                  </label>
+              </div> 
+              <div class="form-check form-check-inline mb-3">
+                  <input class="form-check-input" type="radio" name="rank" id="vip" >
+                   <label class="form-check-label" for="10inch">
+                   3
+                    </label>
+              </div>
+              <div class="form-check form-check-inline mb-3">
+                <input class="form-check-input" type="radio" name="rank" id="normal" checked>
+                <label class="form-check-label" for="6inch">
+                4
+                </label>
+              </div>
+              <div class="form-check form-check-inline mb-3">
+                  <input class="form-check-input" type="radio" name="rank" id="vip" >
+                  <label class="form-check-label" for="8inch">
+                    5
+                  </label>
+              </div> 
+              <div class="form-check form-check-inline mb-3">
+                  <input class="form-check-input" type="radio" name="rank" id="vip" >
+                   <label class="form-check-label" for="10inch">
+                   6
+                    </label>
+              </div>
+              <div class="form-check form-check-inline mb-3">
+                  <input class="form-check-input" type="radio" name="rank" id="vip" >
+                   <label class="form-check-label" for="10inch">
+                   7
+                    </label>
+              </div>
+              <div class="form-check form-check-inline mb-3">
+                  <input class="form-check-input" type="radio" name="rank" id="vip" >
+                  <label class="form-check-label" for="8inch">
+                    8
+                  </label>
+              </div> 
+              <div class="form-check form-check-inline mb-3">
+                  <input class="form-check-input" type="radio" name="rank" id="vip" >
+                   <label class="form-check-label" for="10inch">
+                   9
+                    </label>
+              </div>
+              <div class="form-check form-check-inline mb-3">
+                  <input class="form-check-input" type="radio" name="rank" id="vip" >
+                   <label class="form-check-label" for="10inch">
+                   10
+                    </label>
+              </div>    
             </div>
                        
             <button type="submit" class="btn btn-primary my-5 px-5" data-bs-toggle="modal" data-bs-target="#staticBackdrop">新增</button>

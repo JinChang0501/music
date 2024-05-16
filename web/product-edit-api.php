@@ -7,7 +7,7 @@ header('Content-Type: application/json');
 $output = [
     'success' => false, # 有沒有新增成功
     'bodyData' => $_POST,
-    
+    'newId' => 0,
 ];
 
 // TODO: 欄位資料檢查
@@ -27,7 +27,7 @@ $sql = "UPDATE `products` SET
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
     $_POST['product_name'],
-    $_POST['picture'],
+    $_FILES['picture']['name'],
     $_POST['price'],
     $_POST['purchase_quantity'],
     $_POST['activitie_id'],
