@@ -115,7 +115,6 @@ if (!isset($pageName))
                 <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'ticket-order-list' ? 'active' : '' ?>" href="ticket-order-list.php" href="#">購票訂單</a></li>
                 <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'ticket-list' ? 'active' : '' ?>" href="ticket-list.php">上架購票清單</a></li>
                 <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'ticket-add' ? 'active' : '' ?>" href="ticket-add.php">新增購票</a></li>
-                <li class="li-hover"><a class="dropdown-item py-3 border <?= $pageName == 'ticket-edit' ? 'active' : '' ?>" href="ticket-edit.php" href="#">編輯購票</a></li>
               </div>
             </div>
           </div>

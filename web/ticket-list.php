@@ -1,11 +1,12 @@
 <?php
+
 require __DIR__ . '/admin-required.php';
 require __DIR__ . '/../config/pdo-connect.php';
 
 $title = '上架購票清單';
 $pageName = 'ticket-list';
 
-$perPage = 5; # 每一頁最多有幾筆
+$perPage = 10; # 每一頁最多有幾筆
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 if ($page < 1) {
@@ -83,8 +84,6 @@ function buildQueryStringWithFilters()
     // 獲取 ticket_area 篩選條件
     $filterTicketArea = isset($_GET['filterTicketArea']) ? $_GET['filterTicketArea'] : '';
 
-
-
     // 構建包含所有篩選條件的查詢字符串
     $queryString .= '&sort=' . $sort . '&order=' . $order;
     if (!empty($filterFestival)) {
@@ -147,9 +146,6 @@ LIMIT %d, %d",
         $perPage
     );
 
-
-
-
     $rows = $pdo->query($sql)->fetchAll();
 }
 
@@ -200,7 +196,9 @@ LIMIT %d, %d",
 
         <div class="col-10 p-4">
 
-            <h2 class="col-12 mt-5 mb-4 fw-bold">上架購票管理</h2>
+            <h1 class="col-12 mt-5 mb-4 fw-bold">上架購票管理</h1>
+
+            <!-- #region 文字搜尋 -->
 
             <div class="col-12 mb-3 d-flex justify-content-end">
 
@@ -216,6 +214,10 @@ LIMIT %d, %d",
 
             </div>
 
+            <!-- #endregion 文字搜尋 -->
+
+            <!-- #region 區間價格篩選 -->
+
             <form id="search_form" action="?page=1" method="GET">
                 <div class="col-12 mb-3 d-flex justify-content-end">
                     <div class="d-flex mb-3">
@@ -230,6 +232,9 @@ LIMIT %d, %d",
                 </div>
             </form>
 
+            <!-- #endregion 區間價格篩選 -->
+
+            <!-- #region 篩選活動座位 -->
 
             <div class="col-12 mb-3 d-flex justify-content-end">
 
@@ -249,6 +254,9 @@ LIMIT %d, %d",
 
             </div>
 
+            <!-- #endregion 篩選活動座位 -->
+
+            <!-- #region 新增購票、刪除所選、music festival、concert、顯示全部、篩選器 -->
 
             <div class="d-flex justify-content-between col-12 mb-4">
                 <div>
@@ -259,7 +267,7 @@ LIMIT %d, %d",
                         festival</a>
                     <a class="btn btn-secondary fw-bold"
                         href="?page=1&sort=<?= $sort ?>&order=<?= $order ?>&filterFestival=concert">concert</a>
-                    <a class="reload btn btn-secondary fw-bold">顯示全部</a>
+                    <a class="reload btn btn-secondary fw-bold" href="ticket-list.php">顯示全部</a>
                 </div>
 
                 <div data-bs-toggle="modal" data-bs-target="#Modal">
@@ -267,6 +275,10 @@ LIMIT %d, %d",
                             class="bi bi-filter"></i></a>
                 </div>
             </div>
+
+            <!-- #endregion 新增購票、刪除所選、music festival、concert、顯示全部、篩選器 -->
+
+            <!-- #region Table -->
 
             <div class="col-12 mb-4 text-nowrap" style="overflow:auto">
                 <table
@@ -305,7 +317,8 @@ LIMIT %d, %d",
                                         <i class="bi bi-trash3"></i>
                                     </a></td>
                                 <td><?= $r['tid'] ?></td>
-                                <td><img src="<?= $r['picture'] ?>" class="image img-thumbnail" alt="activities_picture">
+                                <td data-bs-toggle="modal" data-bs-target="#modelImage" data-actid="<?= $r['actid'] ?>">
+                                    <img src="../img/activities-img/<?= $r['picture'] ?>" class="image img-thumbnail" alt="activities_picture">
                                 </td>
                                 <td><?= $r['activity_name'] ?></td>
                                 <td><?= $r['art_name'] ?></td>
@@ -332,6 +345,10 @@ LIMIT %d, %d",
                     </tbody>
                 </table>
             </div>
+
+            <!-- #endregion Table -->
+
+            <!-- #region pagination -->
 
             <div class="col-12 d-flex justify-content-center">
                 <nav aria-label="Page navigation example">
@@ -378,13 +395,15 @@ LIMIT %d, %d",
                 </nav>
             </div>
 
+            <!-- #endregion pagination -->
+
         </div>
 
     </div>
 
 </div>
 
-<!-- Filter -->
+<!-- #region modal 篩選器 Filter -->
 
 <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="Modal" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
@@ -453,11 +472,12 @@ LIMIT %d, %d",
     </div>
 </div>
 
-<!-- Filter -->
+<!-- #endregion modal 篩選器 Filter -->
 
-<!-- description -->
+<!-- #region modal description -->
+
 <div class="modal fade " id="description" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content bg-dark position-relative">
             <div class="position-absolute top-0 end-0">
                 <button type="button" class="btn-close bg-white fs-4" data-bs-dismiss="modal"
@@ -465,40 +485,60 @@ LIMIT %d, %d",
             </div>
             <div class="d-flex justify-content-center my-4 mb-3">
                 <div>
-                    <h4 class="fw-bold text-white fs-2">搜尋篩選器</h4>
+                    <h4 class="fw-bold text-white fs-2">活動描述</h4>
                 </div>
             </div>
             <div class="modal-body fs-2 fw-bold text-white p-5 lh-lg spacing" id="descriptionContent"></div>
         </div>
     </div>
 </div>
-<!-- description -->
+
+<!-- #endregion modal description -->
+
+<!-- #region modal image -->
+
+<div class="modal fade" id="modelImage" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content bg-dark position-relative">
+            <div class="position-absolute top-0 end-0">
+                <button type="button" class="btn-close bg-white fs-4" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="d-flex justify-content-center my-4 mb-3">
+                <div>
+                    <h4 class="fw-bold text-white fs-2">活動圖片</h4>
+                </div>
+            </div>
+            <div class="modal-body d-flex justify-content-center align-items-center">
+                <img id="activityPicture" class="img-fluid w-100 rounded" alt="Activity Picture">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- #endregion modal image -->
 
 <?php include __DIR__ . "/part/scripts.php"; ?>
+
 <script>
 
     // 模糊搜尋
-
     document.getElementById('search_form').addEventListener('submit', function (event) {
-        // 阻止默認的表單提交行為
+        // 防止預設的表單提交行為
         event.preventDefault();
 
         // 手動提交表單
         this.submit();
     });
 
-    // 模糊搜尋
-
-
-    // 按下分頁保存篩選內容
-
+    // 保留篩選條件並跳轉頁面
     function preserveFilters(event, filter) {
-        event.preventDefault(); // 防止點擊分頁時跳轉到 href 中的 URL
+        event.preventDefault(); // 防止點擊分頁連結默認跳轉
         var pageLink = event.target.href; // 獲取點擊的分頁連結
-        var baseUrl = pageLink.split('?')[0]; // 獲取 URL 中的基本部分
+        var baseUrl = pageLink.split('?')[0]; // 獲取連結的基本部分
         var params = new URLSearchParams(window.location.search); // 解析當前 URL 中的參數
 
-        // 清除原始的分页参数，并将其设置为 1
+        // 清除原始的分頁參數，並將其設置為 1
         params.set('page', '1');
 
         // 設置新的排序和篩選條件
@@ -509,10 +549,7 @@ LIMIT %d, %d",
         window.location.href = baseUrl + '?' + params.toString();
     }
 
-    // 按下分頁保存篩選內容
-
     // 價格區間篩選
-
     document.getElementById("search_button").addEventListener("click", function () {
         var minPrice = document.getElementById("min_price_input").value;
         var maxPrice = document.getElementById("max_price_input").value;
@@ -530,17 +567,14 @@ LIMIT %d, %d",
         document.getElementById("search_button").href = url;
     });
 
-    // 價格區間篩選
-
-
-    // 購票價格排序
+    // 保留篩選條件和排序方式
     function preserveFiltersAndSort(event, filter) {
-        event.preventDefault(); // 防止點擊分頁時跳轉到 href 中的 URL
+        event.preventDefault(); // 防止點擊分頁連結默認跳轉
         var pageLink = event.target.href; // 獲取點擊的分頁連結
-        var baseUrl = pageLink.split('?')[0]; // 獲取 URL 中的基本部分
+        var baseUrl = pageLink.split('?')[0]; // 獲取連結的基本部分
         var params = new URLSearchParams(window.location.search); // 解析當前 URL 中的參數
 
-        // 清除原始的分頁参数，并将其设置为 1
+        // 清除原始的分頁參數，並將其設置為 1
         params.set('page', '1');
 
         // 設置新的排序和篩選條件
@@ -561,6 +595,7 @@ LIMIT %d, %d",
         window.location.href = baseUrl + '?' + params.toString();
     }
 
+    // 購票價格排序
     var searchForm = document.getElementById('search_form');
     searchForm.addEventListener('submit', function (event) {
         event.preventDefault(); // 阻止表單的默認提交行為
@@ -569,26 +604,22 @@ LIMIT %d, %d",
         // 這裡只是簡單地打印搜索內容到控制台
         console.log('搜索內容：', searchQuery);
     });
-    // 購票價格排序
 
-    // delete
-
+    // 單個刪除
     const deleteOne = (tid) => {
+        // 確認是否刪除特定編號的資料
         if (confirm(`是否要刪除編號為 ${tid} 的資料?`)) {
-            location.href = `ticket-list-delete.php?tid=${tid}`;
+            location.href = `ticket-list-delete.php?tid=${tid}`; // 跳轉至刪除頁面
         }
     }
 
-    // delete
-
-    // 全選反選
-
+    // 全選與反選
     let cb_all = document.querySelector('.cb_all');
     let tbs = document.querySelector('.tb').querySelectorAll('input');
 
     cb_all.addEventListener('click', function () {
         for (let i = 0; i < tbs.length; i++) {
-            tbs[i].checked = this.checked;
+            tbs[i].checked = this.checked; // 將所有單選框的選中狀態設置為全選框的選中狀態
         }
     });
 
@@ -601,19 +632,16 @@ LIMIT %d, %d",
                     break;
                 }
             }
-            cb_all.checked = flag;
+            cb_all.checked = flag; // 若有單選框未選中，則全選框也取消選中
         }
     }
 
-    // 全選反選
-
     // 刪除所選Script
-
     const dltAllSelect = document.getElementById("dltAllSelect");
     const checkboxes2 = document.querySelectorAll(".checkboxes");
 
     dltAllSelect.addEventListener('click', function () {
-        let selectedIds = []; // 儲存被勾選項目的 ID
+        let selectedIds = []; // 儲存被選中項目的 ID
 
         for (let i = 0; i < checkboxes2.length; i++) {
             if (checkboxes2[i].checked) {
@@ -633,15 +661,12 @@ LIMIT %d, %d",
         }
     });
 
-    // 刪除所選Script
+    // 篩選器 filter 背景顏色變化
 
-    // filter 背景顏色變化
-
-    // 獲取所有帶有類名 "model-a" 的元素
-
-    // const filter = document.querySelector('.filter');
+    // 取得所有帶有 "model-a" 類別的元素
     const links = document.querySelectorAll('#Modal .modal-body .filter .filterBtn');
 
+    // 從本地存儲中獲取活動連結
     const activeLink = localStorage.getItem('activeLink');
 
     if (activeLink) {
@@ -668,11 +693,9 @@ LIMIT %d, %d",
         });
     }
 
-    // filter 背景顏色變化
-
     // 價格範圍限制最小最大價格
 
-    // 找到最小價格輸入框和最大價格輸入框
+    // 取得最小價格輸入框和最大價格輸入框
     const minPriceInput = document.querySelector('input[name="min_price"]');
     const maxPriceInput = document.querySelector('input[name="max_price"]');
 
@@ -686,17 +709,7 @@ LIMIT %d, %d",
         }
     });
 
-    // 當最大價格輸入框內容發生變化時觸發
-    maxPriceInput.addEventListener('input', function () {
-        // 如果最大價格輸入框的值小於最小價格輸入框的值，則將其設置為最小價格輸入框的值
-        if (parseInt(this.value) < parseInt(minPriceInput.value)) {
-            this.value = minPriceInput.value;
-        }
-    });
-
-    // 價格範圍限制最小最大價格
-
-    // Model description 
+    // model描述
 
     function getDescription(element) {
         var actid = element.getAttribute('data-actid');
@@ -711,7 +724,28 @@ LIMIT %d, %d",
         xhr.send();
     }
 
-    // Model description 
+    // model圖片
+
+    let modal = document.getElementById('modelImage');
+    modal.addEventListener('show.bs.modal', function (event) {
+        let button = event.relatedTarget; // 觸發模態框的按鈕
+        let actid = button.getAttribute('data-actid'); // 從觸發按鈕獲取 actid
+        // Ajax 請求獲取 actid 對應的圖片鏈接
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    // 將獲取的圖片鏈接設置到模態框中
+                    let response = xhr.responseText;
+                    modal.querySelector('.modal-body #activityPicture').src = response;
+                } else {
+                    console.error('Error fetching image');
+                }
+            }
+        };
+        xhr.open('GET', 'ticket-get-picture.php?actid=' + encodeURIComponent(actid)); // 使用 GET 請求
+        xhr.send();
+    });
 
 </script>
 <?php include __DIR__ . "/part/html-footer.php"; ?>

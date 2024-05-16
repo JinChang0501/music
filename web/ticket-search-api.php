@@ -39,4 +39,3 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['keyword'])) {
   echo "Method Not Allowed";
   exit;
 }
-?>
