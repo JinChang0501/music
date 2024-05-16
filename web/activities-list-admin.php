@@ -167,7 +167,7 @@ if ($endPage > $totalPages) {
 			<!-- 搜尋功能Start -->
 			<div class="row m-1">
 				<div class="col mb-3 d-flex justify-content-start">
-					<form method="get" action="" id="searching">
+					<form method="get" action="" id="searching" onsubmit="sendData(event)">
 						<div class="form text-dark">
 							<div class="row">
 								<div class="col-md-3">
@@ -337,9 +337,17 @@ if ($endPage > $totalPages) {
 </div>
 <?php include __DIR__ . '/part/scripts.php' ?>
 <script>
-	// const keepAdd = document.getElementById('keepAdd');
-	// const formControls = document.querySelectorAll('.form-control');
+	const keepAdd = document.getElementById('keepAdd');
+	const formControls = document.querySelectorAll('.form-control');
 
+	// const sendData = e => {
+	// 	e.preventDefault(); // 不要讓 form_activities 以傳統的方式送出
+
+	// 	formControls.forEach(function (control) {
+	// 		control.value = '';
+	// 	});
+
+	// };
 	// // 表單提交事件處理程序
 	// document.getElementById('searching').addEventListener('submit', function(event) {
 	// 	// 阻止表單的默認提交行為
