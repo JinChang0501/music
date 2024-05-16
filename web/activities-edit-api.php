@@ -33,6 +33,11 @@ if (!empty($_FILES['picture']['name'])) {
   $sql_update = "UPDATE activities SET picture = ? WHERE actid = ?";
   $stmt_update = $pdo->prepare($sql_update);
   $stmt_update->execute([$target_name, $_POST['actid']]);
+
+  //$output['success'] = !!$stmt_update->rowCount(); # 修改了幾筆
+  if ($stmt_update->rowCount() > 0) {
+    $output['success'] = true;
+  }
 } else {
   // 沒有新的圖片上傳，保持原有圖片不變
   // 從數據庫中讀取原始圖片路徑
@@ -74,6 +79,9 @@ $stmt->execute([
   $_POST['actid']
 ]);
 
-$output['success'] = !!$stmt->rowCount(); # 修改了幾筆
+if ($stmt->rowCount() > 0) {
+  $output['success'] = true;
+}
+//$output['success'] = !!$stmt->rowCount(); # 修改了幾筆
 
 echo json_encode($output);

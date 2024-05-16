@@ -126,33 +126,37 @@ if ($endPage > $totalPages) {
 						<ul class="pagination">
 							<!-- First Page Link -->
 							<li class="page-item<?= $currentPage == 1 ? 'disabled' : '' ?>">
-								<a class="page-link" href="?page=1&order=<?= $order ?>&sort=<?= $sort ?>"><i class="fa-solid fa-angles-left"></i></a>
+								<a class="page-link" href="?page=1&order=<?= $order ?>&sort=<?= $sort ?>"><i
+										class="fa-solid fa-angles-left"></i></a>
 							</li>
 							<!-- Previous Page Link -->
 							<li class="page-item">
-								<a class="page-link" href="?page=<?= $currentPage - 1 ?>&order=<?= $order ?>&sort=<?= $sort ?>"><i class="fa-solid fa-angle-left"></i></a>
+								<a class="page-link" href="?page=<?= $currentPage - 1 ?>&order=<?= $order ?>&sort=<?= $sort ?>"><i
+										class="fa-solid fa-angle-left"></i></a>
 							</li>
 							<!-- Ellipsis before the start page -->
-							<?php if ($startPage > 1) : ?>
+							<?php if ($startPage > 1): ?>
 								<li class="page-item disabled"><span class="page-link">...</span></li>
 							<?php endif; ?>
 							<!-- Page Number Links -->
-							<?php for ($i = $startPage; $i <= $endPage; $i++) : ?>
+							<?php for ($i = $startPage; $i <= $endPage; $i++): ?>
 								<li class="page-item<?= $i == $currentPage ? ' active' : '' ?>">
 									<a class="page-link" href="?page=<?= $i ?>&order=<?= $order ?>&sort=<?= $sort ?>"><?= $i ?></a>
 								</li>
 							<?php endfor; ?>
 							<!-- Ellipsis after the end page -->
-							<?php if ($endPage < $totalPages) : ?>
+							<?php if ($endPage < $totalPages): ?>
 								<li class="page-item disabled"><span class="page-link">...</span></li>
 							<?php endif; ?>
 							<!-- Next Page Link -->
 							<li class="page-item">
-								<a class="page-link" href="?page=<?= $currentPage + 1 ?>&order=<?= $order ?>&sort=<?= $sort ?>"><i class="fa-solid fa-angle-right"></i></a>
+								<a class="page-link" href="?page=<?= $currentPage + 1 ?>&order=<?= $order ?>&sort=<?= $sort ?>"><i
+										class="fa-solid fa-angle-right"></i></a>
 							</li>
 							<!-- Last Page Link -->
 							<li class="page-item<?= $currentPage == $totalPages ? 'disabled' : '' ?>">
-								<a class="page-link" href="?page=<?= $totalPages ?>&order=<?= $order ?>&sort=<?= $sort ?>"><i class="fa-solid fa-angles-right"></i></a>
+								<a class="page-link" href="?page=<?= $totalPages ?>&order=<?= $order ?>&sort=<?= $sort ?>"><i
+										class="fa-solid fa-angles-right"></i></a>
 							</li>
 						</ul>
 					</nav>
@@ -168,32 +172,39 @@ if ($endPage > $totalPages) {
 							<div class="row">
 								<div class="col-md-3">
 									<label for="b2c_id">編號</label>
-									<input type="text" class="form-control" id="actid" name="actid" value="<?= htmlentities($_GET['actid'] ?? '') ?>">
+									<input type="text" class="form-control" id="actid" name="actid"
+										value="<?= htmlentities($_GET['actid'] ?? '') ?>">
 								</div>
 								<div class="col-md-3">
 									<label for="class">類別</label>
-									<input type="text" class="form-control" id="class" name="class" value="<?= htmlentities($_GET['class'] ?? '') ?>">
+									<input type="text" class="form-control" id="class" name="class"
+										value="<?= htmlentities($_GET['class'] ?? '') ?>">
 								</div>
 								<div class="col-md-3">
 									<label for="activity_name">活動名稱</label>
-									<input type="text" class="form-control" id="activity_name" name="activity_name" value="<?= htmlentities($_GET['activity_name'] ?? '') ?>">
+									<input type="text" class="form-control" id="activity_name" name="activity_name"
+										value="<?= htmlentities($_GET['activity_name'] ?? '') ?>">
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-3">
 									<label for="a_date">日期</label>
-									<input type="text" class="form-control" id="a_date" name="a_date" value="<?= htmlentities($_GET['a_date'] ?? '') ?>">
+									<input type="text" class="form-control" id="a_date" name="a_date"
+										value="<?= htmlentities($_GET['a_date'] ?? '') ?>">
 								</div>
 								<div class="col-md-3">
 									<label for="descriptions">活動內容</label>
-									<input type="text" class="form-control" id="descriptions" name="descriptions" value="<?= htmlentities($_GET['descriptions'] ?? '') ?>">
+									<input type="text" class="form-control" id="descriptions" name="descriptions"
+										value="<?= htmlentities($_GET['descriptions'] ?? '') ?>">
 								</div>
 								<div class="col-md-3">
 									<label for="art_name">表演者</label>
-									<input type="text" class="form-control" id="art_name" name="art_name" value="<?= htmlentities($_GET['art_name'] ?? '') ?>">
+									<input type="text" class="form-control" id="art_name" name="art_name"
+										value="<?= htmlentities($_GET['art_name'] ?? '') ?>">
 								</div>
 								<div class="col-md-3">
-									<button type="submit" class="btn btn-primary" id="keepAdd"><i class="bi bi-search text-white"></i></button>
+									<button type="submit" class="btn btn-primary" id="keepAdd"><i
+											class="bi bi-search text-white"></i></button>
 								</div>
 							</div>
 						</div>
@@ -212,24 +223,37 @@ if ($endPage > $totalPages) {
 				<!-- 排序按鈕群組 -->
 				<div class="col-6 mb-3 d-flex justify-content-center">
 					<div class="btn-group mx-2" role="group" aria-label="Basic outlined example">
-						<button type="button" class="btn btn-primary" disabled>編號</button>
-						<button type="button" class="btn btn-outline-primary"><a href="?sort=actid&order=asc&page=<?= $currentPage ?>"><i class="bi bi-caret-up-fill"></i></a></button>
-						<button type="button" class="btn btn-outline-primary"><a href="?sort=actid&order=desc&page=<?= $currentPage ?>"><i class="bi bi-caret-down-fill"></i></a></button>
+						<button type="button" class="btn btn-primary text-nowrap" disabled>編號</button>
+						<button type="button" class="btn btn-outline-primary"><a
+								href="?sort=actid&order=asc&page=<?= $currentPage ?>"><i class="bi bi-caret-up-fill"></i></a></button>
+						<button type="button" class="btn btn-outline-primary"><a
+								href="?sort=actid&order=desc&page=<?= $currentPage ?>"><i
+									class="bi bi-caret-down-fill"></i></a></button>
 					</div>
 					<div class="btn-group mx-2" role="group" aria-label="Basic outlined example">
-						<button type="button" class="btn btn-primary" disabled>類別</button>
-						<button type="button" class="btn btn-outline-primary"><a href="?sort=class&order=asc&page=<?= $currentPage ?>"><i class="bi bi-caret-up-fill"></i></a></button>
-						<button type="button" class="btn btn-outline-primary"><a href="?sort=class&order=desc&page=<?= $currentPage ?>"><i class="bi bi-caret-down-fill"></i></a></button>
+						<button type="button" class="btn btn-primary text-nowrap" disabled>類別</button>
+						<button type="button" class="btn btn-outline-primary"><a
+								href="?sort=class&order=asc&page=<?= $currentPage ?>"><i class="bi bi-caret-up-fill"></i></a></button>
+						<button type="button" class="btn btn-outline-primary"><a
+								href="?sort=class&order=desc&page=<?= $currentPage ?>"><i
+									class="bi bi-caret-down-fill"></i></a></button>
 					</div>
 					<div class="btn-group mx-2" role="group" aria-label="Basic outlined example">
-						<button type="button" class="btn btn-primary" disabled>日期</button>
-						<button type="button" class="btn btn-outline-primary"><a href="?sort=a_date&order=asc&page=<?= $currentPage ?>"><i class="bi bi-caret-up-fill"></i></a></button>
-						<button type="button" class="btn btn-outline-primary"><a href="?sort=a_date&order=desc&page=<?= $currentPage ?>"><i class="bi bi-caret-down-fill"></i></a></button>
+						<button type="button" class="btn btn-primary text-nowrap" disabled>日期</button>
+						<button type="button" class="btn btn-outline-primary"><a
+								href="?sort=a_date&order=asc&page=<?= $currentPage ?>"><i class="bi bi-caret-up-fill"></i></a></button>
+						<button type="button" class="btn btn-outline-primary"><a
+								href="?sort=a_date&order=desc&page=<?= $currentPage ?>"><i
+									class="bi bi-caret-down-fill"></i></a></button>
 					</div>
 					<div class="btn-group mx-2" role="group" aria-label="Basic outlined example">
-						<button type="button" class="btn btn-primary" disabled>表演者</button>
-						<button type="button" class="btn btn-outline-primary"><a href="?sort=art_name&order=asc&page=<?= $currentPage ?>"><i class="bi bi-caret-up-fill"></i></a></button>
-						<button type="button" class="btn btn-outline-primary"><a href="?sort=art_name&order=desc&page=<?= $currentPage ?>"><i class="bi bi-caret-down-fill"></i></a></button>
+						<button type="button" class="btn btn-primary text-nowrap" disabled>表演者</button>
+						<button type="button" class="btn btn-outline-primary"><a
+								href="?sort=art_name&order=asc&page=<?= $currentPage ?>"><i
+									class="bi bi-caret-up-fill"></i></a></button>
+						<button type="button" class="btn btn-outline-primary"><a
+								href="?sort=art_name&order=desc&page=<?= $currentPage ?>"><i
+									class="bi bi-caret-down-fill"></i></a></button>
 					</div>
 				</div>
 			</div>
@@ -260,10 +284,11 @@ if ($endPage > $totalPages) {
 						</tr>
 					</thead>
 					<tbody>
-						<?php foreach ($rows as $r) : ?>
+						<?php foreach ($rows as $r): ?>
 							<tr>
 								<td>
-									<input class="checkboxes form-check-input" type="checkbox" value="<?= $r['actid'] ?>" id="flexCheckDefault<?= $r['actid'] ?>">
+									<input class="checkboxes form-check-input" type="checkbox" value="<?= $r['actid'] ?>"
+										id="flexCheckDefault<?= $r['actid'] ?>">
 								</td>
 								<td><?= $r['actid'] ?></td>
 								<td><?= $r['class'] ?></td>
@@ -275,7 +300,8 @@ if ($endPage > $totalPages) {
 								<td class="d-inline-block" style="width: 300px;"><?= $r['descriptions'] ?></td>
 								<td><?= $r['organizer'] ?></td>
 								<td><?= $r['art_name'] ?></td>
-								<td><img src="../img/activities-img/<?= $r['picture'] ?>" alt="activities_picture" class="image img-thumbnail"></td>
+								<td><img src="../img/activities-img/<?= $r['picture'] ?>" alt="activities_picture"
+										class="image img-thumbnail"></td>
 								<td><a href="javascript: deleteOne(<?= $r['actid'] ?>)">
 										<button type="button" class="btn btn-danger"><i class="fa-solid fa-trash text-white"></i></a></td>
 								</button>
@@ -302,7 +328,8 @@ if ($endPage > $totalPages) {
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">保留</button>
 				<!-- 這裡有問題 -->
-				<button type="button" class="btn btn-danger" herf="activities-delete.php?actid=<?php $r['actid'] ?>">確認刪除</button>
+				<button type="button" class="btn btn-danger"
+					herf="activities-delete.php?actid=<?php $r['actid'] ?>">確認刪除</button>
 			</div>
 		</div>
 	</div>
@@ -336,7 +363,7 @@ if ($endPage > $totalPages) {
 	const checkAll = document.getElementById("checkAll");
 	const checkboxes = document.getElementsByClassName("checkboxes");
 
-	checkAll.addEventListener('change', function() {
+	checkAll.addEventListener('change', function () {
 		if (checkAll.checked === true) {
 			for (let i = 0; i < checkboxes.length; i++) {
 				checkboxes[i].checked = true;
@@ -352,7 +379,7 @@ if ($endPage > $totalPages) {
 	const dltAllSelect = document.getElementById("dltAllSelect");
 	const checkboxes2 = document.querySelectorAll(".checkboxes");
 
-	dltAllSelect.addEventListener('click', function() {
+	dltAllSelect.addEventListener('click', function () {
 		let selectedIds = []; // 儲存被勾選項目的 ID
 
 		for (let i = 0; i < checkboxes2.length; i++) {

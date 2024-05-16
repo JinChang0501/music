@@ -41,7 +41,7 @@ $rows = $pdo->query($sql)->fetchAll();
 						<div class="mb-3">
 							<label for="activity_class" class="form-label">類別</label>
 							<select class="form-select" aria-label="Default select example" id="activity_class" name="activity_class">
-								<option selected>-- 請選擇類別 --</option>
+								<option value="0" selected>-- 請選擇類別 --</option>
 								<option value="1">concert</option>
 								<option value="2">music festival</option>
 							</select>
@@ -92,8 +92,8 @@ $rows = $pdo->query($sql)->fetchAll();
 						<div class="mb-3">
 							<label for="artist_id" class="form-label">表演者</label>
 							<select class="form-select" aria-label="Default select example" id="artist_id" name="artist_id">
-								<option selected>-- 請選擇表演者 --</option>
-								<?php foreach ($rows as $r) : ?>
+								<option value="0" selected>-- 請選擇表演者 --</option>
+								<?php foreach ($rows as $r): ?>
 									<option value="<?= $r['id'] ?>"><?= $r['art_name'] ?></option>
 								<?php endforeach; ?>
 							</select>
@@ -114,7 +114,8 @@ $rows = $pdo->query($sql)->fetchAll();
 </div>
 
 <!-- Modal Start-->
-<div class="modal fade" id="staticBackdropA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelA" aria-hidden="true">
+<div class="modal fade" id="staticBackdropA" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+	aria-labelledby="staticBackdropLabelA" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -138,11 +139,15 @@ $rows = $pdo->query($sql)->fetchAll();
 <?php include __DIR__ . "/part/scripts.php"; ?>
 <script>
 	const keepAdd = document.getElementById('keepAdd');
-	const formControls = document.querySelectorAll('.form-control')
+	const formControls = document.querySelectorAll('.form-control');
+	const formControlSel = document.querySelectorAll('.form-select');
 
-	keepAdd.addEventListener('click', function() {
-		formControls.forEach(function(control) {
+	keepAdd.addEventListener('click', function () {
+		formControls.forEach(function (control) {
 			control.value = ''; // 清空表單控件的值
+		});
+		formControlSel.forEach(function (controlSel) {
+			controlSel.value = '0'; // 清空表單控件的值
 		});
 	});
 
@@ -169,14 +174,14 @@ $rows = $pdo->query($sql)->fetchAll();
 			const fd = new FormData(document.form_activities); // 沒有外觀的表單物件
 
 			fetch('activities-add-api.php', {
-					method: 'POST',
-					body: fd, // Content-Type: multipart/form-data
-				}).then(r => r.json())
+				method: 'POST',
+				body: fd, // Content-Type: multipart/form-data
+			}).then(r => r.json())
 				.then(data => {
 					console.log(data);
 					if (data.success) {
 						myModalA.show();
-					} else {}
+					} else { }
 				})
 				.catch(ex => console.log(ex))
 		}
