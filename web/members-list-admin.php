@@ -42,8 +42,7 @@ $searchSql = '';
 
 if (!empty($searchTerm)) {
   $searchSql = "WHERE `id` LIKE :searchTerm 
-                  OR `first_name` LIKE :searchTerm
-                  OR `last_name` LIKE :searchTerm
+                  OR `name` LIKE :searchTerm
                   OR `email` LIKE :searchTerm 
                   OR `phone_number` LIKE :searchTerm
                   OR `address` LIKE :searchTerm";
@@ -169,14 +168,11 @@ include __DIR__ . "/part/navbar-head.php";
                 <a href="?sort=id&order=desc&page=<?= $page ?>"><i class="fa-solid fa-sort-down"></i></a>
                 <a href="?sort=id&order=asc&page=<?= $page ?>"><i class="fa-solid fa-sort-up"></i></a>
               </th>
-              <th scope="col" class="text-center text-nowrap">First_name
-                <a href="?sort=first_name&order=desc&page=<?= $page ?>"><i class="fa-solid fa-sort-down"></i></a>
-                <a href="?sort=first_name&order=asc&page=<?= $page ?>"><i class="fa-solid fa-sort-up"></i></a>
+              <th scope="col" class="text-center text-nowrap">Name
+                <a href="?sort=name&order=desc&page=<?= $page ?>"><i class="fa-solid fa-sort-down"></i></a>
+                <a href="?sort=name&order=asc&page=<?= $page ?>"><i class="fa-solid fa-sort-up"></i></a>
               </th>
-              <th scope="col" class="text-center text-nowrap">Last_name
-                <a href="?sort=last_name&order=desc&page=<?= $page ?>"><i class="fa-solid fa-sort-down"></i></a>
-                <a href="?sort=last_name&order=asc&page=<?= $page ?>"><i class="fa-solid fa-sort-up"></i></a>
-              </th>
+
               <th scope="col" class="text-center text-nowrap">Email
               </th>
               <th scope="col" class="text-center text-nowrap">Passwords</th>
@@ -189,6 +185,9 @@ include __DIR__ . "/part/navbar-head.php";
                 <a href="?sort=birthday&order=desc&page=<?= $page ?>"><i class="fa-solid fa-sort-down"></i></a>
                 <a href="?sort=birthday&order=asc&page=<?= $page ?>"><i class="fa-solid fa-sort-up"></i></a>
               </th>
+              <!-- <th scope="col" class="text-center text-nowrap">County</th>
+              <th scope="col" class="text-center text-nowrap">District</th>
+              <th scope="col" class="text-center text-nowrap">restAddress</th> -->
               <th scope="col" class="text-center text-nowrap">Address</th>
               <th scope="col" class="text-center text-nowrap">Photo</th>
 
@@ -213,13 +212,15 @@ include __DIR__ . "/part/navbar-head.php";
 
                 <!-- <td class="text-center"><a href="javascript: deleteOne(<?= $r['id'] ?>)"><i class="fa-solid fa-trash text-danger"></i></a></td> -->
                 <td class="text-center"><?= $r['id'] ?></td>
-                <td class="text-center text-nowrap"><?= $r['first_name'] ?></td>
-                <td class="text-center text-nowrap"><?= $r['last_name'] ?></td>
+                <td class="text-center text-nowrap"><?= $r['name'] ?></td>
                 <td class="text-center text-nowrap"><?= $r['email'] ?></td>
                 <td class="text-center text-nowrap"><?= $r['passwords'] ?></td>
                 <td class="text-center text-nowrap"><?= $r['gender'] ?></td>
                 <td class="text-center text-nowrap"><?= $r['phone_number'] ?></td>
                 <td class="text-center text-nowrap"><?= $r['birthday'] ?></td>
+                <!-- <td class="text-center text-nowrap"><?= (!empty($r['county'])) ? htmlentities($r['county']) : '未填' ?></td>
+                <td class="text-center text-nowrap"><?= (!empty($r['district'])) ? htmlentities($r['district']) : '未填' ?></td>
+                <td class="text-center text-nowrap"><?= (!empty($r['restAddress'])) ? htmlentities($r['restAddress']) : '未填' ?></td> -->
                 <td class="text-center text-nowrap"><?= (!empty($r['address'])) ? htmlentities($r['address']) : '未填' ?></td>
                 <td class="text-center text-nowrap"><img src="../img/members-img/<?= $r['photo'] ?>" alt="" style="width: 100px;"></td>
                 <td class="text-center text-nowrap"><?= $r['created_at'] ?></td>
@@ -265,7 +266,7 @@ include __DIR__ . "/part/navbar-head.php";
       } else {
         searchButton.textContent = '搜尋';
       }
-      searchInput.placeholder = isSearched ? '清除搜尋文字' : '請輸入 First_name / Last_name/ Email / Phone_number進行搜尋';
+      searchInput.placeholder = isSearched ? '清除搜尋文字' : '請輸入 Name / Email / Phone_number進行搜尋';
       searchInput.value = isSearched ? '' : searchInput.value;
     }
   });

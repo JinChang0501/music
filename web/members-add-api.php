@@ -12,8 +12,7 @@ $output = [
 
 // 檢查是否有接收到必要的欄位資料
 if (
-    !isset($_POST['first_name']) ||
-    !isset($_POST['last_name']) ||
+    !isset($_POST['name']) ||
     !isset($_POST['email']) ||
     !isset($_POST['passwords']) ||
     !isset($_POST['gender']) ||
@@ -61,11 +60,10 @@ if (!$result) {
 }
 
 // 執行 SQL 插入資料
-$sql = "INSERT INTO `members`(`first_name`, `last_name`, `email`, `passwords`, `gender`, `phone_number`, `birthday`, `address`, `photo`, `created_at`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
+$sql = "INSERT INTO `members`(`name`, `email`, `passwords`, `gender`, `phone_number`, `birthday`, `address`, `photo`, `created_at`) VALUES (?, ?, ?, ?, ?, ?,?,?, NOW())";
 $stmt = $pdo->prepare($sql);
 $result = $stmt->execute([
-    $_POST['first_name'],
-    $_POST['last_name'],
+    $_POST['name'],
     $_POST['email'],
     $_POST['passwords'],
     $_POST['gender'],

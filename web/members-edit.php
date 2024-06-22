@@ -58,18 +58,10 @@ if (empty($row)) {
 
 
               <div class="col-sm-6">
-                <label for="first_name" class="form-label">First name</label>
-                <input type="text" class="form-control" id="first_name" name="first_name" value="<?= $row['first_name'] ?>" required>
+                <label for="name" class="form-label">First name</label>
+                <input type="text" class="form-control" id="name" name="name" value="<?= $row['name'] ?>" required>
                 <div class="invalid-feedback">
                   Valid first name is required.
-                </div>
-              </div>
-
-              <div class="col-sm-6">
-                <label for="last_name" class="form-label">Last name</label>
-                <input type="text" class="form-control" id="last_name" name="last_name" value="<?= $row['last_name'] ?>" required>
-                <div class="invalid-feedback">
-                  Valid last name is required.
                 </div>
               </div>
 
@@ -131,6 +123,9 @@ if (empty($row)) {
                 </div>
               </div>
 
+
+
+
               <div class="col-6">
                 <label for="photo" class="form-label">原始照片</label><br>
                 <img src="../img/members-img/<?= $row['photo'] ?>" alt="原始照片" class="w-50">
@@ -156,77 +151,6 @@ if (empty($row)) {
         </div>
       </div>
       <!-- NEW END -->
-
-
-
-
-
-
-      <!-- OLD Start -->
-      <!-- <div class="card mt-5" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title">編輯資料</h5>
-          <form name="form1" onsubmit="sendData(event)">
-            <input type="hidden" name="id" value="<?= $row['id'] ?>">
-
-            <div class="mb-3">
-              <label for="id" class="form-label">編號</label>
-              <input type="text" class="form-control" id="id" name="id" value="<?= $row['id'] ?>" disabled>
-            </div>
-
-            <div class="mb-3">
-              <label for="first_name" class="form-label">姓名</label>
-              <input type="text" class="form-control" id="first_name" name="first_name" value="<?= $row['first_name'] ?>">
-              <div class="form-text"></div>
-            </div>
-
-            <div class="mb-3">
-              <label for="last_name" class="form-label">姓氏</label>
-              <input type="text" class="form-control" id="last_name" name="last_name" value="<?= $row['last_name'] ?>">
-              <div class="form-text"></div>
-            </div>
-
-            <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
-              <input type="email" class="form-control" id="email" name="email" value="<?= $row['email'] ?>">
-              <div class="form-text"></div>
-            </div>
-
-            <div class="mb-3">
-              <label for="passwords" class="form-label">Passwords</label>
-              <input type="password" class="form-control" id="passwords" name="passwords" value="<?= $row['passwords'] ?>">
-              <div class="form-text"></div>
-            </div>
-
-            <div class="mb-3">
-              <label for="gender" class="form-label">Gender</label>
-              <input type="text" class="form-control" id="gender" name="gender" value="<?= $row['gender'] ?>">
-              <div class="form-text"></div>
-            </div>
-
-            <div class="mb-3">
-              <label for="phone_number" class="form-label">電話號碼</label>
-              <input type="text" class="form-control" id="phone_number" name="phone_number" value="<?= $row['phone_number'] ?>">
-              <div class="form-text"></div>
-            </div>
-
-            <div class="mb-3">
-              <label for="birthday" class="form-label">生日</label>
-              <input type="date" class="form-control" id="birthday" name="birthday" value="<?= $row['birthday'] ?>">
-              <div class="form-text"></div>
-            </div>
-
-            <div class="mb-3">
-              <label for="address" class="form-label">地址</label>
-              <textarea name="address" id="address" cols="30" rows="3"><?= $row['address'] ?></textarea>
-              <div class="form-text"></div>
-            </div>
-
-            <button type="submit" class="btn btn-primary">修改</button>
-          </form>
-        </div>
-      </div> -->
-      <!-- OLD End -->
     </div>
   </div>
 
@@ -304,8 +228,8 @@ if (empty($row)) {
 
 
 
-  const first_nameField = document.form1.first_name;
-  const last_nameField = document.form1.last_name;
+  const nameField = document.form1.name;
+
   const emailField = document.form1.email;
 
   function validateEmail(email) {

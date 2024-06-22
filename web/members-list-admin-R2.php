@@ -114,8 +114,7 @@ include __DIR__ . "/part/navbar-head.php";
             <!-- <th scope="col" class="text-center">選擇</th> -->
             <th class="text-center"><i class="fa-solid fa-trash text-center"></i></th>
             <th scope="col" class="text-center" data-sortable="true">#</th>
-            <th scope="col" class="text-center">First_name</th>
-            <th scope="col" class="text-center">Last_name</th>
+            <th scope="col" class="text-center">Name</th>
             <th scope="col" class="text-center">Email</th>
             <th scope="col" class="text-center">Passwords</th>
             <th scope="col" class="text-center">Gender</th>
@@ -139,8 +138,7 @@ include __DIR__ . "/part/navbar-head.php";
 
               <td class="text-center"><a href="javascript: deleteOne(<?= $r['id'] ?>)"><i class="fa-solid fa-trash text-danger"></i></a></td>
               <td class="text-center"><?= $r['id'] ?></td>
-              <td class="text-center text-nowrap"><?= $r['first_name'] ?></td>
-              <td class="text-center text-nowrap"><?= $r['last_name'] ?></td>
+              <td class="text-center text-nowrap"><?= $r['name'] ?></td>
               <td class="text-center text-nowrap"><?= $r['email'] ?></td>
               <td class="text-center text-nowrap"><?= $r['passwords'] ?></td>
               <td class="text-center text-nowrap"><?= $r['gender'] ?></td>

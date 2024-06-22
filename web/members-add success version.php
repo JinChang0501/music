@@ -53,20 +53,13 @@ $pageName = 'members-add';
           <form name="form1" onsubmit="sendData(event)" class="needs-validation" novalidate>
             <div class="row g-3">
               <div class="col-sm-6">
-                <label for="first_name" class="form-label">First name</label>
-                <input type="text" class="form-control" id="first_name" name="first_name" required>
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
                 <div class="invalid-feedback">
                   Valid first name is required.
                 </div>
               </div>
 
-              <div class="col-sm-6">
-                <label for="last_name" class="form-label">Last name</label>
-                <input type="text" class="form-control" id="last_name" name="last_name" required>
-                <div class="invalid-feedback">
-                  Valid last name is required.
-                </div>
-              </div>
 
 
               <div class="col-12">
@@ -84,19 +77,6 @@ $pageName = 'members-add';
                   Please enter a valid password for shipping updates.
                 </div>
               </div>
-
-              <!-- <div class="col-4">
-                <label for="gender" class="form-label">Gender</label><br>
-
-                <div class="col-12 form-control">
-                  <input type="radio" name="gender" value="Male" required>男 - Male
-                  <input type="radio" name="gender" value="Female" class="ms-3" required>女 - Female
-                  <div class="invalid-feedback">
-                    Gender required.
-                  </div>
-                </div>
-              </div> -->
-
 
               <div class="col-4">
                 <label for="gender" class="form-label">Gender</label><br>

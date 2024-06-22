@@ -127,21 +127,15 @@ include __DIR__ . "/part/navbar-head.php";
       <table class="table table-bordered table-striped">
         <thead>
           <tr>
-            <!-- <th scope="col" style="text-align: center;">
-              <input class="form-check-input" type="checkbox" id="checkall"> 全選
-            </th> -->
+
             <th scope="col" class="text-center">#
               <a href="?sort=id&order=desc&page=<?= $page ?>"><i class="fa-solid fa-sort-down"></i></a>
               <a href="?sort=id&order=desc&page=<?= $page ?>"><i class="fa-solid fa-sort-up"></i></a>
             </th>
 
-            <th scope="col" class="text-center">First_name
-              <a href="?sort=first_name&order=desc&page=<?= $page ?>"><i class="fa-solid fa-sort-down"></i></a>
-              <a href="?sort=first_name&order=asc&page=<?= $page ?>"><i class="fa-solid fa-sort-up"></i></a>
-            </th>
-            <th scope="col" class="text-center">Last_name
-              <a href="?sort=last_name&order=desc&page=<?= $page ?>"><i class="fa-solid fa-sort-down"></i></a>
-              <a href="?sort=last_name&order=asc&page=<?= $page ?>"><i class="fa-solid fa-sort-up"></i></a>
+            <th scope="col" class="text-center">Name
+              <a href="?sort=name&order=desc&page=<?= $page ?>"><i class="fa-solid fa-sort-down"></i></a>
+              <a href="?sort=name&order=asc&page=<?= $page ?>"><i class="fa-solid fa-sort-up"></i></a>
             </th>
             <th scope="col" class="text-center">Email</th>
             <th scope="col" class="text-center">Gender
@@ -159,8 +153,7 @@ include __DIR__ . "/part/navbar-head.php";
                 <input class="checkboxes form-check-input" type="checkbox" value="" id="flexCheckDefault">
               </td> -->
               <td class="text-center"><?= $r['id'] ?></td>
-              <td class="text-center"><?= $r['first_name'] ?></td>
-              <td class="text-center"><?= $r['last_name'] ?></td>
+              <td class="text-center"><?= $r['name'] ?></td>
               <td class="text-center"><?= $r['email'] ?></td>
               <td class="text-center"><?= $r['gender'] ?></td>
               <td class="text-center"><?= $r['phone_number'] ?></td>

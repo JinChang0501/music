@@ -57,7 +57,7 @@ if ($_POST['passwords'] === $row['passwords']) {
     $_SESSION['admin'] = [
         'id' => $row['id'],
         'email' => $row['email'],
-        'first_name' => $row['first_name'],
+        'name' => $row['name'],
     ];
 } else {
     # 密碼是錯的
